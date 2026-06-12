@@ -2,632 +2,497 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Songho — Awélé</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Songho — Version Locale</title>
   <style>
-    * {
-      box-sizing: border-box;
-      user-select: none;
-    }
-
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&display=swap');
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background: #1a0f05;
-      background-image: radial-gradient(circle at 20% 30%, rgba(80, 50, 20, 0.4) 2%, transparent 2.5%);
-      background-size: 45px 45px;
-      font-family: 'Cinzel', 'Segoe UI', serif;
+      font-family: 'Cinzel', serif;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      padding: 8px;
+      gap: 8px;
       min-height: 100vh;
-      margin: 0;
-      padding: 20px;
     }
-
-    /* Conteneur principal style carte */
-    .game-container {
-      max-width: 1100px;
+    #header {
       width: 100%;
-      background: #2a1a08;
-      border-radius: 32px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      padding: 16px 20px 20px 20px;
-    }
-
-    /* En-tête */
-    .game-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: linear-gradient(135deg, #2a1a08, #3d2510);
+      background: linear-gradient(135deg, #2a1a08, #4a2e10);
       border: 1px solid #8b6020;
-      border-radius: 12px;
-      padding: 10px 18px;
-      margin-bottom: 16px;
+      border-radius: 10px;
+      padding: 10px 14px;
     }
-    .logo {
-      font-size: 22px;
-      color: #d4a017;
-      letter-spacing: 4px;
-      font-weight: bold;
-    }
-    .header-right {
-      font-size: 11px;
-      color: #a08040;
-      text-align: right;
-      font-family: monospace;
-    }
-
-    /* Barre de stats */
-    .statusbar {
+    #logo { font-size: 20px; color: #d4a017; letter-spacing: 3px; }
+    #header-right { font-size: 10px; color: #a08040; text-align: right; line-height: 1.6; font-family: sans-serif; }
+    #statusbar {
+      width: 100%;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 16px;
+      gap: 6px;
     }
     .stat-box {
       background: linear-gradient(145deg, #2a1a08, #3d2510);
       border: 1px solid #5a3e10;
-      border-radius: 10px;
+      border-radius: 8px;
       padding: 6px 4px;
       text-align: center;
     }
-    .stat-label {
-      font-size: 9px;
-      color: #8b6914;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-family: monospace;
-    }
-    .stat-value {
-      font-size: 20px;
-      font-weight: 700;
-      font-family: 'Cinzel', serif;
-    }
+    .stat-label { font-size: 9px; color: #8b6914; text-transform: uppercase; letter-spacing: 1px; font-family: sans-serif; }
+    .stat-value { font-size: 18px; font-weight: 700; margin-top: 1px; font-family: 'Cinzel', serif; }
     .stat-value.nord { color: #60aaff; }
     .stat-value.sud { color: #ff6b4a; }
     .stat-value.gold { color: #d4a017; }
-
-    /* Canvas */
-    #canvas-wrapper {
-      width: 100%;
-      margin-bottom: 16px;
-    }
-    canvas {
-      width: 100%;
-      height: auto;
-      display: block;
-      cursor: pointer;
-      background: #5c3010;
-      border-radius: 20px;
-      box-shadow: inset 0 0 0 3px #a07030, 0 10px 20px rgba(0,0,0,0.3);
-    }
-
-    /* Zone infos */
-    .bottom-area {
-      display: flex;
-      gap: 12px;
-    }
+    #canvas-wrapper { width: 100%; }
+    canvas { width: 100%; height: auto; display: block; touch-action: manipulation; }
+    #bottom-area { width: 100%; display: flex; gap: 8px; }
     .info-box {
       flex: 1;
       background: linear-gradient(145deg, #2a1a08, #3d2510);
       border: 1px solid #5a3e10;
-      border-radius: 12px;
-      padding: 10px 12px;
-    }
-    .box-title {
-      font-size: 10px;
-      color: #8b6914;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 6px;
-      border-bottom: 1px solid #4a3010;
-      padding-bottom: 4px;
-      font-family: monospace;
-    }
-    #last-move-text {
-      font-size: 11px;
-      color: #c8a060;
-      font-family: monospace;
-      line-height: 1.5;
-    }
-    .history-item {
-      font-size: 10px;
-      color: #8b6914;
-      padding: 3px 0;
-      border-bottom: 1px solid #3a2508;
-      font-family: monospace;
-    }
-    #history-list {
-      max-height: 95px;
+      border-radius: 8px;
+      padding: 10px;
+      max-height: 90px;
       overflow-y: auto;
     }
-
-    /* Modal fin de partie */
+    .box-title { font-size: 9px; color: #8b6914; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; padding-bottom: 4px; border-bottom: 1px solid #4a3010; font-family: sans-serif; }
+    #last-move-text { font-size: 11px; color: #c8a060; line-height: 1.5; font-family: sans-serif; }
+    .history-item { font-size: 10px; color: #8b6914; padding: 2px 0; border-bottom: 1px solid #3a2508; font-family: sans-serif; }
     #overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.9);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.88); z-index: 100;
+      align-items: center; justify-content: center;
     }
     #overlay.show { display: flex; }
-    .modal {
+    #modal {
       background: linear-gradient(145deg, #2a1a08, #3d2510);
-      border: 2px solid #d4a017;
-      border-radius: 20px;
-      padding: 30px 24px;
-      text-align: center;
-      width: 85%;
-      max-width: 300px;
+      border: 2px solid #d4a017; border-radius: 16px;
+      padding: 30px 24px; text-align: center; width: 85%; max-width: 320px;
     }
-    .modal h2 { color: #d4a017; margin-bottom: 10px; }
-    .modal p { color: #a08040; margin-bottom: 20px; }
-    .modal button {
-      background: linear-gradient(135deg, #d4a017, #a07010);
-      border: none;
-      padding: 8px 24px;
-      border-radius: 30px;
-      font-weight: bold;
-      cursor: pointer;
-      font-family: inherit;
+    #modal h2 { font-size: 24px; color: #d4a017; margin-bottom: 8px; }
+    #modal p { color: #a08040; font-size: 13px; margin-bottom: 20px; font-family: sans-serif; }
+    #btn-restart {
+      padding: 10px 24px; background: linear-gradient(135deg, #d4a017, #a07010);
+      color: #1a0a02; border: none; border-radius: 8px; font-size: 14px;
+      font-weight: 700; cursor: pointer; font-family: 'Cinzel', serif;
     }
   </style>
 </head>
 <body>
-<div class="game-container">
-  <div class="game-header">
-    <div class="logo">⚜ SONGHO</div>
-    <div class="header-right">Version locale · 2 joueurs<br><span id="move-counter">Tour 0</span></div>
-  </div>
 
-  <div class="statusbar">
-    <div class="stat-box"><div class="stat-label">Nord</div><div class="stat-value nord" id="score-nord">0</div></div>
-    <div class="stat-box"><div class="stat-label">Tour</div><div class="stat-value gold" id="tour-joueur">Sud</div></div>
-    <div class="stat-box"><div class="stat-label">État</div><div class="stat-value gold" id="etat-jeu">En jeu</div></div>
-    <div class="stat-box"><div class="stat-label">Sud</div><div class="stat-value sud" id="score-sud">0</div></div>
-  </div>
+<div id="header">
+  <div id="logo">⚜ SONGHO</div>
+  <div id="header-right">Version locale · 2 joueurs<br><span id="move-counter">Tour 0</span></div>
+</div>
 
-  <div id="canvas-wrapper">
-    <canvas id="gameCanvas"></canvas>
+<div id="statusbar">
+  <div class="stat-box">
+    <div class="stat-label">Nord</div>
+    <div class="stat-value nord" id="score-nord">0</div>
   </div>
-
-  <div class="bottom-area">
-    <div class="info-box"><div class="box-title">Dernier coup</div><div id="last-move-text">—</div></div>
-    <div class="info-box"><div class="box-title">Historique</div><div id="history-list"></div></div>
+  <div class="stat-box">
+    <div class="stat-label">Tour</div>
+    <div class="stat-value gold" id="tour-joueur">Sud</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">État</div>
+    <div class="stat-value gold" id="etat-jeu">En jeu</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Sud</div>
+    <div class="stat-value sud" id="score-sud">0</div>
   </div>
 </div>
 
-<div id="overlay"><div class="modal"><h2 id="modal-title">Victoire !</h2><p id="modal-body">—</p><button id="btn-restart">Nouvelle partie</button></div></div>
+<div id="canvas-wrapper">
+  <canvas id="gameCanvas"></canvas>
+</div>
 
+<div id="bottom-area">
+  <div class="info-box">
+    <div class="box-title">Dernier coup</div>
+    <div id="last-move-text">—</div>
+  </div>
+  <div class="info-box">
+    <div class="box-title">Historique</div>
+    <div id="history-list"></div>
+  </div>
+</div>
+
+<div id="overlay">
+  <div id="modal">
+    <h2 id="modal-title">Victoire !</h2>
+    <p id="modal-body">—</p>
+    <button id="btn-restart">Nouvelle partie</button>
+  </div>
+</div>
+
+<script src="js/core/engine-full.js"></script>
 <script>
-  // ============================================================
-  // MOTEUR DU JEU (TON MOTEUR - JE N'Y TOUCHE PAS)
-  // ============================================================
-  
-  let board = [4,4,4,4,4,4, 4,4,4,4,4,4];
-  let northStore = 0;
-  let southStore = 0;
-  let currentPlayer = "sud";
-  let gameOver = false;
-  let winner = null;
-  let historyMoves = [];
-  let moveNumber = 0;
+let state = createGame("south");
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
 
-  function isNordCase(idx) { return idx >= 0 && idx <= 5; }
-  function getCaseOwner(idx) { return isNordCase(idx) ? "nord" : "sud"; }
-  function nordIdxToGlobal(pos) { return pos; }
-  function sudIdxToGlobal(pos) { return 6 + pos; }
+const CW = 500;
+const CH = 280;
+canvas.width = CW;
+canvas.height = CH;
 
-  function hasFeedingMove(player) {
-    for (let i = 0; i < 6; i++) {
-      let globalIdx = (player === "nord") ? nordIdxToGlobal(i) : sudIdxToGlobal(i);
-      if (board[globalIdx] === 0) continue;
-      let seeds = board[globalIdx];
-      let tempBoard = [...board];
-      let idx = globalIdx;
-      let s = seeds;
-      tempBoard[idx] = 0;
-      let current = idx;
-      while (s > 0) {
-        current = (current + 1) % 12;
-        tempBoard[current]++;
-        s--;
-      }
-      let lastPit = current;
-      let lastOwner = getCaseOwner(lastPit);
-      let captured = 0;
-      if (lastOwner !== player && (tempBoard[lastPit] === 2 || tempBoard[lastPit] === 3)) {
-        let captureIdx = lastPit;
-        while (captureIdx >= 0 && getCaseOwner(captureIdx) !== player && (tempBoard[captureIdx] === 2 || tempBoard[captureIdx] === 3)) {
-          captured += tempBoard[captureIdx];
-          captureIdx--;
-          if (captureIdx < 0 || getCaseOwner(captureIdx) === player) break;
-        }
-      }
-      if (captured > 0) return true;
-    }
-    return false;
-  }
+const COLS = 7;
+const PIT_R = 24;
+const SEED_R = 4.5;
+const GREN_W = 44;
+const GREN_H = 110;
+const GREN_X_LEFT = 24;
+const GREN_X_RIGHT = CW - 24;
+const PAD = 8;
 
-  function simulateCapture(player, pitLocalIdx) {
-    let globalIdx = (player === "nord") ? nordIdxToGlobal(pitLocalIdx) : sudIdxToGlobal(pitLocalIdx);
-    let seeds = board[globalIdx];
-    if (seeds === 0) return 0;
-    let tempBoard = [...board];
-    let idx = globalIdx;
-    let s = seeds;
-    tempBoard[idx] = 0;
-    let current = idx;
-    while (s > 0) {
-      current = (current + 1) % 12;
-      tempBoard[current]++;
-      s--;
-    }
-    let lastPit = current;
-    let lastOwner = getCaseOwner(lastPit);
-    let captured = 0;
-    if (lastOwner !== player && (tempBoard[lastPit] === 2 || tempBoard[lastPit] === 3)) {
-      let captureIdx = lastPit;
-      while (captureIdx >= 0 && getCaseOwner(captureIdx) !== player && (tempBoard[captureIdx] === 2 || tempBoard[captureIdx] === 3)) {
-        captured += tempBoard[captureIdx];
-        captureIdx--;
-        if (captureIdx < 0 || getCaseOwner(captureIdx) === player) break;
-      }
-    }
-    return captured;
-  }
+function getPitCenter(player, index) {
+  const usable = CW - 2 * (GREN_W + PAD * 2);
+  const startX = GREN_W + PAD * 2;
+  const cellW = usable / COLS;
+  const x = startX + (index + 0.5) * cellW;
+  const y = player === "north" ? CH * 0.27 : CH * 0.73;
+  return { x, y };
+}
 
-  function playMove(pitLocalIdx) {
-    if (gameOver) return false;
-    let globalIdx = (currentPlayer === "nord") ? nordIdxToGlobal(pitLocalIdx) : sudIdxToGlobal(pitLocalIdx);
-    if (board[globalIdx] === 0) return false;
+function drawWood() {
+  // Fond bois principal
+  const grad = ctx.createLinearGradient(0, 0, CW, CH);
+  grad.addColorStop(0,   "#7a4818");
+  grad.addColorStop(0.25,"#5c3010");
+  grad.addColorStop(0.5, "#8b5520");
+  grad.addColorStop(0.75,"#6b3e14");
+  grad.addColorStop(1,   "#5c3010");
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.roundRect(0, 0, CW, CH, 18);
+  ctx.fill();
 
-    let hasFeeding = hasFeedingMove(currentPlayer);
-    if (hasFeeding) {
-      let testCapture = simulateCapture(currentPlayer, pitLocalIdx);
-      if (testCapture === 0) return false;
-    }
-
-    let seeds = board[globalIdx];
-    board[globalIdx] = 0;
-    let sowingIdx = globalIdx;
-    let remaining = seeds;
-    while (remaining > 0) {
-      sowingIdx = (sowingIdx + 1) % 12;
-      board[sowingIdx]++;
-      remaining--;
-    }
-
-    let lastPit = sowingIdx;
-    let lastOwner = getCaseOwner(lastPit);
-    let capturedTotal = 0;
-
-    if (lastOwner !== currentPlayer && (board[lastPit] === 2 || board[lastPit] === 3)) {
-      let captureIdx = lastPit;
-      while (captureIdx >= 0 && getCaseOwner(captureIdx) !== currentPlayer && (board[captureIdx] === 2 || board[captureIdx] === 3)) {
-        capturedTotal += board[captureIdx];
-        board[captureIdx] = 0;
-        captureIdx--;
-        if (captureIdx < 0 || getCaseOwner(captureIdx) === currentPlayer) break;
-      }
-      if (capturedTotal > 0) {
-        if (currentPlayer === "nord") northStore += capturedTotal;
-        else southStore += capturedTotal;
-      }
-    }
-
-    moveNumber++;
-    let moveName = (currentPlayer === "nord") ? `N${pitLocalIdx+1}` : `S${pitLocalIdx+1}`;
-    let lastPosName = `${lastOwner === "nord" ? "N" : "S"}${(lastPit % 6) + 1}`;
-    let captureText = capturedTotal > 0 ? `capture ${capturedTotal}` : `aucune capture`;
-    let desc = `${currentPlayer === "nord" ? "Nord" : "Sud"} joue ${moveName}, dernière graine en ${lastPosName}, ${captureText}.`;
-    
-    historyMoves.unshift({ num: moveNumber, text: moveNumber + ". " + desc });
-    document.getElementById("last-move-text").innerHTML = desc;
-    updateHistoryList();
-
-    currentPlayer = (currentPlayer === "nord") ? "sud" : "nord";
-
-    let nordSeeds = board.slice(0,6).reduce((a,b)=>a+b,0);
-    let sudSeeds = board.slice(6,12).reduce((a,b)=>a+b,0);
-    if (nordSeeds === 0 || sudSeeds === 0) {
-      if (nordSeeds === 0) { southStore += sudSeeds; for(let i=6;i<12;i++) board[i]=0; }
-      if (sudSeeds === 0) { northStore += nordSeeds; for(let i=0;i<6;i++) board[i]=0; }
-      gameOver = true;
-      winner = northStore > southStore ? "Nord" : (southStore > northStore ? "Sud" : "Égalité");
-      document.getElementById("etat-jeu").innerText = "Terminée";
-      showGameOver();
-    }
-
-    updateUI();
-    drawCanvas();
-    return true;
-  }
-
-  function updateUI() {
-    document.getElementById("score-nord").innerText = northStore;
-    document.getElementById("score-sud").innerText = southStore;
-    document.getElementById("tour-joueur").innerText = currentPlayer === "nord" ? "Nord" : "Sud";
-    document.getElementById("move-counter").innerText = "Tour " + moveNumber;
-  }
-
-  function updateHistoryList() {
-    let container = document.getElementById("history-list");
-    container.innerHTML = "";
-    for (let i = 0; i < Math.min(historyMoves.length, 8); i++) {
-      let div = document.createElement("div");
-      div.className = "history-item";
-      div.innerText = historyMoves[i].text;
-      container.appendChild(div);
-    }
-  }
-
-  function showGameOver() {
-    document.getElementById("modal-title").innerText = winner === "Égalité" ? "Match nul !" : winner + " gagne !";
-    document.getElementById("modal-body").innerText = `Nord ${northStore} – Sud ${southStore}`;
-    document.getElementById("overlay").classList.add("show");
-  }
-
-  function resetGame() {
-    board = [4,4,4,4,4,4,4,4,4,4,4,4];
-    northStore = 0;
-    southStore = 0;
-    currentPlayer = "sud";
-    gameOver = false;
-    winner = null;
-    historyMoves = [];
-    moveNumber = 0;
-    document.getElementById("etat-jeu").innerText = "En jeu";
-    document.getElementById("last-move-text").innerHTML = "—";
-    updateUI();
-    updateHistoryList();
-    drawCanvas();
-    document.getElementById("overlay").classList.remove("show");
-  }
-
-  document.getElementById("btn-restart").addEventListener("click", resetGame);
-
-  // ============================================================
-  // RENDU CANVAS (STYLE TON AMI)
-  // ============================================================
-  const canvas = document.getElementById("gameCanvas");
-  const ctx = canvas.getContext("2d");
-  
-  let CW = 600;
-  let CH = 320;
-  canvas.width = CW;
-  canvas.height = CH;
-  
-  function resizeCanvas() {
-    const wrapper = document.getElementById("canvas-wrapper");
-    const rect = wrapper.getBoundingClientRect();
-    CW = Math.min(700, rect.width);
-    CH = CW * 0.53;
-    canvas.width = CW;
-    canvas.height = CH;
-    drawCanvas();
-  }
-  window.addEventListener("resize", resizeCanvas);
-  
-  const PIT_R = 24;
-  const SEED_R = 4.2;
-  const GREN_W = 48;
-  const GREN_H = 100;
-  const GREN_X_LEFT = 22;
-  const GREN_X_RIGHT = CW - 22;
-  
-  function getPitCenter(player, idx) {
-    const usable = CW - 2 * (GREN_W + 8);
-    const startX = GREN_W + 8;
-    const cellW = usable / 7;
-    let x = startX + (idx + 0.5) * cellW;
-    if (idx === 6) x = player === "north" ? GREN_X_RIGHT : GREN_X_LEFT;
-    const y = player === "north" ? CH * 0.3 : CH * 0.7;
-    return { x, y };
-  }
-  
-  function drawWoodenBg() {
-    const grad = ctx.createLinearGradient(0, 0, CW, CH);
-    grad.addColorStop(0, "#7a4818");
-    grad.addColorStop(0.3, "#5c3010");
-    grad.addColorStop(0.7, "#8b5520");
-    grad.addColorStop(1, "#5c3010");
-    ctx.fillStyle = grad;
+  // Veines bois
+  for (let i = 0; i < 22; i++) {
+    const yBase = (CH / 22) * i;
     ctx.beginPath();
-    ctx.roundRect(0, 0, CW, CH, 16);
-    ctx.fill();
-    for (let i = 0; i < 18; i++) {
-      ctx.beginPath();
-      ctx.moveTo(0, i * 18 + Math.sin(i) * 4);
-      ctx.lineTo(CW, i * 18 + Math.cos(i * 1.3) * 4);
-      ctx.strokeStyle = `rgba(0,0,0,0.05)`;
-      ctx.stroke();
-    }
-    ctx.strokeStyle = "#c9a84c";
+    ctx.moveTo(0, yBase + Math.sin(i * 1.1) * 5);
+    ctx.bezierCurveTo(
+      CW * 0.25, yBase + Math.sin(i * 0.9) * 8,
+      CW * 0.75, yBase - Math.sin(i * 1.3) * 6,
+      CW, yBase + Math.sin(i * 0.7) * 5
+    );
+    ctx.strokeStyle = `rgba(0,0,0,${0.03 + (i % 3) * 0.01})`;
+    ctx.lineWidth = 1 + (i % 2) * 0.5;
+    ctx.stroke();
+  }
+
+  // Reflet global haut
+  const topShine = ctx.createLinearGradient(0, 0, 0, CH * 0.4);
+  topShine.addColorStop(0, "rgba(255,200,80,0.07)");
+  topShine.addColorStop(1, "transparent");
+  ctx.fillStyle = topShine;
+  ctx.beginPath();
+  ctx.roundRect(0, 0, CW, CH, 18);
+  ctx.fill();
+
+  // Bordure dorée
+  ctx.save();
+  ctx.strokeStyle = "#c9a84c";
+  ctx.lineWidth = 3;
+  ctx.shadowColor = "rgba(201,168,76,0.5)";
+  ctx.shadowBlur = 8;
+  ctx.beginPath();
+  ctx.roundRect(2, 2, CW - 4, CH - 4, 16);
+  ctx.stroke();
+  ctx.restore();
+
+  // Séparateur central
+  const sepG = ctx.createLinearGradient(0, 0, CW, 0);
+  sepG.addColorStop(0, "transparent");
+  sepG.addColorStop(0.15, "rgba(201,168,76,0.5)");
+  sepG.addColorStop(0.85, "rgba(201,168,76,0.5)");
+  sepG.addColorStop(1, "transparent");
+  ctx.fillStyle = sepG;
+  ctx.fillRect(GREN_W + PAD, CH / 2 - 1, CW - 2 * (GREN_W + PAD), 2);
+}
+
+function drawCavity(x, y, r, isLegal) {
+  // Ombre portée
+  ctx.save();
+  ctx.shadowColor = "rgba(0,0,0,0.9)";
+  ctx.shadowBlur = 14;
+  ctx.shadowOffsetY = 4;
+
+  const grad = ctx.createRadialGradient(x - r*0.25, y - r*0.2, r*0.05, x + r*0.1, y + r*0.1, r);
+  grad.addColorStop(0, "#0f0603");
+  grad.addColorStop(0.4, "#1e0d05");
+  grad.addColorStop(0.75, "#2d1608");
+  grad.addColorStop(1, "#4a2810");
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  // Bord relief bois
+  const rimG = ctx.createLinearGradient(x, y - r, x, y + r);
+  rimG.addColorStop(0, "rgba(220,150,60,0.5)");
+  rimG.addColorStop(0.4, "rgba(140,80,20,0.2)");
+  rimG.addColorStop(1, "rgba(0,0,0,0.5)");
+  ctx.strokeStyle = rimG;
+  ctx.lineWidth = 3.5;
+  ctx.beginPath();
+  ctx.arc(x, y, r + 1, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Lueur dorée si jouable
+  if (isLegal) {
+    ctx.save();
+    ctx.shadowColor = "rgba(212,160,23,1)";
+    ctx.shadowBlur = 20;
+    ctx.strokeStyle = "rgba(255,200,50,0.9)";
     ctx.lineWidth = 2.5;
     ctx.beginPath();
-    ctx.roundRect(3, 3, CW - 6, CH - 6, 14);
+    ctx.arc(x, y, r + 3, 0, Math.PI * 2);
     ctx.stroke();
-  }
-  
-  function drawPit(x, y, r, isLegal) {
-    ctx.save();
-    ctx.shadowColor = "rgba(0,0,0,0.8)";
-    ctx.shadowBlur = 10;
-    ctx.shadowOffsetY = 3;
-    const grad = ctx.createRadialGradient(x - 5, y - 5, 3, x, y, r);
-    grad.addColorStop(0, "#1a0a02");
-    grad.addColorStop(0.7, "#3a2010");
-    grad.addColorStop(1, "#2a1508");
-    ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fill();
     ctx.restore();
-    
-    ctx.beginPath();
-    ctx.arc(x, y, r - 1, 0, Math.PI * 2);
-    ctx.strokeStyle = "rgba(212,160,35,0.4)";
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-    
-    if (isLegal) {
-      ctx.beginPath();
-      ctx.arc(x, y, r + 4, 0, Math.PI * 2);
-      ctx.strokeStyle = "rgba(255,200,80,0.9)";
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
-    }
   }
-  
-  function drawSeed(x, y) {
+
+  // Reflet intérieur
+  const shine = ctx.createRadialGradient(x - r*0.3, y - r*0.3, 0, x - r*0.3, y - r*0.3, r * 0.7);
+  shine.addColorStop(0, "rgba(255,180,80,0.07)");
+  shine.addColorStop(1, "transparent");
+  ctx.fillStyle = shine;
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function drawSeed(x, y, c1, c2) {
+  ctx.save();
+  ctx.shadowColor = "rgba(0,0,0,0.8)";
+  ctx.shadowBlur = 5;
+  ctx.shadowOffsetY = 2;
+  const g = ctx.createRadialGradient(x - SEED_R*0.35, y - SEED_R*0.35, 0.5, x, y, SEED_R);
+  g.addColorStop(0, c1);
+  g.addColorStop(0.55, c2);
+  g.addColorStop(1, "rgba(0,0,0,0.5)");
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.arc(x, y, SEED_R, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+  // Reflet
+  const sh = ctx.createRadialGradient(x - SEED_R*0.3, y - SEED_R*0.3, 0, x - SEED_R*0.3, y - SEED_R*0.3, SEED_R*0.5);
+  sh.addColorStop(0, "rgba(255,255,255,0.55)");
+  sh.addColorStop(1, "transparent");
+  ctx.fillStyle = sh;
+  ctx.beginPath();
+  ctx.arc(x, y, SEED_R, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function getSeedPositions(count, cx, cy, r) {
+  if (count === 0) return [];
+  if (count === 1) return [{ x: cx, y: cy }];
+  if (count === 2) return [{ x: cx-r*0.27, y: cy }, { x: cx+r*0.27, y: cy }];
+  if (count === 3) return [
+    { x: cx, y: cy-r*0.27 },
+    { x: cx-r*0.27, y: cy+r*0.18 },
+    { x: cx+r*0.27, y: cy+r*0.18 }
+  ];
+  if (count === 4) return [
+    { x: cx-r*0.24, y: cy-r*0.24 }, { x: cx+r*0.24, y: cy-r*0.24 },
+    { x: cx-r*0.24, y: cy+r*0.24 }, { x: cx+r*0.24, y: cy+r*0.24 }
+  ];
+  if (count === 5) return [
+    { x: cx, y: cy },
+    { x: cx-r*0.3, y: cy-r*0.27 }, { x: cx+r*0.3, y: cy-r*0.27 },
+    { x: cx-r*0.3, y: cy+r*0.27 }, { x: cx+r*0.3, y: cy+r*0.27 }
+  ];
+  // 6 à 12
+  const positions = [];
+  const ring = Math.min(count, 8);
+  for (let i = 0; i < ring; i++) {
+    const angle = (i / ring) * Math.PI * 2 - Math.PI / 2;
+    positions.push({ x: cx + Math.cos(angle) * r * 0.52, y: cy + Math.sin(angle) * r * 0.52 });
+  }
+  if (count > 8) positions.push({ x: cx, y: cy });
+  return positions;
+}
+
+function drawBadge(x, y, count, r) {
+  if (count === 0) return;
+  const bx = x + r * 0.58, by = y - r * 0.62;
+  ctx.save();
+  ctx.shadowColor = "rgba(0,0,0,0.6)";
+  ctx.shadowBlur = 4;
+  ctx.fillStyle = "rgba(255,255,255,0.94)";
+  ctx.beginPath();
+  ctx.arc(bx, by, 8.5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = "#1a0a02";
+  ctx.font = "bold 8px sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(count, bx, by);
+  ctx.restore();
+}
+
+function drawGrenier(side, score) {
+  const cx = side === "sud" ? GREN_X_LEFT : GREN_X_RIGHT;
+  const cy = CH / 2;
+  const hw = GREN_W / 2 - 2;
+  const hh = GREN_H / 2;
+
+  // Fond creusé
+  ctx.save();
+  ctx.shadowColor = "rgba(0,0,0,0.9)";
+  ctx.shadowBlur = 12;
+  const g = ctx.createLinearGradient(cx - hw, cy - hh, cx + hw, cy + hh);
+  g.addColorStop(0, "#0f0603");
+  g.addColorStop(0.5, "#1e0d05");
+  g.addColorStop(1, "#3a2010");
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.roundRect(cx - hw, cy - hh, hw * 2, hh * 2, 10);
+  ctx.fill();
+  ctx.restore();
+
+  // Bordure dorée
+  ctx.strokeStyle = "rgba(201,168,76,0.6)";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.roundRect(cx - hw, cy - hh, hw * 2, hh * 2, 10);
+  ctx.stroke();
+
+  // Score
+  ctx.save();
+  ctx.font = "bold 20px Cinzel, serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillStyle = side === "sud" ? "#ff6b4a" : "#60aaff";
+  ctx.shadowColor = side === "sud" ? "rgba(255,107,74,0.6)" : "rgba(96,170,255,0.6)";
+  ctx.shadowBlur = 10;
+  ctx.fillText(score, cx, cy - hh * 0.45);
+  ctx.restore();
+
+  // Label
+  ctx.save();
+  ctx.font = "bold 9px sans-serif";
+  ctx.fillStyle = "rgba(201,168,76,0.55)";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.translate(cx, cy + hh * 0.3);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText(side === "sud" ? "SUD" : "NORD", 0, 0);
+  ctx.restore();
+
+  // Mini billes dans grenier
+  const maxB = Math.min(score, 15);
+  const cols = 2;
+  for (let i = 0; i < maxB; i++) {
+    const col = i % cols - (cols - 1) / 2;
+    const row = Math.floor(i / cols);
+    const sx = cx + col * 9;
+    const sy = cy - hh * 0.05 + row * 10;
+    if (sy > cy + hh - 8) break;
+    const c1 = side === "sud" ? "#ffd0b0" : "#c0e0ff";
+    const c2 = side === "sud" ? "#c04020" : "#2060a0";
     ctx.save();
+    const sg = ctx.createRadialGradient(sx - 2, sy - 2, 0.3, sx, sy, 4);
+    sg.addColorStop(0, c1);
+    sg.addColorStop(1, c2);
+    ctx.fillStyle = sg;
+    ctx.shadowColor = "rgba(0,0,0,0.6)";
     ctx.shadowBlur = 3;
-    const grad = ctx.createRadialGradient(x - 2, y - 2, 1, x, y, SEED_R);
-    grad.addColorStop(0, "#fff0c0");
-    grad.addColorStop(0.6, "#c87820");
-    grad.addColorStop(1, "#8a4010");
-    ctx.fillStyle = grad;
     ctx.beginPath();
-    ctx.ellipse(x, y, SEED_R, SEED_R * 0.85, 0, 0, Math.PI * 2);
+    ctx.arc(sx, sy, 4, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
   }
-  
-  function getSeedPositions(count, cx, cy, r) {
-    if (count === 0) return [];
-    if (count === 1) return [{ x: cx, y: cy }];
-    if (count <= 3) {
-      let arr = [];
-      for (let i = 0; i < count; i++) {
-        let angle = (i / count) * Math.PI * 2 - Math.PI / 2;
-        arr.push({ x: cx + Math.cos(angle) * r * 0.4, y: cy + Math.sin(angle) * r * 0.4 });
-      }
-      return arr;
-    }
-    let arr = [];
-    let ring = Math.min(count, 8);
-    for (let i = 0; i < ring; i++) {
-      let angle = (i / ring) * Math.PI * 2;
-      arr.push({ x: cx + Math.cos(angle) * r * 0.55, y: cy + Math.sin(angle) * r * 0.55 });
-    }
-    if (count > 8) arr.push({ x: cx, y: cy });
-    return arr.slice(0, count);
-  }
-  
-  function drawBadge(x, y, count) {
-    if (count === 0) return;
-    ctx.font = "bold 11px 'Courier New'";
-    ctx.fillStyle = "#fff8e0";
-    ctx.shadowBlur = 0;
-    ctx.fillText(count, x - 5, y - 12);
-  }
-  
-  function drawGrenier(side, score) {
-    const cx = side === "sud" ? GREN_X_LEFT : GREN_X_RIGHT;
-    const cy = CH / 2;
-    const w = GREN_W - 6;
-    const h = GREN_H - 10;
-    
-    ctx.save();
-    ctx.shadowBlur = 8;
-    ctx.fillStyle = "#2a1508";
-    ctx.beginPath();
-    ctx.roundRect(cx - w/2, cy - h/2, w, h, 8);
-    ctx.fill();
-    ctx.fillStyle = side === "sud" ? "#ff6b4a" : "#60aaff";
-    ctx.font = "bold 26px 'Cinzel'";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(score, cx, cy - 5);
-    ctx.font = "bold 9px monospace";
-    ctx.fillStyle = "#c8a060";
-    ctx.fillText(side === "sud" ? "SUD" : "NORD", cx, cy + 28);
-    ctx.restore();
-  }
-  
-  function drawCanvas() {
-    if (CW < 100) return;
-    drawWoodenBg();
-    
-    let legalMoves = [];
-    if (!gameOver) {
-      for (let i = 0; i < 6; i++) {
-        let globalIdx = (currentPlayer === "nord") ? i : 6 + i;
-        if (board[globalIdx] > 0) {
-          let isFeeding = hasFeedingMove(currentPlayer);
-          if (!isFeeding || simulateCapture(currentPlayer, i) > 0) {
-            legalMoves.push(i);
-          }
-        }
-      }
-    }
-    
-    // Nord cases (0-5)
-    for (let i = 0; i < 6; i++) {
-      let { x, y } = getPitCenter("north", i);
-      let count = board[i];
-      let isLegal = !gameOver && currentPlayer === "nord" && legalMoves.includes(i);
-      drawPit(x, y, PIT_R, isLegal);
-      getSeedPositions(count, x, y, PIT_R).forEach(p => drawSeed(p.x, p.y));
-      drawBadge(x, y, count);
-    }
-    
-    // Sud cases (0-5)
-    for (let i = 0; i < 6; i++) {
-      let { x, y } = getPitCenter("south", i);
-      let count = board[6 + i];
-      let isLegal = !gameOver && currentPlayer === "sud" && legalMoves.includes(i);
-      drawPit(x, y, PIT_R, isLegal);
-      getSeedPositions(count, x, y, PIT_R).forEach(p => drawSeed(p.x, p.y));
-      drawBadge(x, y, count);
-    }
-    
-    drawGrenier("nord", northStore);
-    drawGrenier("sud", southStore);
-  }
-  
-  // Gestion clics canvas
-  canvas.addEventListener("click", (e) => {
-    if (gameOver) return;
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-    const mx = (e.clientX - rect.left) * scaleX;
-    const my = (e.clientY - rect.top) * scaleY;
-    
-    let legalMoves = [];
-    for (let i = 0; i < 6; i++) {
-      let globalIdx = (currentPlayer === "nord") ? i : 6 + i;
-      if (board[globalIdx] > 0) {
-        let isFeeding = hasFeedingMove(currentPlayer);
-        if (!isFeeding || simulateCapture(currentPlayer, i) > 0) {
-          legalMoves.push(i);
-        }
-      }
-    }
-    
-    for (let i = 0; i < 6; i++) {
-      if (!legalMoves.includes(i)) continue;
-      let { x, y } = getPitCenter(currentPlayer, i);
-      let dist = Math.hypot(mx - x, my - y);
-      if (dist <= PIT_R + 8) {
-        playMove(i);
-        drawCanvas();
-        break;
-      }
+}
+
+function draw() {
+  ctx.clearRect(0, 0, CW, CH);
+  drawWood();
+
+  const legalMoves = getLegalMoves(state);
+  const legalIndexes = legalMoves.map(m => m.pitIndex);
+
+  ["north", "south"].forEach(player => {
+    for (let i = 0; i < 7; i++) {
+      const { x, y } = getPitCenter(player, i);
+      const count = state.board[player][i];
+      const isLegal = state.currentPlayer === player && legalIndexes.includes(i);
+      drawCavity(x, y, PIT_R, isLegal);
+      const c1 = isLegal ? "#fff8c0" : (player === "north" ? "#d0eeff" : "#ffe8d0");
+      const c2 = isLegal ? "#b88010" : (player === "north" ? "#1a5a9a" : "#aa3010");
+      getSeedPositions(count, x, y, PIT_R).forEach(p => drawSeed(p.x, p.y, c1, c2));
+      drawBadge(x, y, count, PIT_R);
     }
   });
-  
-  function init() {
-    resizeCanvas();
-    updateUI();
-    drawCanvas();
+
+  drawGrenier("sud", state.scores.south);
+  drawGrenier("nord", state.scores.north);
+}
+
+canvas.addEventListener("click", function(e) {
+  if (state.status !== "playing") return;
+  const rect = canvas.getBoundingClientRect();
+  const mx = (e.clientX - rect.left) * (CW / rect.width);
+  const my = (e.clientY - rect.top) * (CH / rect.height);
+  const legalMoves = getLegalMoves(state);
+  const legalIndexes = legalMoves.map(m => m.pitIndex);
+  for (let i = 0; i < 7; i++) {
+    if (!legalIndexes.includes(i)) continue;
+    const { x, y } = getPitCenter(state.currentPlayer, i);
+    if (Math.hypot(mx - x, my - y) <= PIT_R + 5) { playMove(state.currentPlayer, i); return; }
   }
-  
-  init();
+});
+
+function playMove(player, pitIndex) {
+  const pitName = (player === "north" ? "N" : "S") + (pitIndex + 1);
+  const result = applyMove(state, { player, pitIndex });
+  if (!result.ok) return;
+  state = result.state;
+  const action = result.action;
+  let desc = action.type === "forced-donation"
+    ? `${player === "north" ? "Nord" : "Sud"} joue ${pitName}, don forcé ${action.donated} graine(s).`
+    : `${player === "north" ? "Nord" : "Sud"} joue ${pitName}, dernière graine en ${(action.sowing.lastPosition.player === "north" ? "N" : "S") + (action.sowing.lastPosition.pitIndex + 1)}, capture ${action.capture.captured}.`;
+  document.getElementById("last-move-text").textContent = desc;
+  const item = document.createElement("div");
+  item.className = "history-item";
+  item.textContent = state.moveNumber + ". " + desc;
+  document.getElementById("history-list").insertBefore(item, document.getElementById("history-list").firstChild);
+  updateUI(); draw();
+  if (state.status === "ended") {
+    document.getElementById("overlay").classList.add("show");
+    document.getElementById("modal-title").textContent = state.winner === "draw" ? "Match nul !" : (state.winner === "north" ? "Nord" : "Sud") + " gagne !";
+    document.getElementById("modal-body").textContent = `Score final : Nord ${state.scores.north} – Sud ${state.scores.south}`;
+  }
+}
+
+function updateUI() {
+  document.getElementById("score-nord").textContent = state.scores.north;
+  document.getElementById("score-sud").textContent = state.scores.south;
+  document.getElementById("move-counter").textContent = "Tour " + state.moveNumber;
+  document.getElementById("tour-joueur").textContent = state.currentPlayer === "north" ? "Nord" : "Sud";
+  document.getElementById("etat-jeu").textContent = state.status === "playing" ? "En jeu" : "Terminée";
+}
+
+document.getElementById("btn-restart").addEventListener("click", () => {
+  state = createGame("south");
+  document.getElementById("history-list").innerHTML = "";
+  document.getElementById("last-move-text").textContent = "—";
+  document.getElementById("overlay").classList.remove("show");
+  updateUI(); draw();
+});
+
+updateUI(); draw();
 </script>
 </body>
 </html>
