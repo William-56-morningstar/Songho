@@ -19,7 +19,6 @@
       gap: 8px;
     }
 
-    /* HEADER */
     #header {
       width: 100%;
       display: flex;
@@ -41,7 +40,6 @@
 
     #header-right { font-size: 11px; color: #a08040; text-align: right; line-height: 1.6; }
 
-    /* STATUS */
     #statusbar {
       width: 100%;
       display: grid;
@@ -63,7 +61,6 @@
     .stat-value.sud { color: #ff6b4a; }
     .stat-value.gold { color: #d4a017; }
 
-    /* GRENIER */
     .grenier-bar {
       width: 100%;
       background: linear-gradient(135deg, #1a1205, #2d1f0a);
@@ -75,94 +72,80 @@
       justify-content: space-between;
     }
 
-    .g-info { display: flex; flex-direction: column; gap: 2px; }
     .g-label { font-size: 10px; color: #8b6914; text-transform: uppercase; letter-spacing: 1px; }
     .g-score { font-family: 'Cinzel', serif; font-size: 28px; font-weight: 800; }
     .g-score.nord { color: #60aaff; }
     .g-score.sud { color: #ff6b4a; }
-
     .g-seeds { display: flex; flex-wrap: wrap; gap: 3px; max-width: 200px; justify-content: flex-end; }
     .gseed { width: 8px; height: 8px; border-radius: 50%; }
     .gseed.nord { background: radial-gradient(circle at 35% 35%, #90c8ff, #2060a0); }
     .gseed.sud { background: radial-gradient(circle at 35% 35%, #ff9070, #c03020); }
 
-    /* PLATEAU avec texture bois */
+    /* PLATEAU avec vraie image bois */
     #plateau-wrapper {
       width: 100%;
       position: relative;
       border-radius: 16px;
       overflow: hidden;
       border: 3px solid #8b5e1a;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,200,80,0.2);
-    }
-
-    #plateau-bg {
-      position: absolute;
-      inset: 0;
-      background-image:
-        repeating-linear-gradient(
-          90deg,
-          transparent,
-          transparent 3px,
-          rgba(0,0,0,0.03) 3px,
-          rgba(0,0,0,0.03) 6px
-        ),
-        repeating-linear-gradient(
-          0deg,
-          transparent,
-          transparent 8px,
-          rgba(0,0,0,0.02) 8px,
-          rgba(0,0,0,0.02) 16px
-        ),
-        linear-gradient(160deg,
-          #5c3010 0%,
-          #8b4e1a 15%,
-          #6b3a12 30%,
-          #9b5820 45%,
-          #7a4418 60%,
-          #5c3010 75%,
-          #8b4e1a 90%,
-          #6b3a12 100%
-        );
-      filter: contrast(1.1) saturate(1.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.8);
     }
 
     #plateau {
       position: relative;
-      padding: 16px 10px;
+      padding: 14px 8px 20px 8px;
       display: flex;
       flex-direction: column;
       gap: 10px;
+      background-image: url('https://images.unsplash.com/photo-1611329532992-0b7e49673e31?w=800&q=80');
+      background-size: cover;
+      background-position: center;
       z-index: 1;
     }
 
-    /* Labels Nord/Sud sur le plateau */
+    #plateau::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(20, 8, 0, 0.35);
+      z-index: 0;
+    }
+
+    .board-row {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    #row-nord { flex-direction: row-reverse; }
+
+    #separator {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255,200,80,0.5), transparent);
+      margin: 0 6px;
+      position: relative;
+      z-index: 2;
+    }
+
     #plateau-labels {
       position: absolute;
-      bottom: 8px;
+      bottom: 6px;
       left: 0; right: 0;
       display: flex;
       justify-content: space-between;
-      padding: 0 12px;
-      z-index: 2;
+      padding: 0 14px;
+      z-index: 3;
       pointer-events: none;
     }
 
     .plateau-label {
       font-size: 9px;
-      color: rgba(255,220,100,0.6);
+      color: rgba(255,220,100,0.7);
       text-transform: uppercase;
       letter-spacing: 2px;
       font-family: 'Cinzel', serif;
-    }
-
-    .board-row { display: flex; gap: 5px; justify-content: center; }
-    #row-nord { flex-direction: row-reverse; }
-
-    #separator {
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(255,200,80,0.4), transparent);
-      margin: 0 6px;
     }
 
     /* CASES */
@@ -171,8 +154,8 @@
       max-width: 44px;
       height: 44px;
       border-radius: 50%;
-      background: radial-gradient(ellipse at 40% 30%, #2a1508, #0f0603);
-      border: 2px solid #6b3a12;
+      background: radial-gradient(ellipse at 40% 30%, #2a1508cc, #0f0603cc);
+      border: 2px solid rgba(107, 58, 18, 0.8);
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -182,47 +165,46 @@
       cursor: default;
       transition: all 0.15s;
       box-shadow:
-        inset 0 3px 6px rgba(0,0,0,0.7),
-        inset 0 -1px 2px rgba(255,180,50,0.1),
-        0 2px 4px rgba(0,0,0,0.5);
+        inset 0 3px 8px rgba(0,0,0,0.8),
+        inset 0 -1px 3px rgba(255,180,50,0.15),
+        0 2px 6px rgba(0,0,0,0.6);
+      backdrop-filter: blur(1px);
     }
 
     .pit.legal {
       border-color: #d4a017 !important;
-      background: radial-gradient(ellipse at 40% 30%, #4a2808, #1f0e03);
+      background: radial-gradient(ellipse at 40% 30%, #5c3a10cc, #2a1206cc);
       cursor: pointer;
       box-shadow:
-        inset 0 3px 6px rgba(0,0,0,0.5),
-        0 0 12px rgba(212,160,23,0.5),
-        0 0 24px rgba(212,160,23,0.2);
+        inset 0 3px 8px rgba(0,0,0,0.5),
+        0 0 14px rgba(212,160,23,0.7),
+        0 0 28px rgba(212,160,23,0.3);
     }
 
     .pit.legal:active { transform: scale(0.88); }
-    .pit.nord-pit { border-color: #1a4a8a; }
-    .pit.sud-pit { border-color: #8a1a0a; }
-    .pit.disabled { opacity: 0.5; }
+    .pit.nord-pit { border-color: rgba(30, 80, 150, 0.7); }
+    .pit.sud-pit { border-color: rgba(150, 30, 20, 0.7); }
+    .pit.disabled { opacity: 0.55; }
 
-    /* GRAINES */
     .seed { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
     .pit.nord-pit .seed {
-      background: radial-gradient(circle at 35% 35%, #c0e0ff, #3080c0);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+      background: radial-gradient(circle at 35% 35%, #d0eeff, #3888cc);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.6);
     }
 
     .pit.sud-pit .seed {
-      background: radial-gradient(circle at 35% 35%, #ffc0a0, #c04020);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+      background: radial-gradient(circle at 35% 35%, #ffd0b0, #cc4422);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.6);
     }
 
     .pit.legal .seed {
-      background: radial-gradient(circle at 35% 35%, #fff0a0, #d4a017);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      background: radial-gradient(circle at 35% 35%, #fff5b0, #d4a017);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.6);
     }
 
     .seed-overflow { font-size: 8px; color: #d4a017; font-weight: bold; width: 100%; text-align: center; }
 
-    /* BAS */
     #bottom-area { width: 100%; display: flex; gap: 8px; }
 
     .info-box {
@@ -248,7 +230,6 @@
     #last-move-text { font-size: 11px; color: #c8a060; line-height: 1.5; }
     .history-item { font-size: 10px; color: #8b6914; padding: 2px 0; border-bottom: 1px solid #2a1e08; }
 
-    /* MODAL */
     #overlay {
       display: none;
       position: fixed;
@@ -285,7 +266,6 @@
       font-weight: 700;
       cursor: pointer;
       font-family: 'Cinzel', serif;
-      letter-spacing: 1px;
     }
 
     .info-box::-webkit-scrollbar { width: 3px; }
@@ -319,7 +299,7 @@
   </div>
 
   <div class="grenier-bar">
-    <div class="g-info">
+    <div>
       <div class="g-label">⬆ Grenier Nord</div>
       <div class="g-score nord" id="g-nord">0</div>
     </div>
@@ -327,20 +307,19 @@
   </div>
 
   <div id="plateau-wrapper">
-    <div id="plateau-bg"></div>
     <div id="plateau">
       <div class="board-row" id="row-nord"></div>
       <div id="separator"></div>
       <div class="board-row" id="row-sud"></div>
-    </div>
-    <div id="plateau-labels">
-      <span class="plateau-label">Nord</span>
-      <span class="plateau-label">Sud</span>
+      <div id="plateau-labels">
+        <span class="plateau-label">Nord</span>
+        <span class="plateau-label">Sud</span>
+      </div>
     </div>
   </div>
 
   <div class="grenier-bar">
-    <div class="g-info">
+    <div>
       <div class="g-label">⬇ Grenier Sud</div>
       <div class="g-score sud" id="g-sud">0</div>
     </div>
@@ -477,4 +456,4 @@
     render();
   </script>
 </body>
-  </html>
+</html>
