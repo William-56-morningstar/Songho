@@ -7,7 +7,6 @@
     body { font-family: sans-serif; padding: 16px; }
     .ok { color: green; }
     .fail { color: red; }
-    h2 { font-size: 18px; }
   </style>
 </head>
 <body>
@@ -32,49 +31,76 @@
       out.appendChild(p);
     }
 
+    function tryTest(label, fn) {
+      try {
+        fn();
+      } catch(e) {
+        const p = document.createElement("p");
+        p.className = "fail";
+        p.textContent = "❌ ERREUR dans [" + label + "] : " + e.message;
+        out.appendChild(p);
+      }
+    }
+
     // Test 1
-    const s1 = createGame();
-    assert("Etat initial - total 70 graines", totalSeeds(s1) === 70);
-    assert("Etat initial - status playing", s1.status === "playing");
-    assert("Etat initial - 7 cases Nord", s1.board.north.length === 7);
-    assert("Etat initial - 7 cases Sud", s1.board.south.length === 7);
+    tryTest("Etat initial", () => {
+      const s = createGame();
+      assert("Etat initial - total 70 graines", totalSeeds(s) === 70);
+      assert("Etat initial - status playing", s.status === "playing");
+      assert("Etat initial - 7 cases Nord", s.board.north.length === 7);
+      assert("Etat initial - 7 cases Sud", s.board.south.length === 7);
+    });
 
     // Test 2
-    const s2 = createGame("south");
-    applyMove(s2, { player: "south", pitIndex: 2 });
-    assert("Semaille Sud S2 - case source vide", s2.board.south[2] === 0);
-    assert("Semaille Sud S2 - invariant 70", totalSeeds(s2) === 70);
+    tryTest("Semaille Sud", () => {
+      const s = createGame("south");
+      applyMove(s, { player: "south", pitIndex: 2 });
+      assert("Semaille Sud S2 - case source vide", s.board.south[2] === 0);
+      assert("Semaille Sud S2 - invariant 70", totalSeeds(s) === 70);
+    });
 
     // Test 3
-    const s3 = createGame("north");
-    applyMove(s3, { player: "north", pitIndex: 4 });
-    assert("Semaille Nord N4 - case source vide", s3.board.north[4] === 0);
-    assert("Semaille Nord N4 - invariant 70", totalSeeds(s3) === 70);
+    tryTest("Semaille Nord", () => {
+      const s = createGame("north");
+      applyMove(s, { player: "north", pitIndex: 4 });
+      assert("Semaille Nord N4 - case source vide", s.board.north[4] === 0);
+      assert("Semaille Nord N4 - invariant 70", totalSeeds(s) === 70);
+    });
 
-    // Test 4
-    const s4 = createGame("south");
-    s4.board.south[3] = 14;
-    s4.board.south[0] = 0;
-    applyMove(s4, { player: "south", pitIndex: 3 });
-    assert("Grenier 14 - case source vide", s4.board.south[3] === 0);
-    assert("Grenier 14 - score Sud augmente", s4.scores.south >= 1);
-    assert("Grenier 14 - invariant 70", totalSeeds(s4) === 70);
+    // Test 4 : Grenier
+    tryTest("Grenier 14", () => {
+      const s = createGame("south");
+      // On enlève 14 graines de S0 et on les met en S3
+      s.board.south[3] = s.board.south[3] + 14 - s.board.south[0];
+      s.board.south[0] = 0;
+      assert("Grenier 14 - invariant avant", totalSeeds(s) === 70);
+      applyMove(s, { player: "south", pitIndex: 3 });
+      assert("Grenier 14 - case source vide", s.board.south[3] === 0);
+      assert("Grenier 14 - score Sud augmente", s.scores.south >= 1);
+      assert("Grenier 14 - invariant 70", totalSeeds(s) === 70);
+    });
 
     // Test 5
-    const s5 = createGame("south");
-    s5.board.south = [1, 0, 0, 0, 0, 0, 0];
-    s5.board.north = [5, 5, 5, 5, 5, 5, 5];
-    const legal5 = getLegalMoves(s5);
-    assert("Coup interdit S0=1", !legal5.some(m => m.pitIndex === 0));
+    tryTest("Coup interdit", () => {
+      const s = createGame("south");
+      s.board.south = [1, 0, 0, 0, 0, 0, 0];
+      s.board.north = [5, 5, 5, 5, 5, 5, 5];
+      s.scores.south = 70 - 1 - 35;
+      s.scores.north = 0;
+      const legal = getLegalMoves(s);
+      assert("Coup interdit S0=1", !legal.some(m => m.pitIndex === 0));
+    });
 
     // Test 6
-    const s7 = createGame();
-    for (let i = 0; i < 10; i++) {
-      const moves = getLegalMoves(s7);
-      if (moves.length === 0 || s7.status !== "playing") break;
-      applyMove(s7, moves[0]);
-    }
-    assert("10 coups joués - invariant 70", totalSeeds(s7) === 70);
+    tryTest("10 coups invariant", () => {
+      const s = createGame();
+      for (let i = 0; i < 10; i++) {
+        const moves = getLegalMoves(s);
+        if (moves.length === 0 || s.status !== "playing") break;
+        applyMove(s, moves[0]);
+      }
+      assert("10 coups joués - invariant 70", totalSeeds(s) === 70);
+    });
 
     const total = out.querySelectorAll("p").length;
     const fails = out.querySelectorAll(".fail").length;
