@@ -1,634 +1,641 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Songho — Version Locale</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&display=swap');
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: #0d0802;
-      font-family: 'Cinzel', serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 8px;
-      gap: 8px;
-      min-height: 100vh;
-    }
-    #header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(135deg, #1e1005, #3a2008);
-      border: 1px solid #c9a84c;
-      border-radius: 12px;
-      padding: 10px 16px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.7), inset 0 1px 0 rgba(201,168,76,0.2);
-    }
-    #logo { font-size: 20px; color: #e8c050; letter-spacing: 4px; text-shadow: 0 0 12px rgba(232,192,80,0.5); }
-    #header-right { font-size: 10px; color: #a08040; text-align: right; line-height: 1.6; font-family: sans-serif; }
-    #statusbar {
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      gap: 6px;
-    }
-    .stat-box {
-      background: linear-gradient(145deg, #1a0e04, #2d1a08);
-      border: 1px solid #4a3010;
-      border-radius: 8px;
-      padding: 6px 4px;
-      text-align: center;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.5), 0 1px 0 rgba(201,168,76,0.1);
-    }
-    .stat-label { font-size: 9px; color: #7a5a14; text-transform: uppercase; letter-spacing: 1px; font-family: sans-serif; }
-    .stat-value { font-size: 18px; font-weight: 700; margin-top: 1px; font-family: 'Cinzel', serif; }
-    .stat-value.nord { color: #6ab8ff; text-shadow: 0 0 8px rgba(106,184,255,0.5); }
-    .stat-value.sud { color: #ff7055; text-shadow: 0 0 8px rgba(255,112,85,0.5); }
-    .stat-value.gold { color: #e8c050; text-shadow: 0 0 8px rgba(232,192,80,0.4); }
-    #canvas-wrapper { width: 100%; }
-    canvas { width: 100%; height: auto; display: block; touch-action: manipulation; border-radius: 16px; }
-    #bottom-area { width: 100%; display: flex; gap: 8px; }
-    .info-box {
-      flex: 1;
-      background: linear-gradient(145deg, #1a0e04, #2d1a08);
-      border: 1px solid #4a3010;
-      border-radius: 8px;
-      padding: 10px;
-      max-height: 90px;
-      overflow-y: auto;
-      box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
-    }
-    .box-title { font-size: 9px; color: #7a5a14; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; padding-bottom: 4px; border-bottom: 1px solid #3a2508; font-family: sans-serif; }
-    #last-move-text { font-size: 11px; color: #c8a060; line-height: 1.5; font-family: sans-serif; }
-    .history-item { font-size: 10px; color: #8b6914; padding: 2px 0; border-bottom: 1px solid #2a1a05; font-family: sans-serif; }
-    #overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.92); z-index: 100;
-      align-items: center; justify-content: center;
-      backdrop-filter: blur(3px);
-    }
-    #overlay.show { display: flex; }
-    #modal {
-      background: linear-gradient(145deg, #1e1005, #3a2008);
-      border: 2px solid #c9a84c;
-      border-radius: 18px;
-      padding: 32px 24px;
-      text-align: center;
-      width: 85%;
-      max-width: 320px;
-      box-shadow: 0 0 40px rgba(201,168,76,0.3), 0 20px 40px rgba(0,0,0,0.8);
-    }
-    #modal h2 { font-size: 24px; color: #e8c050; margin-bottom: 8px; text-shadow: 0 0 16px rgba(232,192,80,0.6); }
-    #modal p { color: #a08040; font-size: 13px; margin-bottom: 20px; font-family: sans-serif; }
-    #btn-restart {
-      padding: 10px 24px;
-      background: linear-gradient(135deg, #e8c050, #a07010);
-      color: #1a0a02;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: 'Cinzel', serif;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.4);
-    }
-    #btn-restart:active { transform: translateY(1px); }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Awélé - Jeu de semis</title>
+    <style>
+        * {
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a472a;
+            background-image: radial-gradient(circle at 20% 30%, rgba(60, 100, 45, 0.4) 2%, transparent 2.5%),
+                              radial-gradient(circle at 80% 70%, rgba(50, 90, 40, 0.3) 1.5%, transparent 2%);
+            background-size: 55px 55px, 70px 70px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', 'Poppins', 'Roboto', system-ui, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Conteneur principal */
+        .game-container {
+            max-width: 1300px;
+            width: 100%;
+            background: #faf3e0;
+            background: linear-gradient(145deg, #fff8ec, #f5ebd4);
+            border-radius: 60px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), inset 0 1px 3px rgba(255, 255, 255, 0.8);
+            padding: 22px 28px 28px 28px;
+            transition: all 0.2s;
+        }
+
+        /* En-tête */
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #d8c99e;
+            padding-bottom: 14px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .connexion {
+            font-family: 'Courier New', monospace;
+            font-weight: 800;
+            font-size: 1.15rem;
+            letter-spacing: 2px;
+            background: #1e2f1a;
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 40px;
+            color: #e9dba9;
+            box-shadow: inset 0 -1px 0 #4a6040, 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .connexion small {
+            font-size: 0.65rem;
+            display: block;
+            letter-spacing: 1px;
+        }
+        .info-links {
+            display: flex;
+            gap: 28px;
+            font-weight: 600;
+            color: #6b4c2c;
+            font-size: 0.95rem;
+        }
+        .info-links span {
+            cursor: default;
+            border-right: 1px solid #ccb988;
+            padding-right: 26px;
+        }
+        .info-links span:last-child {
+            border-right: none;
+        }
+        .licence {
+            font-size: 0.7rem;
+            background: #e6dbbc;
+            padding: 5px 14px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #4a351a;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        /* Layout principal */
+        .main-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            justify-content: center;
+        }
+
+        /* Zone plateau */
+        .board-area {
+            flex: 3;
+            min-width: 500px;
+            background: #c9a15b;
+            background: radial-gradient(ellipse at 30% 35%, #e0bd7c, #b8883a);
+            border-radius: 100px;
+            padding: 28px 18px 22px 18px;
+            box-shadow: inset 0 0 0 5px #fdf0cf, inset 0 0 0 12px #a57130, 0 12px 28px rgba(0,0,0,0.35);
+        }
+
+        .awale-board {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .pit {
+            width: 82px;
+            height: 82px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 2rem;
+            font-family: 'Courier New', monospace;
+            color: #2e1e0c;
+            transition: all 0.1s ease;
+            cursor: pointer;
+            background: radial-gradient(circle at 30% 35%, #fcf3cf, #e9d69a);
+            box-shadow: inset 0 -5px 0 #9b6e3c, 0 8px 14px rgba(0,0,0,0.25);
+            position: relative;
+            border: 1px solid #ffefb5;
+        }
+
+        .pit.highlight {
+            box-shadow: 0 0 0 4px #ffdd77, 0 0 0 9px #ffa847, inset 0 -3px 0 #a56b2f;
+            transform: scale(1.02);
+            background: radial-gradient(circle at 30% 35%, #fff5cf, #f7e2a4);
+        }
+
+        .pit.disabled {
+            opacity: 0.55;
+            filter: grayscale(0.15);
+            cursor: not-allowed;
+        }
+
+        /* Greniers */
+        .granaries {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 35px 0 35px;
+            gap: 35px;
+        }
+        .granary {
+            background: #9c6e3e;
+            background: linear-gradient(145deg, #b07d48, #845a2c);
+            padding: 8px 28px;
+            border-radius: 60px;
+            font-weight: bold;
+            font-size: 1.9rem;
+            font-family: monospace;
+            color: #faf0c5;
+            text-align: center;
+            box-shadow: inset 0 1px 4px #efc48c, 0 6px 12px rgba(0,0,0,0.25);
+            min-width: 140px;
+        }
+        .granary span:first-child {
+            font-size: 0.8rem;
+            display: block;
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: #ffefb8;
+        }
+
+        /* Panneau de tour */
+        .turn-panel {
+            background: #2d2113d0;
+            backdrop-filter: blur(6px);
+            margin-top: 22px;
+            padding: 10px 18px;
+            border-radius: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-weight: bold;
+            color: #fbefcf;
+        }
+        .turn-indicator {
+            background: #1e2f12;
+            padding: 6px 24px;
+            border-radius: 3rem;
+            font-size: 1rem;
+        }
+        .last-move {
+            background: #4a341c;
+            padding: 5px 20px;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+        }
+        .message {
+            background: #e9bc6d;
+            color: #2c1b0a;
+            padding: 5px 18px;
+            border-radius: 2rem;
+            font-weight: 600;
+        }
+        button {
+            background: #8f673b;
+            border: none;
+            font-weight: bold;
+            padding: 6px 20px;
+            border-radius: 40px;
+            color: white;
+            cursor: pointer;
+            font-family: inherit;
+            transition: 0.08s linear;
+            box-shadow: 0 2px 5px black;
+        }
+        button:active {
+            transform: scale(0.96);
+        }
+
+        /* Historique */
+        .history-area {
+            flex: 1.2;
+            min-width: 260px;
+            background: #f7efdb;
+            border-radius: 48px;
+            padding: 22px 18px;
+            box-shadow: inset 0 0 0 2px #fffef5, 0 8px 22px rgba(0,0,0,0.2);
+        }
+        .history-header {
+            font-weight: 800;
+            font-size: 1.4rem;
+            border-left: 5px solid #b87a3a;
+            padding-left: 14px;
+            margin-bottom: 20px;
+            color: #3a2a1a;
+        }
+        .last-coup {
+            background: #e6dbbc;
+            border-radius: 28px;
+            padding: 12px 18px;
+            margin-bottom: 28px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: inset 0 0 0 1px #fff3dc, 0 3px 8px #0000001a;
+        }
+        .last-coup p {
+            margin: 6px 0;
+        }
+        .history-list {
+            max-height: 360px;
+            overflow-y: auto;
+            font-size: 0.8rem;
+            font-family: monospace;
+            background: #e7ddc0;
+            border-radius: 24px;
+            padding: 10px 14px;
+        }
+        .history-list div {
+            padding: 6px 0;
+            border-bottom: 1px dashed #c2ae7a;
+            font-weight: 500;
+        }
+
+        @media (max-width: 900px) {
+            .pit {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            .board-area {
+                min-width: 360px;
+            }
+            .granary {
+                min-width: 100px;
+                font-size: 1.4rem;
+            }
+            .game-container {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
+<div class="game-container">
+    <div class="game-header">
+        <div class="connexion"># CONNEXION<br><small>Connecte</small></div>
+        <div class="info-links">
+            <span>Règles</span>
+            <span>Prise</span>
+            <span>Quitter</span>
+        </div>
+        <div class="licence">NYUMA PENA DE<br>MANIFESTATION DE<br>LICENCE 2 - C</div>
+    </div>
 
-<div id="header">
-  <div id="logo">⚜ SONGHO</div>
-  <div id="header-right">Version locale · 2 joueurs<br><span id="move-counter">Tour 0</span></div>
+    <div class="main-layout">
+        <div class="board-area">
+            <div class="awale-board">
+                <div class="row row-nord" id="nord-row"></div>
+                <div class="row row-sud" id="sud-row"></div>
+            </div>
+            <div class="granaries">
+                <div class="granary"><span>NORD</span> <span id="north-store">0</span></div>
+                <div class="granary"><span>SUD</span> <span id="south-store">0</span></div>
+            </div>
+            <div class="turn-panel">
+                <div class="turn-indicator" id="turn-indicator">TOUR : SUD</div>
+                <div class="last-move" id="last-move-label">DERNIER COUP : —</div>
+                <div class="message" id="game-message">A vous de jouer</div>
+                <button id="reset-game">⟳ Nouvelle partie</button>
+            </div>
+        </div>
+
+        <div class="history-area">
+            <div class="history-header">HISTORIQUE</div>
+            <div class="last-coup">
+                <p><strong>⚫ DERNIER COUP</strong><br><span id="last-coup-detail">Nord joue —</span><br><span id="last-catch">aucune capture</span></p>
+            </div>
+            <div class="history-list" id="history-list">
+                <div style="color:#7a6233;">Liste des tours</div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div id="statusbar">
-  <div class="stat-box">
-    <div class="stat-label">Nord</div>
-    <div class="stat-value nord" id="score-nord">0</div>
-  </div>
-  <div class="stat-box">
-    <div class="stat-label">Tour</div>
-    <div class="stat-value gold" id="tour-joueur">Sud</div>
-  </div>
-  <div class="stat-box">
-    <div class="stat-label">État</div>
-    <div class="stat-value gold" id="etat-jeu">En jeu</div>
-  </div>
-  <div class="stat-box">
-    <div class="stat-label">Sud</div>
-    <div class="stat-value sud" id="score-sud">0</div>
-  </div>
-</div>
-
-<div id="canvas-wrapper">
-  <canvas id="gameCanvas"></canvas>
-</div>
-
-<div id="bottom-area">
-  <div class="info-box">
-    <div class="box-title">Dernier coup</div>
-    <div id="last-move-text">—</div>
-  </div>
-  <div class="info-box">
-    <div class="box-title">Historique</div>
-    <div id="history-list"></div>
-  </div>
-</div>
-
-<div id="overlay">
-  <div id="modal">
-    <h2 id="modal-title">Victoire !</h2>
-    <p id="modal-body">—</p>
-    <button id="btn-restart">Nouvelle partie</button>
-  </div>
-</div>
-
-<script src="js/core/engine-full.js"></script>
 <script>
-let state = createGame("south");
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+    // ---------- MOTEUR COMPLET AWÉLÉ ----------
+    let board = [4,4,4,4,4,4, 4,4,4,4,4,4];
+    let northStore = 0;
+    let southStore = 0;
+    let currentPlayer = "sud";
+    let gameOver = false;
+    let winner = null;
+    let historyMoves = [];
 
-const CW = 500;
-const CH = 290;
-canvas.width = CW;
-canvas.height = CH;
+    // DOM refs
+    const nordRow = document.getElementById("nord-row");
+    const sudRow = document.getElementById("sud-row");
+    const northStoreSpan = document.getElementById("north-store");
+    const southStoreSpan = document.getElementById("south-store");
+    const turnIndicator = document.getElementById("turn-indicator");
+    const lastMoveLabel = document.getElementById("last-move-label");
+    const gameMessage = document.getElementById("game-message");
+    const lastCoupDetail = document.getElementById("last-coup-detail");
+    const lastCatchSpan = document.getElementById("last-catch");
+    const historyListDiv = document.getElementById("history-list");
+    const resetBtn = document.getElementById("reset-game");
 
-const COLS = 7;
-const PIT_R = 26;
-const SEED_R = 5;
-const GREN_W = 46;
-const GREN_H = 118;
-const GREN_X_LEFT = 23;
-const GREN_X_RIGHT = CW - 23;
-const PAD = 6;
+    function isNordCase(idx) { return idx >= 0 && idx <= 5; }
+    function getCaseOwner(idx) { return isNordCase(idx) ? "nord" : "sud"; }
+    function nordIdxToGlobal(pos) { return pos; }
+    function sudIdxToGlobal(pos) { return 6 + pos; }
 
-function getPitCenter(player, index) {
-  const usable = CW - 2 * (GREN_W + PAD * 2);
-  const startX = GREN_W + PAD * 2;
-  const cellW = usable / COLS;
-  const x = startX + (index + 0.5) * cellW;
-  const y = player === "north" ? CH * 0.26 : CH * 0.74;
-  return { x, y };
-}
-
-function drawWood() {
-  // Fond bois principal - tons chauds profonds
-  const grad = ctx.createLinearGradient(0, 0, CW, CH);
-  grad.addColorStop(0,   "#6b3c10");
-  grad.addColorStop(0.2, "#4e2a08");
-  grad.addColorStop(0.5, "#7a4818");
-  grad.addColorStop(0.8, "#5c3210");
-  grad.addColorStop(1,   "#4e2a08");
-  ctx.fillStyle = grad;
-  ctx.beginPath();
-  ctx.roundRect(0, 0, CW, CH, 18);
-  ctx.fill();
-
-  // Veines bois subtiles
-  for (let i = 0; i < 28; i++) {
-    const yBase = (CH / 28) * i;
-    ctx.beginPath();
-    ctx.moveTo(0, yBase + Math.sin(i * 1.3) * 4);
-    ctx.bezierCurveTo(
-      CW * 0.3, yBase + Math.sin(i * 0.8) * 7,
-      CW * 0.7, yBase - Math.sin(i * 1.1) * 5,
-      CW, yBase + Math.sin(i * 0.6) * 4
-    );
-    ctx.strokeStyle = `rgba(0,0,0,${0.025 + (i % 4) * 0.008})`;
-    ctx.lineWidth = 0.8 + (i % 3) * 0.4;
-    ctx.stroke();
-  }
-
-  // Reflets clairs sur le bois (effet verni)
-  const sheen1 = ctx.createLinearGradient(0, 0, CW * 0.6, CH * 0.4);
-  sheen1.addColorStop(0, "rgba(255,210,100,0.09)");
-  sheen1.addColorStop(0.5, "rgba(255,180,60,0.04)");
-  sheen1.addColorStop(1, "transparent");
-  ctx.fillStyle = sheen1;
-  ctx.beginPath();
-  ctx.roundRect(0, 0, CW, CH, 18);
-  ctx.fill();
-
-  // Ombre intérieure bas (profondeur)
-  const shadowBottom = ctx.createLinearGradient(0, CH * 0.7, 0, CH);
-  shadowBottom.addColorStop(0, "transparent");
-  shadowBottom.addColorStop(1, "rgba(0,0,0,0.3)");
-  ctx.fillStyle = shadowBottom;
-  ctx.beginPath();
-  ctx.roundRect(0, 0, CW, CH, 18);
-  ctx.fill();
-
-  // Bordure dorée avec glow
-  ctx.save();
-  ctx.shadowColor = "rgba(201,168,76,0.8)";
-  ctx.shadowBlur = 12;
-  ctx.strokeStyle = "#c9a84c";
-  ctx.lineWidth = 2.5;
-  ctx.beginPath();
-  ctx.roundRect(2, 2, CW - 4, CH - 4, 16);
-  ctx.stroke();
-  ctx.restore();
-
-  // Bordure intérieure fine
-  ctx.strokeStyle = "rgba(100,60,10,0.5)";
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.roundRect(5, 5, CW - 10, CH - 10, 14);
-  ctx.stroke();
-
-  // Séparateur central
-  const sepG = ctx.createLinearGradient(0, 0, CW, 0);
-  sepG.addColorStop(0, "transparent");
-  sepG.addColorStop(0.1, "rgba(201,168,76,0.6)");
-  sepG.addColorStop(0.9, "rgba(201,168,76,0.6)");
-  sepG.addColorStop(1, "transparent");
-  ctx.fillStyle = sepG;
-  ctx.fillRect(GREN_W + PAD, CH / 2 - 1, CW - 2 * (GREN_W + PAD), 2);
-  // Reflet sur le séparateur
-  const sepShine = ctx.createLinearGradient(0, 0, CW, 0);
-  sepShine.addColorStop(0, "transparent");
-  sepShine.addColorStop(0.1, "rgba(255,230,120,0.3)");
-  sepShine.addColorStop(0.9, "rgba(255,230,120,0.3)");
-  sepShine.addColorStop(1, "transparent");
-  ctx.fillStyle = sepShine;
-  ctx.fillRect(GREN_W + PAD, CH / 2 - 1, CW - 2 * (GREN_W + PAD), 1);
-}
-
-function drawCavity(x, y, r, isLegal) {
-  // Ombre portée externe
-  ctx.save();
-  ctx.shadowColor = "rgba(0,0,0,0.95)";
-  ctx.shadowBlur = 18;
-  ctx.shadowOffsetY = 5;
-  ctx.shadowOffsetX = 2;
-
-  // Cavité principale - gradient radial très sombre au centre
-  const grad = ctx.createRadialGradient(
-    x - r * 0.2, y - r * 0.15, r * 0.02,
-    x + r * 0.15, y + r * 0.15, r * 1.05
-  );
-  grad.addColorStop(0,    "#080300");
-  grad.addColorStop(0.3,  "#130800");
-  grad.addColorStop(0.65, "#1e0d04");
-  grad.addColorStop(0.85, "#2e1608");
-  grad.addColorStop(1,    "#4a2810");
-  ctx.fillStyle = grad;
-  ctx.beginPath();
-  ctx.arc(x, y, r, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.restore();
-
-  // Bord relief bois - haut clair, bas sombre
-  const rimTop = ctx.createLinearGradient(x, y - r - 3, x, y - r + 4);
-  rimTop.addColorStop(0, "rgba(220,160,70,0.7)");
-  rimTop.addColorStop(1, "rgba(120,70,20,0.3)");
-  ctx.strokeStyle = rimTop;
-  ctx.lineWidth = 4;
-  ctx.beginPath();
-  ctx.arc(x, y, r + 1.5, Math.PI * 1.1, Math.PI * 1.9);
-  ctx.stroke();
-
-  const rimBottom = ctx.createLinearGradient(x, y + r - 4, x, y + r + 3);
-  rimBottom.addColorStop(0, "rgba(80,40,10,0.4)");
-  rimBottom.addColorStop(1, "rgba(0,0,0,0.6)");
-  ctx.strokeStyle = rimBottom;
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.arc(x, y, r + 1.5, Math.PI * 0.1, Math.PI * 0.9);
-  ctx.stroke();
-
-  // Lueur jouable - or brillant
-  if (isLegal) {
-    ctx.save();
-    ctx.shadowColor = "rgba(255,200,30,1)";
-    ctx.shadowBlur = 22;
-    ctx.strokeStyle = "rgba(255,210,60,0.95)";
-    ctx.lineWidth = 2.5;
-    ctx.beginPath();
-    ctx.arc(x, y, r + 4, 0, Math.PI * 2);
-    ctx.stroke();
-    // Double anneau
-    ctx.shadowBlur = 8;
-    ctx.strokeStyle = "rgba(255,240,120,0.5)";
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.arc(x, y, r + 6.5, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.restore();
-  }
-
-  // Reflet interne - petite ellipse lumineuse en haut à gauche
-  const shine = ctx.createRadialGradient(
-    x - r * 0.35, y - r * 0.35, 0,
-    x - r * 0.25, y - r * 0.25, r * 0.65
-  );
-  shine.addColorStop(0, "rgba(255,200,100,0.10)");
-  shine.addColorStop(0.5, "rgba(255,150,50,0.04)");
-  shine.addColorStop(1, "transparent");
-  ctx.fillStyle = shine;
-  ctx.beginPath();
-  ctx.arc(x, y, r, 0, Math.PI * 2);
-  ctx.fill();
-}
-
-function drawSeed(x, y, c1, c2) {
-  // Ombre portée de la bille
-  ctx.save();
-  ctx.shadowColor = "rgba(0,0,0,0.9)";
-  ctx.shadowBlur = 7;
-  ctx.shadowOffsetX = 1.5;
-  ctx.shadowOffsetY = 2.5;
-
-  // Corps de la bille avec gradient sphérique
-  const g = ctx.createRadialGradient(
-    x - SEED_R * 0.38, y - SEED_R * 0.38, 0.3,
-    x + SEED_R * 0.1,  y + SEED_R * 0.1,  SEED_R
-  );
-  g.addColorStop(0,    c1);
-  g.addColorStop(0.45, c2);
-  g.addColorStop(0.85, shadeColor(c2, -40));
-  g.addColorStop(1,    "rgba(0,0,0,0.6)");
-  ctx.fillStyle = g;
-  ctx.beginPath();
-  ctx.arc(x, y, SEED_R, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.restore();
-
-  // Reflet primaire - brillance principale
-  const sh1 = ctx.createRadialGradient(
-    x - SEED_R * 0.32, y - SEED_R * 0.32, 0,
-    x - SEED_R * 0.2,  y - SEED_R * 0.2,  SEED_R * 0.55
-  );
-  sh1.addColorStop(0, "rgba(255,255,255,0.70)");
-  sh1.addColorStop(0.4, "rgba(255,255,255,0.25)");
-  sh1.addColorStop(1, "transparent");
-  ctx.fillStyle = sh1;
-  ctx.beginPath();
-  ctx.arc(x, y, SEED_R, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Micro-reflet secondaire - point brillant
-  const sh2 = ctx.createRadialGradient(
-    x - SEED_R * 0.5, y - SEED_R * 0.48, 0,
-    x - SEED_R * 0.5, y - SEED_R * 0.48, SEED_R * 0.22
-  );
-  sh2.addColorStop(0, "rgba(255,255,255,0.85)");
-  sh2.addColorStop(1, "transparent");
-  ctx.fillStyle = sh2;
-  ctx.beginPath();
-  ctx.arc(x, y, SEED_R, 0, Math.PI * 2);
-  ctx.fill();
-}
-
-function shadeColor(color, amount) {
-  // Assombrit une couleur hex ou rgba
-  if (color.startsWith("rgba") || color.startsWith("rgb")) return "rgba(0,0,0,0.7)";
-  return color; // fallback
-}
-
-function getSeedPositions(count, cx, cy, r) {
-  if (count === 0) return [];
-  if (count === 1) return [{ x: cx, y: cy }];
-  if (count === 2) return [{ x: cx - r*0.28, y: cy }, { x: cx + r*0.28, y: cy }];
-  if (count === 3) return [
-    { x: cx, y: cy - r*0.28 },
-    { x: cx - r*0.28, y: cy + r*0.18 },
-    { x: cx + r*0.28, y: cy + r*0.18 }
-  ];
-  if (count === 4) return [
-    { x: cx - r*0.25, y: cy - r*0.25 }, { x: cx + r*0.25, y: cy - r*0.25 },
-    { x: cx - r*0.25, y: cy + r*0.25 }, { x: cx + r*0.25, y: cy + r*0.25 }
-  ];
-  if (count === 5) return [
-    { x: cx, y: cy },
-    { x: cx - r*0.30, y: cy - r*0.28 }, { x: cx + r*0.30, y: cy - r*0.28 },
-    { x: cx - r*0.30, y: cy + r*0.28 }, { x: cx + r*0.30, y: cy + r*0.28 }
-  ];
-  if (count === 6) return [
-    { x: cx - r*0.28, y: cy - r*0.28 }, { x: cx + r*0.28, y: cy - r*0.28 },
-    { x: cx - r*0.32, y: cy }, { x: cx + r*0.32, y: cy },
-    { x: cx - r*0.28, y: cy + r*0.28 }, { x: cx + r*0.28, y: cy + r*0.28 }
-  ];
-  // 7+ : anneau + centre
-  const positions = [];
-  const ring = Math.min(count, 8);
-  for (let i = 0; i < ring; i++) {
-    const angle = (i / ring) * Math.PI * 2 - Math.PI / 2;
-    positions.push({ x: cx + Math.cos(angle) * r * 0.50, y: cy + Math.sin(angle) * r * 0.50 });
-  }
-  if (count > 8) positions.push({ x: cx, y: cy });
-  return positions;
-}
-
-function drawBadge(x, y, count, r) {
-  if (count === 0) return;
-  const bx = x + r * 0.60;
-  const by = y - r * 0.63;
-  ctx.save();
-  // Ombre badge
-  ctx.shadowColor = "rgba(0,0,0,0.7)";
-  ctx.shadowBlur = 5;
-  ctx.shadowOffsetY = 1;
-  // Fond blanc
-  ctx.fillStyle = "rgba(255,255,255,0.96)";
-  ctx.beginPath();
-  ctx.arc(bx, by, 9, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.shadowBlur = 0;
-  // Texte
-  ctx.fillStyle = "#1a0a02";
-  ctx.font = "bold 7.5px sans-serif";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText(count, bx, by + 0.5);
-  ctx.restore();
-}
-
-function drawGrenier(side, score) {
-  const cx = side === "sud" ? GREN_X_LEFT : GREN_X_RIGHT;
-  const cy = CH / 2;
-  const hw = GREN_W / 2 - 2;
-  const hh = GREN_H / 2;
-
-  // Ombre grenier
-  ctx.save();
-  ctx.shadowColor = "rgba(0,0,0,0.95)";
-  ctx.shadowBlur = 16;
-  ctx.shadowOffsetY = 4;
-
-  // Fond creusé
-  const g = ctx.createLinearGradient(cx - hw, cy - hh, cx + hw, cy + hh);
-  g.addColorStop(0,   "#060200");
-  g.addColorStop(0.4, "#120600");
-  g.addColorStop(0.8, "#1e0d04");
-  g.addColorStop(1,   "#2e1608");
-  ctx.fillStyle = g;
-  ctx.beginPath();
-  ctx.roundRect(cx - hw, cy - hh, hw * 2, hh * 2, 10);
-  ctx.fill();
-  ctx.restore();
-
-  // Bord supérieur clair (relief)
-  const rimG = ctx.createLinearGradient(cx - hw, cy - hh, cx - hw, cy - hh + 6);
-  rimG.addColorStop(0, "rgba(200,140,50,0.7)");
-  rimG.addColorStop(1, "rgba(100,60,10,0.1)");
-  ctx.strokeStyle = rimG;
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.roundRect(cx - hw, cy - hh, hw * 2, hh * 2, 10);
-  ctx.stroke();
-
-  // Bordure dorée
-  ctx.strokeStyle = "rgba(201,168,76,0.5)";
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.roundRect(cx - hw + 1, cy - hh + 1, hw * 2 - 2, hh * 2 - 2, 9);
-  ctx.stroke();
-
-  // Score
-  ctx.save();
-  ctx.font = "bold 22px Cinzel, serif";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillStyle = side === "sud" ? "#ff7055" : "#6ab8ff";
-  ctx.shadowColor = side === "sud" ? "rgba(255,112,85,0.8)" : "rgba(106,184,255,0.8)";
-  ctx.shadowBlur = 14;
-  ctx.fillText(score, cx, cy - hh * 0.42);
-  ctx.restore();
-
-  // Label
-  ctx.save();
-  ctx.font = "bold 8px sans-serif";
-  ctx.fillStyle = "rgba(201,168,76,0.45)";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.translate(cx, cy + hh * 0.28);
-  ctx.rotate(-Math.PI / 2);
-  ctx.fillText(side === "sud" ? "SUD" : "NORD", 0, 0);
-  ctx.restore();
-
-  // Mini billes dans grenier
-  const maxB = Math.min(score, 16);
-  const cols = 2;
-  for (let i = 0; i < maxB; i++) {
-    const col = (i % cols) - (cols - 1) / 2;
-    const row = Math.floor(i / cols);
-    const sx = cx + col * 10;
-    const sy = cy - hh * 0.02 + row * 11;
-    if (sy > cy + hh - 9) break;
-    const c1 = side === "sud" ? "#ffd8b8" : "#c8e8ff";
-    const c2 = side === "sud" ? "#c84828" : "#2870b8";
-    ctx.save();
-    ctx.shadowColor = "rgba(0,0,0,0.7)";
-    ctx.shadowBlur = 4;
-    ctx.shadowOffsetY = 1.5;
-    const sg = ctx.createRadialGradient(sx - 1.5, sy - 1.5, 0.2, sx + 0.5, sy + 0.5, 4.5);
-    sg.addColorStop(0, c1);
-    sg.addColorStop(0.5, c2);
-    sg.addColorStop(1, "rgba(0,0,0,0.5)");
-    ctx.fillStyle = sg;
-    ctx.beginPath();
-    ctx.arc(sx, sy, 4.5, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-    // Reflet bille grenier
-    const shr = ctx.createRadialGradient(sx - 1.8, sy - 1.8, 0, sx - 1.2, sy - 1.2, 2.5);
-    shr.addColorStop(0, "rgba(255,255,255,0.65)");
-    shr.addColorStop(1, "transparent");
-    ctx.fillStyle = shr;
-    ctx.beginPath();
-    ctx.arc(sx, sy, 4.5, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
-
-function draw() {
-  ctx.clearRect(0, 0, CW, CH);
-  drawWood();
-
-  const legalMoves = getLegalMoves(state);
-  const legalIndexes = legalMoves.map(m => m.pitIndex);
-
-  ["north", "south"].forEach(player => {
-    for (let i = 0; i < 7; i++) {
-      const { x, y } = getPitCenter(player, i);
-      const count = state.board[player][i];
-      const isLegal = state.currentPlayer === player && legalIndexes.includes(i);
-      drawCavity(x, y, PIT_R, isLegal);
-      const c1 = isLegal
-        ? "#fff0a0"
-        : (player === "north" ? "#c8e0ff" : "#ffe0c0");
-      const c2 = isLegal
-        ? "#c89010"
-        : (player === "north" ? "#1850a0" : "#b03010");
-      getSeedPositions(count, x, y, PIT_R).forEach(p => drawSeed(p.x, p.y, c1, c2));
-      drawBadge(x, y, count, PIT_R);
+    // Vérifie si un joueur a au moins un coup nourrissant (qui capture >= 1)
+    function hasFeedingMove(player) {
+        for (let i = 0; i < 6; i++) {
+            let globalIdx = (player === "nord") ? nordIdxToGlobal(i) : sudIdxToGlobal(i);
+            if (board[globalIdx] === 0) continue;
+            let seeds = board[globalIdx];
+            let tempBoard = [...board];
+            let idx = globalIdx;
+            let s = seeds;
+            tempBoard[idx] = 0;
+            let current = idx;
+            while (s > 0) {
+                current = (current + 1) % 12;
+                tempBoard[current]++;
+                s--;
+            }
+            let lastPit = current;
+            let lastOwner = getCaseOwner(lastPit);
+            let captured = 0;
+            if (lastOwner !== player && (tempBoard[lastPit] === 2 || tempBoard[lastPit] === 3)) {
+                let captureIdx = lastPit;
+                while (captureIdx >= 0 && getCaseOwner(captureIdx) !== player && (tempBoard[captureIdx] === 2 || tempBoard[captureIdx] === 3)) {
+                    captured += tempBoard[captureIdx];
+                    captureIdx--;
+                    if (captureIdx < 0 || getCaseOwner(captureIdx) === player) break;
+                }
+            }
+            if (captured > 0) return true;
+        }
+        return false;
     }
-  });
 
-  drawGrenier("sud", state.scores.south);
-  drawGrenier("nord", state.scores.north);
-}
+    // Simulation pour un coup précis
+    function simulateCapture(player, pitLocalIdx) {
+        let globalIdx = (player === "nord") ? nordIdxToGlobal(pitLocalIdx) : sudIdxToGlobal(pitLocalIdx);
+        let seeds = board[globalIdx];
+        if (seeds === 0) return 0;
+        let tempBoard = [...board];
+        let idx = globalIdx;
+        let s = seeds;
+        tempBoard[idx] = 0;
+        let current = idx;
+        while (s > 0) {
+            current = (current + 1) % 12;
+            tempBoard[current]++;
+            s--;
+        }
+        let lastPit = current;
+        let lastOwner = getCaseOwner(lastPit);
+        let captured = 0;
+        if (lastOwner !== player && (tempBoard[lastPit] === 2 || tempBoard[lastPit] === 3)) {
+            let captureIdx = lastPit;
+            while (captureIdx >= 0 && getCaseOwner(captureIdx) !== player && (tempBoard[captureIdx] === 2 || tempBoard[captureIdx] === 3)) {
+                captured += tempBoard[captureIdx];
+                captureIdx--;
+                if (captureIdx < 0 || getCaseOwner(captureIdx) === player) break;
+            }
+        }
+        return captured;
+    }
 
-canvas.addEventListener("click", function(e) {
-  if (state.status !== "playing") return;
-  const rect = canvas.getBoundingClientRect();
-  const mx = (e.clientX - rect.left) * (CW / rect.width);
-  const my = (e.clientY - rect.top) * (CH / rect.height);
-  const legalMoves = getLegalMoves(state);
-  const legalIndexes = legalMoves.map(m => m.pitIndex);
-  for (let i = 0; i < 7; i++) {
-    if (!legalIndexes.includes(i)) continue;
-    const { x, y } = getPitCenter(state.currentPlayer, i);
-    if (Math.hypot(mx - x, my - y) <= PIT_R + 6) { playMove(state.currentPlayer, i); return; }
-  }
-});
+    function playMove(pitLocalIdx) {
+        if (gameOver) {
+            gameMessage.innerText = "Partie terminée !";
+            return false;
+        }
+        let globalIdx = (currentPlayer === "nord") ? nordIdxToGlobal(pitLocalIdx) : sudIdxToGlobal(pitLocalIdx);
+        if (board[globalIdx] === 0) {
+            gameMessage.innerText = "Case vide ! Choisissez une case pleine.";
+            return false;
+        }
 
-function playMove(player, pitIndex) {
-  const pitName = (player === "north" ? "N" : "S") + (pitIndex + 1);
-  const result = applyMove(state, { player, pitIndex });
-  if (!result.ok) return;
-  state = result.state;
-  const action = result.action;
-  let desc = action.type === "forced-donation"
-    ? `${player === "north" ? "Nord" : "Sud"} joue ${pitName}, don forcé ${action.donated} graine(s).`
-    : `${player === "north" ? "Nord" : "Sud"} joue ${pitName}, dernière graine en ${(action.sowing.lastPosition.player === "north" ? "N" : "S") + (action.sowing.lastPosition.pitIndex + 1)}, capture ${action.capture.captured}.`;
-  document.getElementById("last-move-text").textContent = desc;
-  const item = document.createElement("div");
-  item.className = "history-item";
-  item.textContent = state.moveNumber + ". " + desc;
-  document.getElementById("history-list").insertBefore(item, document.getElementById("history-list").firstChild);
-  updateUI(); draw();
-  if (state.status === "ended") {
-    document.getElementById("overlay").classList.add("show");
-    document.getElementById("modal-title").textContent = state.winner === "draw" ? "Match nul !" : (state.winner === "north" ? "Nord" : "Sud") + " gagne !";
-    document.getElementById("modal-body").textContent = `Score final : Nord ${state.scores.north} – Sud ${state.scores.south}`;
-  }
-}
+        let hasFeeding = hasFeedingMove(currentPlayer);
+        if (hasFeeding) {
+            let testCapture = simulateCapture(currentPlayer, pitLocalIdx);
+            if (testCapture === 0) {
+                gameMessage.innerText = "❌ Ce coup ne capture rien. Vous devez jouer un coup nourrissant !";
+                return false;
+            }
+        }
 
-function updateUI() {
-  document.getElementById("score-nord").textContent = state.scores.north;
-  document.getElementById("score-sud").textContent = state.scores.south;
-  document.getElementById("move-counter").textContent = "Tour " + state.moveNumber;
-  document.getElementById("tour-joueur").textContent = state.currentPlayer === "north" ? "Nord" : "Sud";
-  document.getElementById("etat-jeu").textContent = state.status === "playing" ? "En jeu" : "Terminée";
-}
+        // EXÉCUTION
+        let seeds = board[globalIdx];
+        board[globalIdx] = 0;
+        let sowingIdx = globalIdx;
+        let remaining = seeds;
+        while (remaining > 0) {
+            sowingIdx = (sowingIdx + 1) % 12;
+            board[sowingIdx]++;
+            remaining--;
+        }
 
-document.getElementById("btn-restart").addEventListener("click", () => {
-  state = createGame("south");
-  document.getElementById("history-list").innerHTML = "";
-  document.getElementById("last-move-text").textContent = "—";
-  document.getElementById("overlay").classList.remove("show");
-  updateUI(); draw();
-});
+        let lastPit = sowingIdx;
+        let lastOwner = getCaseOwner(lastPit);
+        let capturedTotal = 0;
 
-updateUI(); draw();
+        if (lastOwner !== currentPlayer && (board[lastPit] === 2 || board[lastPit] === 3)) {
+            let captureIdx = lastPit;
+            while (captureIdx >= 0 && getCaseOwner(captureIdx) !== currentPlayer && (board[captureIdx] === 2 || board[captureIdx] === 3)) {
+                capturedTotal += board[captureIdx];
+                board[captureIdx] = 0;
+                captureIdx--;
+                if (captureIdx < 0 || getCaseOwner(captureIdx) === currentPlayer) break;
+            }
+            if (capturedTotal > 0) {
+                if (currentPlayer === "nord") northStore += capturedTotal;
+                else southStore += capturedTotal;
+            }
+        }
+
+        // Enregistrer historique
+        let moveName = (currentPlayer === "nord") ? `N${pitLocalIdx+1}` : `S${pitLocalIdx+1}`;
+        let tourNumber = historyMoves.length + 1;
+        historyMoves.unshift({
+            numero: tourNumber,
+            joueur: currentPlayer === "nord" ? "Nord" : "Sud",
+            coup: moveName,
+            capture: capturedTotal
+        });
+
+        lastCoupDetail.innerText = `${currentPlayer === "nord" ? "Nord" : "Sud"} joue ${moveName}`;
+        lastCatchSpan.innerText = capturedTotal > 0 ? `capture ${capturedTotal} graine(s)` : `aucune capture`;
+        lastMoveLabel.innerText = `DERNIER COUP : ${moveName}`;
+
+        // Changement de joueur
+        currentPlayer = (currentPlayer === "nord") ? "sud" : "nord";
+        updateUI();
+
+        // Vérifier fin de partie (si un camp n'a plus de graines)
+        let nordSeeds = board.slice(0,6).reduce((a,b)=>a+b,0);
+        let sudSeeds = board.slice(6,12).reduce((a,b)=>a+b,0);
+        if (nordSeeds === 0 || sudSeeds === 0) {
+            if (nordSeeds === 0) {
+                southStore += sudSeeds;
+                for(let i=6;i<12;i++) board[i]=0;
+            }
+            if (sudSeeds === 0) {
+                northStore += nordSeeds;
+                for(let i=0;i<6;i++) board[i]=0;
+            }
+            gameOver = true;
+            if (northStore > southStore) winner = "Nord";
+            else if (southStore > northStore) winner = "Sud";
+            else winner = "Égalité";
+            updateUI();
+            gameMessage.innerText = `Fin ! Victoire : ${winner}`;
+        } else {
+            let nextHasFeeding = hasFeedingMove(currentPlayer);
+            if (!nextHasFeeding) {
+                gameMessage.innerText = `⚠️ ${currentPlayer.toUpperCase()} : aucun coup nourrissant, mais jouez légalement.`;
+            } else {
+                gameMessage.innerText = `A vous de jouer (${currentPlayer.toUpperCase()})`;
+            }
+        }
+        updateHistoryDisplay();
+        return true;
+    }
+
+    function updateUI() {
+        for (let i = 0; i < 6; i++) {
+            let nordDiv = document.getElementById(`nord-${i}`);
+            let sudDiv = document.getElementById(`sud-${i}`);
+            if (nordDiv) nordDiv.innerText = board[nordIdxToGlobal(i)];
+            if (sudDiv) sudDiv.innerText = board[sudIdxToGlobal(i)];
+        }
+        northStoreSpan.innerText = northStore;
+        southStoreSpan.innerText = southStore;
+        turnIndicator.innerText = `TOUR : ${currentPlayer.toUpperCase()}`;
+
+        // Highlight cases jouables
+        for (let i=0;i<6;i++) {
+            let nordPit = document.getElementById(`nord-${i}`);
+            let sudPit = document.getElementById(`sud-${i}`);
+            if (nordPit) nordPit.classList.remove("highlight", "disabled");
+            if (sudPit) sudPit.classList.remove("highlight", "disabled");
+
+            if (!gameOver) {
+                if (currentPlayer === "nord") {
+                    let globalIdx = nordIdxToGlobal(i);
+                    if (board[globalIdx] > 0) {
+                        let isFeedingLegal = true;
+                        if (hasFeedingMove("nord")) {
+                            if (simulateCapture("nord", i) === 0) isFeedingLegal = false;
+                        }
+                        if (hasFeedingMove("nord") && !isFeedingLegal) nordPit.classList.add("disabled");
+                        else nordPit.classList.add("highlight");
+                    } else {
+                        nordPit.classList.add("disabled");
+                    }
+                } else {
+                    let globalIdx = sudIdxToGlobal(i);
+                    if (board[globalIdx] > 0) {
+                        let isFeedingLegal = true;
+                        if (hasFeedingMove("sud")) {
+                            if (simulateCapture("sud", i) === 0) isFeedingLegal = false;
+                        }
+                        if (hasFeedingMove("sud") && !isFeedingLegal) sudPit.classList.add("disabled");
+                        else sudPit.classList.add("highlight");
+                    } else {
+                        sudPit.classList.add("disabled");
+                    }
+                }
+            } else {
+                if (nordPit) nordPit.classList.add("disabled");
+                if (sudPit) sudPit.classList.add("disabled");
+            }
+        }
+    }
+
+    function updateHistoryDisplay() {
+        historyListDiv.innerHTML = "";
+        if (historyMoves.length === 0) {
+            historyListDiv.innerHTML = "<div style='color:#7a6233;'>Aucun mouvement</div>";
+            return;
+        }
+        for (let i = 0; i < Math.min(historyMoves.length, 16); i++) {
+            let mv = historyMoves[i];
+            let captureTxt = mv.capture > 0 ? `capture ${mv.capture}` : `capture 0`;
+            let div = document.createElement("div");
+            div.innerText = `Tour ${mv.numero} : ${mv.joueur} joue ${mv.coup}, ${captureTxt}.`;
+            historyListDiv.appendChild(div);
+        }
+        if (historyMoves.length > 16) {
+            let more = document.createElement("div");
+            more.innerText = `... et ${historyMoves.length-16} autres tours`;
+            more.style.fontStyle="italic";
+            historyListDiv.appendChild(more);
+        }
+    }
+
+    function resetGame() {
+        board = [4,4,4,4,4,4,4,4,4,4,4,4];
+        northStore = 0;
+        southStore = 0;
+        currentPlayer = "sud";
+        gameOver = false;
+        winner = null;
+        historyMoves = [];
+        lastCoupDetail.innerText = "Nord joue —";
+        lastCatchSpan.innerText = "aucune capture";
+        lastMoveLabel.innerText = "DERNIER COUP : —";
+        gameMessage.innerText = "Nouvelle partie ! Sud commence";
+        updateUI();
+        updateHistoryDisplay();
+    }
+
+    function createBoardUI() {
+        nordRow.innerHTML = "";
+        sudRow.innerHTML = "";
+        for (let i = 0; i < 6; i++) {
+            let nordPit = document.createElement("div");
+            nordPit.classList.add("pit");
+            nordPit.id = `nord-${i}`;
+            nordPit.innerText = board[i];
+            nordPit.addEventListener("click", (function(idx){ return function(){ playMove(idx); }; })(i));
+            nordRow.appendChild(nordPit);
+        }
+        for (let i = 0; i < 6; i++) {
+            let sudPit = document.createElement("div");
+            sudPit.classList.add("pit");
+            sudPit.id = `sud-${i}`;
+            sudPit.innerText = board[6+i];
+            sudPit.addEventListener("click", (function(idx){ return function(){ playMove(idx); }; })(i));
+            sudRow.appendChild(sudPit);
+        }
+    }
+
+    resetBtn.addEventListener("click", () => { resetGame(); });
+    createBoardUI();
+    updateUI();
+    updateHistoryDisplay();
+    gameMessage.innerText = "A vous de jouer (SUD)";
 </script>
 </body>
-</html>
+  </html>
