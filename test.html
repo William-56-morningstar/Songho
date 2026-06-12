@@ -3,12 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Tests Songho</title>
+  <style>
+    body { font-family: sans-serif; padding: 16px; }
+    .ok { color: green; }
+    .fail { color: red; }
+    h2 { font-size: 18px; }
+  </style>
 </head>
 <body>
   <h2>Tests du moteur Songho</h2>
-  <p>Ouvre la console du navigateur (F12) pour voir les résultats.</p>
+  <div id="results"></div>
 
-  <!-- Moteur -->
   <script src="js/core/constants.js"></script>
   <script src="js/core/coordinates.js"></script>
   <script src="js/core/state.js"></script>
@@ -17,6 +22,66 @@
   <script src="js/core/legal-moves.js"></script>
   <script src="js/core/end-game.js"></script>
   <script src="js/core/engine.js"></script>
-  <script src="js/core/tests.js"></script>
+  <script>
+    const out = document.getElementById("results");
+
+    function assert(label, condition) {
+      const p = document.createElement("p");
+      p.className = condition ? "ok" : "fail";
+      p.textContent = (condition ? "✅ " : "❌ ") + label;
+      out.appendChild(p);
+    }
+
+    // Test 1
+    const s1 = createGame();
+    assert("Etat initial - total 70 graines", totalSeeds(s1) === 70);
+    assert("Etat initial - status playing", s1.status === "playing");
+    assert("Etat initial - 7 cases Nord", s1.board.north.length === 7);
+    assert("Etat initial - 7 cases Sud", s1.board.south.length === 7);
+
+    // Test 2
+    const s2 = createGame("south");
+    applyMove(s2, { player: "south", pitIndex: 2 });
+    assert("Semaille Sud S2 - case source vide", s2.board.south[2] === 0);
+    assert("Semaille Sud S2 - invariant 70", totalSeeds(s2) === 70);
+
+    // Test 3
+    const s3 = createGame("north");
+    applyMove(s3, { player: "north", pitIndex: 4 });
+    assert("Semaille Nord N4 - case source vide", s3.board.north[4] === 0);
+    assert("Semaille Nord N4 - invariant 70", totalSeeds(s3) === 70);
+
+    // Test 4
+    const s4 = createGame("south");
+    s4.board.south[3] = 14;
+    s4.board.south[0] = 0;
+    applyMove(s4, { player: "south", pitIndex: 3 });
+    assert("Grenier 14 - case source vide", s4.board.south[3] === 0);
+    assert("Grenier 14 - score Sud augmente", s4.scores.south >= 1);
+    assert("Grenier 14 - invariant 70", totalSeeds(s4) === 70);
+
+    // Test 5
+    const s5 = createGame("south");
+    s5.board.south = [1, 0, 0, 0, 0, 0, 0];
+    s5.board.north = [5, 5, 5, 5, 5, 5, 5];
+    const legal5 = getLegalMoves(s5);
+    assert("Coup interdit S0=1", !legal5.some(m => m.pitIndex === 0));
+
+    // Test 6
+    const s7 = createGame();
+    for (let i = 0; i < 10; i++) {
+      const moves = getLegalMoves(s7);
+      if (moves.length === 0 || s7.status !== "playing") break;
+      applyMove(s7, moves[0]);
+    }
+    assert("10 coups joués - invariant 70", totalSeeds(s7) === 70);
+
+    const total = out.querySelectorAll("p").length;
+    const fails = out.querySelectorAll(".fail").length;
+    const p = document.createElement("p");
+    p.style.fontWeight = "bold";
+    p.textContent = `Résultat : ${total - fails}/${total} réussis`;
+    out.appendChild(p);
+  </script>
 </body>
 </html>
