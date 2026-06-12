@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Songho</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1a0a00;
+      color: #f5deb3;
+      font-family: sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #d4a017;
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+    }
+
+    #status {
+      font-size: 15px;
+      margin-bottom: 16px;
+      color: #f5deb3;
+      text-align: center;
+      min-height: 20px;
+    }
+
+    #scores {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 420px;
+      margin-bottom: 12px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .score-north { color: #6ab0f5; }
+    .score-south { color: #f57c6a; }
+
+    #board {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .row {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+    }
+
+    .pit {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #3b1f0a;
+      border: 2px solid #8b5e3c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      color: #f5deb3;
+    }
+
+    .pit:active { transform: scale(0.92); }
+
+    .pit.legal {
+      border-color: #d4a017;
+      background: #5c3010;
+      cursor: pointer;
+    }
+
+    .pit.legal:hover {
+      background: #7a4015;
+    }
+
+    .pit.disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    .pit.north-pit { border-color: #6ab0f5; }
+    .pit.south-pit { border-color: #f57c6a; }
+
+    #row-north { flex-direction: row-reverse; }
+
+    #message {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #d4a017;
+      text-align: center;
+    }
+
+    #btn-restart {
+      margin-top: 16px;
+      padding: 10px 28px;
+      background: #d4a017;
+      color: #1a0a00;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      display: none;
+    }
+
+    #btn-restart:active { opacity: 0.8; }
+
+    #turn-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌾 SONGHO</h1>
+  <div id="status"></div>
+
+  <div id="scores">
+    <span class="score-north">⬆️ Nord : <span id="score-north">0</span></span>
+    <span class="score-south">⬇️ Sud : <span id="score-south">0</span></span>
+  </div>
+
+  <div id="board">
+    <div class="row" id="row-north"></div>
+    <div class="row" id="row-south"></div>
+  </div>
+
+  <div id="message"></div>
+  <button id="btn-restart">🔄 Nouvelle partie</button>
+
+  <script src="js/core/engine-full.js"></script>
+  <script>
+    let state = createGame("south");
+
+    function render() {
+      const legalMoves = getLegalMoves(state);
+      const legalIndexes = legalMoves.map(m => m.pitIndex);
+
+      // Ligne Nord (affichée en miroir)
+      const rowNorth = document.getElementById("row-north");
+      rowNorth.innerHTML = "";
+      for (let i = 0; i < 7; i++) {
+        const pit = document.createElement("div");
+        pit.className = "pit north-pit";
+        pit.textContent = state.board.north[i];
+        const isLegal = state.currentPlayer === "north" && legalIndexes.includes(i);
+        if (isLegal) {
+          pit.classList.add("legal");
+          pit.addEventListener("click", () => playMove("north", i));
+        } else {
+          pit.classList.add("disabled");
+        }
+        rowNorth.appendChild(pit);
+      }
+
+      // Ligne Sud
+      const rowSouth = document.getElementById("row-south");
+      rowSouth.innerHTML = "";
+      for (let i = 0; i < 7; i++) {
+        const pit = document.createElement("div");
+        pit.className = "pit south-pit";
+        pit.textContent = state.board.south[i];
+        const isLegal = state.currentPlayer === "south" && legalIndexes.includes(i);
+        if (isLegal) {
+          pit.classList.add("legal");
+          pit.addEventListener("click", () => playMove("south", i));
+        } else {
+          pit.classList.add("disabled");
+        }
+        rowSouth.appendChild(pit);
+      }
+
+      // Scores
+      document.getElementById("score-north").textContent = state.scores.north;
+      document.getElementById("score-south").textContent = state.scores.south;
+
+      // Status
+      const statusEl = document.getElementById("status");
+      if (state.status === "playing") {
+        const who = state.currentPlayer === "north" ? "⬆️ Nord joue" : "⬇️ Sud joue";
+        statusEl.textContent = who + " — cases dorées = coups possibles";
+      }
+
+      // Fin de partie
+      const msgEl = document.getElementById("message");
+      const btnRestart = document.getElementById("btn-restart");
+      if (state.status === "ended") {
+        let msg = "";
+        if (state.winner === "draw") msg = "🤝 Match nul !";
+        else if (state.winner === "north") msg = "🎉 Nord gagne !";
+        else msg = "🎉 Sud gagne !";
+        msgEl.textContent = msg;
+        btnRestart.style.display = "inline-block";
+        statusEl.textContent = "Partie terminée — " + reasonLabel(state.reason);
+      }
+    }
+
+    function reasonLabel(reason) {
+      if (reason === "score_40") return "40 graines atteintes";
+      if (reason === "low_board") return "moins de 10 graines sur le tablier";
+      if (reason === "solidarity_impossible") return "solidarité impossible";
+      return reason;
+    }
+
+    function playMove(player, pitIndex) {
+      if (state.status !== "playing") return;
+      const result = applyMove(state, { player, pitIndex });
+      if (result.ok) {
+        state = result.state;
+        render();
+      }
+    }
+
+    document.getElementById("btn-restart").addEventListener("click", () => {
+      state = createGame("south");
+      document.getElementById("message").textContent = "";
+      document.getElementById("btn-restart").style.display = "none";
+      render();
+    });
+
+    render();
+  </script>
+</body>
+    </html>
