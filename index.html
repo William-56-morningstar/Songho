@@ -5,572 +5,571 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Songho — Version Locale</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&display=swap');
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
-      min-height: 100vh;
-      background: #1a1008;
-      font-family: 'Inter', sans-serif;
+      background: #1a0f05;
+      font-family: 'Cinzel', serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 10px;
+      padding: 8px;
       gap: 8px;
+      min-height: 100vh;
     }
-
     #header {
       width: 100%;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 10px 14px;
-      background: linear-gradient(135deg, #2a1a08, #3d2510);
+      align-items: center;
+      background: linear-gradient(135deg, #2a1a08, #4a2e10);
       border: 1px solid #8b6020;
       border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      padding: 10px 14px;
     }
-
-    #logo {
-      font-family: 'Cinzel', serif;
-      font-size: 22px;
-      color: #d4a017;
-      letter-spacing: 3px;
-      text-shadow: 0 2px 8px rgba(212,160,23,0.4);
-    }
-
-    #header-right { font-size: 11px; color: #a08040; text-align: right; line-height: 1.6; }
-
+    #logo { font-size: 20px; color: #d4a017; letter-spacing: 3px; }
+    #header-right { font-size: 10px; color: #a08040; text-align: right; line-height: 1.6; font-family: sans-serif; }
     #statusbar {
       width: 100%;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
       gap: 6px;
     }
-
     .stat-box {
       background: linear-gradient(145deg, #2a1a08, #3d2510);
       border: 1px solid #5a3e10;
       border-radius: 8px;
       padding: 6px 4px;
       text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
     }
-
-    .stat-label { font-size: 9px; color: #8b6914; text-transform: uppercase; letter-spacing: 1px; }
-    .stat-value { font-size: 18px; font-weight: 700; margin-top: 1px; }
+    .stat-label { font-size: 9px; color: #8b6914; text-transform: uppercase; letter-spacing: 1px; font-family: sans-serif; }
+    .stat-value { font-size: 18px; font-weight: 700; margin-top: 1px; font-family: 'Cinzel', serif; }
     .stat-value.nord { color: #60aaff; }
     .stat-value.sud { color: #ff6b4a; }
     .stat-value.gold { color: #d4a017; }
-
-    /* GRENIERS */
-    .grenier-bar {
-      width: 100%;
-      background: linear-gradient(145deg, #2a1a08, #3d2510);
-      border: 1px solid #5a3e10;
-      border-radius: 10px;
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-    }
-
-    .g-label { font-size: 10px; color: #8b6914; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
-    .g-score { font-family: 'Cinzel', serif; font-size: 30px; font-weight: 800; line-height: 1; }
-    .g-score.nord { color: #60aaff; text-shadow: 0 0 20px rgba(96,170,255,0.4); }
-    .g-score.sud { color: #ff6b4a; text-shadow: 0 0 20px rgba(255,107,74,0.4); }
-
-    .g-seeds { display: flex; flex-wrap: wrap; gap: 3px; max-width: 200px; justify-content: flex-end; }
-    .gseed { width: 9px; height: 9px; border-radius: 50%; }
-    .gseed.nord {
-      background: radial-gradient(circle at 35% 30%, #c0e0ff, #2060a0);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.3);
-    }
-    .gseed.sud {
-      background: radial-gradient(circle at 35% 30%, #ffd0b0, #c04020);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.3);
-    }
-
-    /* PLATEAU */
-    #plateau-wrapper {
-      width: 100%;
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow:
-        0 10px 40px rgba(0,0,0,0.8),
-        0 2px 0 rgba(255,200,80,0.2),
-        inset 0 1px 0 rgba(255,200,80,0.1);
-      border: 3px solid #6b4010;
-    }
-
-    #plateau {
-      width: 100%;
-      padding: 16px 10px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      position: relative;
-
-      /* Texture bois CSS pure */
-      background-color: #5c3010;
-      background-image:
-        repeating-linear-gradient(
-          87deg,
-          transparent 0px,
-          transparent 2px,
-          rgba(0,0,0,0.03) 2px,
-          rgba(0,0,0,0.03) 4px
-        ),
-        repeating-linear-gradient(
-          93deg,
-          transparent 0px,
-          transparent 8px,
-          rgba(255,255,255,0.015) 8px,
-          rgba(255,255,255,0.015) 9px
-        ),
-        repeating-linear-gradient(
-          180deg,
-          transparent 0px,
-          transparent 20px,
-          rgba(0,0,0,0.04) 20px,
-          rgba(0,0,0,0.04) 21px
-        ),
-        linear-gradient(
-          170deg,
-          #7a4818 0%,
-          #5c3010 20%,
-          #8b5520 35%,
-          #6b3e14 50%,
-          #9b6028 65%,
-          #7a4818 80%,
-          #5c3010 100%
-        );
-    }
-
-    #plateau::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse at 50% 0%, rgba(255,200,80,0.08) 0%, transparent 60%),
-        radial-gradient(ellipse at 50% 100%, rgba(0,0,0,0.3) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    .board-row {
-      display: flex;
-      gap: 6px;
-      justify-content: center;
-      position: relative;
-      z-index: 2;
-    }
-
-    #row-nord { flex-direction: row-reverse; }
-
-    #separator {
-      height: 1px;
-      margin: 0 8px;
-      background: linear-gradient(90deg, transparent, rgba(255,200,80,0.4), rgba(255,200,80,0.6), rgba(255,200,80,0.4), transparent);
-      position: relative;
-      z-index: 2;
-    }
-
-    #plateau-labels {
-      position: absolute;
-      bottom: 6px;
-      left: 0; right: 0;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 14px;
-      z-index: 3;
-      pointer-events: none;
-    }
-
-    .plateau-label {
-      font-size: 9px;
-      color: rgba(255,200,80,0.5);
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      font-family: 'Cinzel', serif;
-    }
-
-    /* CASES — vraies cavités 3D */
-    .pit {
-      flex: 1;
-      max-width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      padding: 5px;
-      gap: 2px;
-      cursor: default;
-      transition: all 0.15s ease;
-      position: relative;
-
-      /* Effet cavité creusée dans le bois */
-      background:
-        radial-gradient(ellipse at 40% 35%,
-          #1a0a02 0%,
-          #2d1508 40%,
-          #3d2010 70%,
-          #4a2810 100%
-        );
-      border: none;
-      box-shadow:
-        /* Ombre intérieure profonde = creusé */
-        inset 0 4px 12px rgba(0,0,0,0.9),
-        inset 0 2px 6px rgba(0,0,0,0.7),
-        inset -2px -2px 6px rgba(0,0,0,0.5),
-        /* Reflet bois sur le bord haut = relief */
-        inset 0 -2px 3px rgba(180,100,30,0.3),
-        /* Ombre portée externe */
-        0 3px 8px rgba(0,0,0,0.6),
-        0 1px 3px rgba(0,0,0,0.4);
-    }
-
-    .pit::before {
-      content: '';
-      position: absolute;
-      top: 3px;
-      left: 8px;
-      right: 8px;
-      height: 30%;
-      background: linear-gradient(180deg, rgba(255,180,60,0.06) 0%, transparent 100%);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
-    .pit.legal {
-      background:
-        radial-gradient(ellipse at 40% 35%,
-          #2a1208 0%,
-          #4a2210 40%,
-          #5c3015 70%,
-          #6b3818 100%
-        );
-      cursor: pointer;
-      box-shadow:
-        inset 0 4px 12px rgba(0,0,0,0.8),
-        inset 0 2px 6px rgba(0,0,0,0.6),
-        inset -2px -2px 6px rgba(0,0,0,0.4),
-        inset 0 -2px 3px rgba(180,100,30,0.2),
-        /* Lueur dorée externe */
-        0 0 12px rgba(212,160,23,0.6),
-        0 0 24px rgba(212,160,23,0.3),
-        0 0 4px rgba(212,160,23,0.8),
-        0 3px 8px rgba(0,0,0,0.5);
-      outline: 2px solid rgba(212,160,23,0.7);
-      outline-offset: 1px;
-    }
-
-    .pit.legal:active {
-      transform: scale(0.9);
-      box-shadow:
-        inset 0 6px 16px rgba(0,0,0,0.95),
-        inset 0 3px 8px rgba(0,0,0,0.8),
-        0 0 8px rgba(212,160,23,0.4);
-    }
-
-    .pit.disabled { opacity: 0.6; }
-
-    /* GRAINES 3D */
-    .seed {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      position: relative;
-    }
-
-    .pit.nord-pit .seed {
-      background: radial-gradient(circle at 35% 30%, #e0f0ff, #1a5a9a);
-      box-shadow:
-        0 2px 4px rgba(0,0,0,0.7),
-        inset 0 1px 2px rgba(255,255,255,0.4);
-    }
-
-    .pit.sud-pit .seed {
-      background: radial-gradient(circle at 35% 30%, #ffe8d0, #aa3010);
-      box-shadow:
-        0 2px 4px rgba(0,0,0,0.7),
-        inset 0 1px 2px rgba(255,255,255,0.4);
-    }
-
-    .pit.legal .seed {
-      background: radial-gradient(circle at 35% 30%, #fff8c0, #b88010);
-      box-shadow:
-        0 2px 4px rgba(0,0,0,0.7),
-        inset 0 1px 2px rgba(255,255,255,0.5),
-        0 0 4px rgba(212,160,23,0.4);
-    }
-
-    .seed-overflow {
-      font-size: 8px;
-      color: #d4a017;
-      font-weight: bold;
-      width: 100%;
-      text-align: center;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-    }
-
-    /* BAS */
+    #canvas-wrapper { width: 100%; }
+    canvas { width: 100%; height: auto; display: block; touch-action: manipulation; }
     #bottom-area { width: 100%; display: flex; gap: 8px; }
-
     .info-box {
       flex: 1;
       background: linear-gradient(145deg, #2a1a08, #3d2510);
       border: 1px solid #5a3e10;
       border-radius: 8px;
       padding: 10px;
-      max-height: 100px;
+      max-height: 90px;
       overflow-y: auto;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
-
-    .box-title {
-      font-size: 9px;
-      color: #8b6914;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 5px;
-      padding-bottom: 4px;
-      border-bottom: 1px solid #4a3010;
-    }
-
-    #last-move-text { font-size: 11px; color: #c8a060; line-height: 1.5; }
-    .history-item { font-size: 10px; color: #8b6914; padding: 2px 0; border-bottom: 1px solid #3a2508; }
-
-    /* MODAL */
+    .box-title { font-size: 9px; color: #8b6914; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; padding-bottom: 4px; border-bottom: 1px solid #4a3010; font-family: sans-serif; }
+    #last-move-text { font-size: 11px; color: #c8a060; line-height: 1.5; font-family: sans-serif; }
+    .history-item { font-size: 10px; color: #8b6914; padding: 2px 0; border-bottom: 1px solid #3a2508; font-family: sans-serif; }
     #overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.88);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.88); z-index: 100;
+      align-items: center; justify-content: center;
     }
-
     #overlay.show { display: flex; }
-
     #modal {
       background: linear-gradient(145deg, #2a1a08, #3d2510);
-      border: 2px solid #d4a017;
-      border-radius: 16px;
-      padding: 30px 24px;
-      text-align: center;
-      width: 85%;
-      max-width: 320px;
-      box-shadow: 0 0 50px rgba(212,160,23,0.3);
+      border: 2px solid #d4a017; border-radius: 16px;
+      padding: 30px 24px; text-align: center; width: 85%; max-width: 320px;
     }
-
-    #modal h2 { font-family: 'Cinzel', serif; font-size: 24px; color: #d4a017; margin-bottom: 8px; }
-    #modal p { color: #a08040; font-size: 13px; margin-bottom: 20px; }
-
+    #modal h2 { font-size: 24px; color: #d4a017; margin-bottom: 8px; }
+    #modal p { color: #a08040; font-size: 13px; margin-bottom: 20px; font-family: sans-serif; }
     #btn-restart {
-      padding: 10px 24px;
-      background: linear-gradient(135deg, #d4a017, #a07010);
-      color: #1a0a02;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: 'Cinzel', serif;
-      letter-spacing: 1px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      padding: 10px 24px; background: linear-gradient(135deg, #d4a017, #a07010);
+      color: #1a0a02; border: none; border-radius: 8px; font-size: 14px;
+      font-weight: 700; cursor: pointer; font-family: 'Cinzel', serif;
     }
-
-    .info-box::-webkit-scrollbar { width: 3px; }
-    .info-box::-webkit-scrollbar-thumb { background: #5a3e10; }
   </style>
 </head>
 <body>
 
-  <div id="header">
-    <div id="logo">⚜ SONGHO</div>
-    <div id="header-right">Version locale · 2 joueurs<br><span id="move-counter">Tour 0</span></div>
+<div id="header">
+  <div id="logo">⚜ SONGHO</div>
+  <div id="header-right">Version locale · 2 joueurs<br><span id="move-counter">Tour 0</span></div>
+</div>
+
+<div id="statusbar">
+  <div class="stat-box">
+    <div class="stat-label">Nord</div>
+    <div class="stat-value nord" id="score-nord">0</div>
   </div>
-
-  <div id="statusbar">
-    <div class="stat-box">
-      <div class="stat-label">Nord</div>
-      <div class="stat-value nord" id="score-nord">0</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-label">Tour</div>
-      <div class="stat-value gold" id="tour-joueur">Sud</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-label">État</div>
-      <div class="stat-value gold" id="etat-jeu">En jeu</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-label">Sud</div>
-      <div class="stat-value sud" id="score-sud">0</div>
-    </div>
+  <div class="stat-box">
+    <div class="stat-label">Tour</div>
+    <div class="stat-value gold" id="tour-joueur">Sud</div>
   </div>
-
-  <div class="grenier-bar">
-    <div>
-      <div class="g-label">⬆ Grenier Nord</div>
-      <div class="g-score nord" id="g-nord">0</div>
-    </div>
-    <div class="g-seeds" id="gs-nord"></div>
+  <div class="stat-box">
+    <div class="stat-label">État</div>
+    <div class="stat-value gold" id="etat-jeu">En jeu</div>
   </div>
-
-  <div id="plateau-wrapper">
-    <div id="plateau">
-      <div class="board-row" id="row-nord"></div>
-      <div id="separator"></div>
-      <div class="board-row" id="row-sud"></div>
-      <div id="plateau-labels">
-        <span class="plateau-label">Nord</span>
-        <span class="plateau-label">Sud</span>
-      </div>
-    </div>
+  <div class="stat-box">
+    <div class="stat-label">Sud</div>
+    <div class="stat-value sud" id="score-sud">0</div>
   </div>
+</div>
 
-  <div class="grenier-bar">
-    <div>
-      <div class="g-label">⬇ Grenier Sud</div>
-      <div class="g-score sud" id="g-sud">0</div>
-    </div>
-    <div class="g-seeds" id="gs-sud"></div>
+<div id="canvas-wrapper">
+  <canvas id="gameCanvas"></canvas>
+</div>
+
+<div id="bottom-area">
+  <div class="info-box">
+    <div class="box-title">Dernier coup</div>
+    <div id="last-move-text">—</div>
   </div>
-
-  <div id="bottom-area">
-    <div class="info-box">
-      <div class="box-title">Dernier coup</div>
-      <div id="last-move-text">—</div>
-    </div>
-    <div class="info-box">
-      <div class="box-title">Historique</div>
-      <div id="history-list"></div>
-    </div>
+  <div class="info-box">
+    <div class="box-title">Historique</div>
+    <div id="history-list"></div>
   </div>
+</div>
 
-  <div id="overlay">
-    <div id="modal">
-      <h2 id="modal-title">Victoire !</h2>
-      <p id="modal-body">—</p>
-      <button id="btn-restart">Nouvelle partie</button>
-    </div>
+<div id="overlay">
+  <div id="modal">
+    <h2 id="modal-title">Victoire !</h2>
+    <p id="modal-body">—</p>
+    <button id="btn-restart">Nouvelle partie</button>
   </div>
+</div>
 
-  <script src="js/core/engine-full.js"></script>
-  <script>
-    let state = createGame("south");
+<script src="js/core/engine-full.js"></script>
+<script>
+let state = createGame("south");
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
 
-    function renderSeeds(pit, count) {
-      pit.innerHTML = "";
-      const display = Math.min(count, 12);
-      for (let i = 0; i < display; i++) {
-        const s = document.createElement("div");
-        s.className = "seed";
-        pit.appendChild(s);
-      }
-      if (count > 12) {
-        const lbl = document.createElement("div");
-        lbl.className = "seed-overflow";
-        lbl.textContent = count;
-        pit.appendChild(lbl);
+// Dimensions
+const CW = 420;
+const CH = 260;
+canvas.width = CW;
+canvas.height = CH;
+
+const COLS = 7;
+const PIT_R = 26;
+const SEED_R = 5;
+
+// Positions des cases
+function getPitCenter(player, index) {
+  const margin = 30;
+  const grenierW = 38;
+  const playW = CW - 2 * margin - 2 * grenierW;
+  const cellW = playW / COLS;
+  const x = margin + grenierW + (index + 0.5) * cellW;
+  const y = player === "north" ? CH * 0.28 : CH * 0.72;
+  return { x, y };
+}
+
+function getGrenierCenter(side) {
+  if (side === "nord") return { x: CW - 22, y: CH * 0.28 };
+  return { x: 22, y: CH * 0.72 };
+}
+
+// Dessin texture bois
+function drawWood() {
+  // Fond bois
+  const grad = ctx.createLinearGradient(0, 0, CW, CH);
+  grad.addColorStop(0, "#7a4818");
+  grad.addColorStop(0.2, "#5c3010");
+  grad.addColorStop(0.4, "#8b5520");
+  grad.addColorStop(0.6, "#6b3e14");
+  grad.addColorStop(0.8, "#9b6028");
+  grad.addColorStop(1, "#5c3010");
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.roundRect(0, 0, CW, CH, 16);
+  ctx.fill();
+
+  // Veines du bois
+  ctx.save();
+  for (let i = 0; i < 18; i++) {
+    const y = (CH / 18) * i + Math.sin(i * 0.8) * 4;
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.bezierCurveTo(
+      CW * 0.3, y + Math.sin(i) * 6,
+      CW * 0.7, y - Math.sin(i * 1.2) * 5,
+      CW, y + Math.sin(i * 0.5) * 4
+    );
+    ctx.strokeStyle = `rgba(0,0,0,${0.04 + Math.random() * 0.03})`;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Bordure plateau
+  ctx.save();
+  ctx.strokeStyle = "#c9a84c";
+  ctx.lineWidth = 2.5;
+  ctx.shadowColor = "rgba(201,168,76,0.4)";
+  ctx.shadowBlur = 6;
+  ctx.beginPath();
+  ctx.roundRect(2, 2, CW - 4, CH - 4, 14);
+  ctx.stroke();
+  ctx.restore();
+
+  // Séparateur central
+  ctx.save();
+  const sepGrad = ctx.createLinearGradient(0, CH/2, CW, CH/2);
+  sepGrad.addColorStop(0, "transparent");
+  sepGrad.addColorStop(0.3, "rgba(201,168,76,0.5)");
+  sepGrad.addColorStop(0.7, "rgba(201,168,76,0.5)");
+  sepGrad.addColorStop(1, "transparent");
+  ctx.fillStyle = sepGrad;
+  ctx.fillRect(30, CH/2 - 1, CW - 60, 2);
+  ctx.restore();
+}
+
+// Dessin cavité
+function drawCavity(x, y, r, isLegal, isEmpty) {
+  // Ombre externe
+  ctx.save();
+  ctx.shadowColor = "rgba(0,0,0,0.8)";
+  ctx.shadowBlur = 10;
+  ctx.shadowOffsetY = 3;
+
+  // Fond cavité creusée
+  const grad = ctx.createRadialGradient(x - r*0.2, y - r*0.2, r*0.1, x, y, r);
+  grad.addColorStop(0, "#1a0a02");
+  grad.addColorStop(0.5, "#2d1508");
+  grad.addColorStop(0.8, "#3d2010");
+  grad.addColorStop(1, "#5a3318");
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  // Reflet bord haut (relief bois)
+  const rimGrad = ctx.createLinearGradient(x, y - r, x, y + r);
+  rimGrad.addColorStop(0, "rgba(200,140,60,0.35)");
+  rimGrad.addColorStop(0.3, "rgba(150,90,30,0.15)");
+  rimGrad.addColorStop(1, "rgba(0,0,0,0.4)");
+  ctx.strokeStyle = rimGrad;
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.arc(x, y, r + 1, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Lueur dorée si case jouable
+  if (isLegal) {
+    ctx.save();
+    ctx.shadowColor = "rgba(212,160,23,0.9)";
+    ctx.shadowBlur = 18;
+    ctx.strokeStyle = "rgba(212,160,23,0.85)";
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.arc(x, y, r + 2, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Reflet brillant dans la cavité
+  ctx.save();
+  const shine = ctx.createRadialGradient(x - r*0.3, y - r*0.3, 0, x - r*0.3, y - r*0.3, r*0.6);
+  shine.addColorStop(0, "rgba(255,200,100,0.08)");
+  shine.addColorStop(1, "transparent");
+  ctx.fillStyle = shine;
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+// Dessin bille 3D
+function drawSeed(x, y, color1, color2) {
+  ctx.save();
+  ctx.shadowColor = "rgba(0,0,0,0.7)";
+  ctx.shadowBlur = 4;
+  ctx.shadowOffsetY = 2;
+
+  const grad = ctx.createRadialGradient(
+    x - SEED_R * 0.35, y - SEED_R * 0.35, SEED_R * 0.05,
+    x, y, SEED_R
+  );
+  grad.addColorStop(0, color1);
+  grad.addColorStop(0.5, color2);
+  grad.addColorStop(1, "rgba(0,0,0,0.6)");
+
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.arc(x, y, SEED_R, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  // Reflet
+  ctx.save();
+  const shine = ctx.createRadialGradient(
+    x - SEED_R * 0.3, y - SEED_R * 0.3, 0,
+    x - SEED_R * 0.3, y - SEED_R * 0.3, SEED_R * 0.5
+  );
+  shine.addColorStop(0, "rgba(255,255,255,0.5)");
+  shine.addColorStop(1, "transparent");
+  ctx.fillStyle = shine;
+  ctx.beginPath();
+  ctx.arc(x, y, SEED_R, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+// Disposition des graines dans une cavité
+function getSeedPositions(count, cx, cy, r) {
+  const positions = [];
+  if (count === 0) return positions;
+  if (count === 1) {
+    positions.push({ x: cx, y: cy });
+  } else if (count === 2) {
+    positions.push({ x: cx - r*0.28, y: cy });
+    positions.push({ x: cx + r*0.28, y: cy });
+  } else if (count === 3) {
+    positions.push({ x: cx, y: cy - r*0.28 });
+    positions.push({ x: cx - r*0.28, y: cy + r*0.18 });
+    positions.push({ x: cx + r*0.28, y: cy + r*0.18 });
+  } else if (count === 4) {
+    positions.push({ x: cx - r*0.25, y: cy - r*0.25 });
+    positions.push({ x: cx + r*0.25, y: cy - r*0.25 });
+    positions.push({ x: cx - r*0.25, y: cy + r*0.25 });
+    positions.push({ x: cx + r*0.25, y: cy + r*0.25 });
+  } else if (count === 5) {
+    positions.push({ x: cx, y: cy });
+    positions.push({ x: cx - r*0.3, y: cy - r*0.28 });
+    positions.push({ x: cx + r*0.3, y: cy - r*0.28 });
+    positions.push({ x: cx - r*0.3, y: cy + r*0.28 });
+    positions.push({ x: cx + r*0.3, y: cy + r*0.28 });
+  } else if (count <= 9) {
+    const cols = 3;
+    const rows = Math.ceil(count / cols);
+    let idx = 0;
+    for (let row = 0; row < rows && idx < count; row++) {
+      const inRow = Math.min(cols, count - idx);
+      for (let col = 0; col < inRow; col++) {
+        const px = cx + (col - (inRow-1)/2) * r*0.32;
+        const py = cy + (row - (rows-1)/2) * r*0.32;
+        positions.push({ x: px, y: py });
+        idx++;
       }
     }
-
-    function renderGrenierSeeds(id, count, side) {
-      const el = document.getElementById(id);
-      el.innerHTML = "";
-      const display = Math.min(count, 28);
-      for (let i = 0; i < display; i++) {
-        const s = document.createElement("div");
-        s.className = "gseed " + side;
-        el.appendChild(s);
-      }
+  } else {
+    // Trop de graines : cercle + centre
+    const ring = Math.min(count - 1, 8);
+    for (let i = 0; i < ring; i++) {
+      const angle = (i / ring) * Math.PI * 2 - Math.PI/2;
+      positions.push({ x: cx + Math.cos(angle) * r*0.5, y: cy + Math.sin(angle) * r*0.5 });
     }
+    positions.push({ x: cx, y: cy });
+  }
+  return positions;
+}
 
-    function render() {
-      const legalMoves = getLegalMoves(state);
-      const legalIndexes = legalMoves.map(m => m.pitIndex);
+// Dessin compteur sur case
+function drawCount(x, y, count, r) {
+  if (count === 0) return;
+  ctx.save();
+  // Badge blanc
+  const bx = x + r * 0.55;
+  const by = y - r * 0.65;
+  ctx.fillStyle = "rgba(255,255,255,0.92)";
+  ctx.shadowColor = "rgba(0,0,0,0.5)";
+  ctx.shadowBlur = 3;
+  ctx.beginPath();
+  ctx.arc(bx, by, 9, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = "#1a0a02";
+  ctx.font = "bold 9px sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(count, bx, by);
+  ctx.restore();
+}
 
-      ["nord", "sud"].forEach(side => {
-        const player = side === "nord" ? "north" : "south";
-        const row = document.getElementById("row-" + side);
-        row.innerHTML = "";
-        for (let i = 0; i < 7; i++) {
-          const pit = document.createElement("div");
-          pit.className = "pit " + side + "-pit";
-          const isLegal = state.currentPlayer === player && legalIndexes.includes(i);
-          if (isLegal) {
-            pit.classList.add("legal");
-            pit.addEventListener("click", () => playMove(player, i));
-          } else {
-            pit.classList.add("disabled");
-          }
-          renderSeeds(pit, state.board[player][i]);
-          row.appendChild(pit);
-        }
+// Dessin grenier
+function drawGrenier(side, score) {
+  const { x, y } = getGrenierCenter(side);
+  const rw = 28, rh = 80;
+
+  ctx.save();
+  ctx.shadowColor = "rgba(0,0,0,0.8)";
+  ctx.shadowBlur = 8;
+
+  const grad = ctx.createLinearGradient(x - rw, y - rh, x + rw, y + rh);
+  grad.addColorStop(0, "#1a0a02");
+  grad.addColorStop(0.5, "#2d1508");
+  grad.addColorStop(1, "#4a2810");
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.roundRect(x - rw, y - rh, rw * 2, rh * 2, 10);
+  ctx.fill();
+  ctx.restore();
+
+  // Bordure
+  ctx.strokeStyle = "rgba(201,168,76,0.5)";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.roundRect(x - rw, y - rh, rw * 2, rh * 2, 10);
+  ctx.stroke();
+
+  // Score
+  ctx.save();
+  ctx.font = "bold 18px Cinzel, serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillStyle = side === "nord" ? "#60aaff" : "#ff6b4a";
+  ctx.shadowColor = side === "nord" ? "rgba(96,170,255,0.5)" : "rgba(255,107,74,0.5)";
+  ctx.shadowBlur = 8;
+  ctx.fillText(score, x, y - rh * 0.3);
+  ctx.restore();
+
+  // Label
+  ctx.save();
+  ctx.font = "9px sans-serif";
+  ctx.fillStyle = "rgba(201,168,76,0.6)";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.save();
+  ctx.translate(x, y + rh * 0.5);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText(side.toUpperCase(), 0, 0);
+  ctx.restore();
+  ctx.restore();
+
+  // Petites billes dans grenier
+  const maxSeeds = Math.min(score, 12);
+  const cols = 3;
+  for (let i = 0; i < maxSeeds; i++) {
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+    const sx = x - rw*0.5 + col * (rw*0.5);
+    const sy = y + rh*0.05 + row * 13;
+    const c1 = side === "nord" ? "#c0e0ff" : "#ffd0b0";
+    const c2 = side === "nord" ? "#2060a0" : "#c04020";
+    ctx.save();
+    ctx.shadowColor = "rgba(0,0,0,0.5)";
+    ctx.shadowBlur = 2;
+    const sg = ctx.createRadialGradient(sx-2, sy-2, 0.5, sx, sy, 4);
+    sg.addColorStop(0, c1);
+    sg.addColorStop(1, c2);
+    ctx.fillStyle = sg;
+    ctx.beginPath();
+    ctx.arc(sx, sy, 4, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+// Rendu complet
+function draw() {
+  ctx.clearRect(0, 0, CW, CH);
+  drawWood();
+
+  const legalMoves = getLegalMoves(state);
+  const legalIndexes = legalMoves.map(m => m.pitIndex);
+
+  // Cases Nord et Sud
+  ["north", "south"].forEach(player => {
+    const side = player === "north" ? "nord" : "sud";
+    for (let i = 0; i < 7; i++) {
+      const { x, y } = getPitCenter(player, i);
+      const count = state.board[player][i];
+      const isLegal = state.currentPlayer === player && legalIndexes.includes(i);
+
+      drawCavity(x, y, PIT_R, isLegal, count === 0);
+
+      // Graines
+      const c1 = player === "north" ? "#d0eeff" : "#ffe8d0";
+      const c2 = player === "north" ? "#1a5a9a" : "#aa3010";
+      const lc1 = "#fff8c0", lc2 = "#b88010";
+
+      const positions = getSeedPositions(count, x, y, PIT_R);
+      positions.forEach(pos => {
+        drawSeed(pos.x, pos.y, isLegal ? lc1 : c1, isLegal ? lc2 : c2);
       });
 
-      document.getElementById("score-nord").textContent = state.scores.north;
-      document.getElementById("score-sud").textContent = state.scores.south;
-      document.getElementById("g-nord").textContent = state.scores.north;
-      document.getElementById("g-sud").textContent = state.scores.south;
-      document.getElementById("move-counter").textContent = "Tour " + state.moveNumber;
-      document.getElementById("tour-joueur").textContent = state.currentPlayer === "north" ? "Nord" : "Sud";
-      document.getElementById("etat-jeu").textContent = state.status === "playing" ? "En jeu" : "Terminée";
-
-      renderGrenierSeeds("gs-nord", state.scores.north, "nord");
-      renderGrenierSeeds("gs-sud", state.scores.south, "sud");
-
-      if (state.status === "ended") {
-        document.getElementById("overlay").classList.add("show");
-        const w = state.winner;
-        document.getElementById("modal-title").textContent =
-          w === "draw" ? "Match nul !" : (w === "north" ? "Nord" : "Sud") + " gagne !";
-        document.getElementById("modal-body").textContent =
-          `Score final : Nord ${state.scores.north} – Sud ${state.scores.south}`;
-      }
+      // Compteur
+      drawCount(x, y, count, PIT_R);
     }
+  });
 
-    function playMove(player, pitIndex) {
-      if (state.status !== "playing") return;
-      const pitName = (player === "north" ? "N" : "S") + (pitIndex + 1);
-      const result = applyMove(state, { player, pitIndex });
-      if (!result.ok) return;
-      state = result.state;
-      const action = result.action;
-      let desc = "";
-      if (action.type === "forced-donation") {
-        desc = `${player === "north" ? "Nord" : "Sud"} joue ${pitName}, don forcé ${action.donated} graine(s).`;
-      } else {
-        const cap = action.capture.captured;
-        const last = action.sowing.lastPosition;
-        const lastName = (last.player === "north" ? "N" : "S") + (last.pitIndex + 1);
-        desc = `${player === "north" ? "Nord" : "Sud"} joue ${pitName}, dernière graine en ${lastName}, capture ${cap}.`;
-      }
-      document.getElementById("last-move-text").textContent = desc;
-      const item = document.createElement("div");
-      item.className = "history-item";
-      item.textContent = state.moveNumber + ". " + desc;
-      const list = document.getElementById("history-list");
-      list.insertBefore(item, list.firstChild);
-      render();
+  // Greniers
+  drawGrenier("nord", state.scores.north);
+  drawGrenier("sud", state.scores.south);
+}
+
+// Gestion du clic
+canvas.addEventListener("click", function(e) {
+  if (state.status !== "playing") return;
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = CW / rect.width;
+  const scaleY = CH / rect.height;
+  const mx = (e.clientX - rect.left) * scaleX;
+  const my = (e.clientY - rect.top) * scaleY;
+
+  const legalMoves = getLegalMoves(state);
+  const legalIndexes = legalMoves.map(m => m.pitIndex);
+  const player = state.currentPlayer;
+
+  for (let i = 0; i < 7; i++) {
+    if (!legalIndexes.includes(i)) continue;
+    const { x, y } = getPitCenter(player, i);
+    const dist = Math.sqrt((mx - x) ** 2 + (my - y) ** 2);
+    if (dist <= PIT_R + 4) {
+      playMove(player, i);
+      return;
     }
+  }
+});
 
-    document.getElementById("btn-restart").addEventListener("click", () => {
-      state = createGame("south");
-      document.getElementById("history-list").innerHTML = "";
-      document.getElementById("last-move-text").textContent = "—";
-      document.getElementById("overlay").classList.remove("show");
-      render();
-    });
+function playMove(player, pitIndex) {
+  const pitName = (player === "north" ? "N" : "S") + (pitIndex + 1);
+  const result = applyMove(state, { player, pitIndex });
+  if (!result.ok) return;
+  state = result.state;
+  const action = result.action;
+  let desc = "";
+  if (action.type === "forced-donation") {
+    desc = `${player === "north" ? "Nord" : "Sud"} joue ${pitName}, don forcé ${action.donated} graine(s).`;
+  } else {
+    const cap = action.capture.captured;
+    const last = action.sowing.lastPosition;
+    const lastName = (last.player === "north" ? "N" : "S") + (last.pitIndex + 1);
+    desc = `${player === "north" ? "Nord" : "Sud"} joue ${pitName}, dernière graine en ${lastName}, capture ${cap}.`;
+  }
+  document.getElementById("last-move-text").textContent = desc;
+  const item = document.createElement("div");
+  item.className = "history-item";
+  item.textContent = state.moveNumber + ". " + desc;
+  const list = document.getElementById("history-list");
+  list.insertBefore(item, list.firstChild);
+  updateUI();
+  draw();
 
-    render();
-  </script>
+  if (state.status === "ended") {
+    document.getElementById("overlay").classList.add("show");
+    const w = state.winner;
+    document.getElementById("modal-title").textContent =
+      w === "draw" ? "Match nul !" : (w === "north" ? "Nord" : "Sud") + " gagne !";
+    document.getElementById("modal-body").textContent =
+      `Score final : Nord ${state.scores.north} – Sud ${state.scores.south}`;
+  }
+}
+
+function updateUI() {
+  document.getElementById("score-nord").textContent = state.scores.north;
+  document.getElementById("score-sud").textContent = state.scores.south;
+  document.getElementById("move-counter").textContent = "Tour " + state.moveNumber;
+  document.getElementById("tour-joueur").textContent = state.currentPlayer === "north" ? "Nord" : "Sud";
+  document.getElementById("etat-jeu").textContent = state.status === "playing" ? "En jeu" : "Terminée";
+}
+
+document.getElementById("btn-restart").addEventListener("click", () => {
+  state = createGame("south");
+  document.getElementById("history-list").innerHTML = "";
+  document.getElementById("last-move-text").textContent = "—";
+  document.getElementById("overlay").classList.remove("show");
+  updateUI();
+  draw();
+});
+
+updateUI();
+draw();
+</script>
 </body>
-  </html>
+</html>
