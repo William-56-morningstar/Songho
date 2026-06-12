@@ -8,7 +8,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&display=swap');
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: #1a0f05;
+      background: #0d0802;
       font-family: 'Cinzel', serif;
       display: flex;
       flex-direction: column;
@@ -22,12 +22,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: linear-gradient(135deg, #2a1a08, #4a2e10);
-      border: 1px solid #8b6020;
-      border-radius: 10px;
-      padding: 10px 14px;
+      background: linear-gradient(135deg, #1e1005, #3a2008);
+      border: 1px solid #c9a84c;
+      border-radius: 12px;
+      padding: 10px 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.7), inset 0 1px 0 rgba(201,168,76,0.2);
     }
-    #logo { font-size: 20px; color: #d4a017; letter-spacing: 3px; }
+    #logo { font-size: 20px; color: #e8c050; letter-spacing: 4px; text-shadow: 0 0 12px rgba(232,192,80,0.5); }
     #header-right { font-size: 10px; color: #a08040; text-align: right; line-height: 1.6; font-family: sans-serif; }
     #statusbar {
       width: 100%;
@@ -36,50 +37,66 @@
       gap: 6px;
     }
     .stat-box {
-      background: linear-gradient(145deg, #2a1a08, #3d2510);
-      border: 1px solid #5a3e10;
+      background: linear-gradient(145deg, #1a0e04, #2d1a08);
+      border: 1px solid #4a3010;
       border-radius: 8px;
       padding: 6px 4px;
       text-align: center;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.5), 0 1px 0 rgba(201,168,76,0.1);
     }
-    .stat-label { font-size: 9px; color: #8b6914; text-transform: uppercase; letter-spacing: 1px; font-family: sans-serif; }
+    .stat-label { font-size: 9px; color: #7a5a14; text-transform: uppercase; letter-spacing: 1px; font-family: sans-serif; }
     .stat-value { font-size: 18px; font-weight: 700; margin-top: 1px; font-family: 'Cinzel', serif; }
-    .stat-value.nord { color: #60aaff; }
-    .stat-value.sud { color: #ff6b4a; }
-    .stat-value.gold { color: #d4a017; }
+    .stat-value.nord { color: #6ab8ff; text-shadow: 0 0 8px rgba(106,184,255,0.5); }
+    .stat-value.sud { color: #ff7055; text-shadow: 0 0 8px rgba(255,112,85,0.5); }
+    .stat-value.gold { color: #e8c050; text-shadow: 0 0 8px rgba(232,192,80,0.4); }
     #canvas-wrapper { width: 100%; }
-    canvas { width: 100%; height: auto; display: block; touch-action: manipulation; }
+    canvas { width: 100%; height: auto; display: block; touch-action: manipulation; border-radius: 16px; }
     #bottom-area { width: 100%; display: flex; gap: 8px; }
     .info-box {
       flex: 1;
-      background: linear-gradient(145deg, #2a1a08, #3d2510);
-      border: 1px solid #5a3e10;
+      background: linear-gradient(145deg, #1a0e04, #2d1a08);
+      border: 1px solid #4a3010;
       border-radius: 8px;
       padding: 10px;
       max-height: 90px;
       overflow-y: auto;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
     }
-    .box-title { font-size: 9px; color: #8b6914; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; padding-bottom: 4px; border-bottom: 1px solid #4a3010; font-family: sans-serif; }
+    .box-title { font-size: 9px; color: #7a5a14; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; padding-bottom: 4px; border-bottom: 1px solid #3a2508; font-family: sans-serif; }
     #last-move-text { font-size: 11px; color: #c8a060; line-height: 1.5; font-family: sans-serif; }
-    .history-item { font-size: 10px; color: #8b6914; padding: 2px 0; border-bottom: 1px solid #3a2508; font-family: sans-serif; }
+    .history-item { font-size: 10px; color: #8b6914; padding: 2px 0; border-bottom: 1px solid #2a1a05; font-family: sans-serif; }
     #overlay {
       display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.88); z-index: 100;
+      background: rgba(0,0,0,0.92); z-index: 100;
       align-items: center; justify-content: center;
+      backdrop-filter: blur(3px);
     }
     #overlay.show { display: flex; }
     #modal {
-      background: linear-gradient(145deg, #2a1a08, #3d2510);
-      border: 2px solid #d4a017; border-radius: 16px;
-      padding: 30px 24px; text-align: center; width: 85%; max-width: 320px;
+      background: linear-gradient(145deg, #1e1005, #3a2008);
+      border: 2px solid #c9a84c;
+      border-radius: 18px;
+      padding: 32px 24px;
+      text-align: center;
+      width: 85%;
+      max-width: 320px;
+      box-shadow: 0 0 40px rgba(201,168,76,0.3), 0 20px 40px rgba(0,0,0,0.8);
     }
-    #modal h2 { font-size: 24px; color: #d4a017; margin-bottom: 8px; }
+    #modal h2 { font-size: 24px; color: #e8c050; margin-bottom: 8px; text-shadow: 0 0 16px rgba(232,192,80,0.6); }
     #modal p { color: #a08040; font-size: 13px; margin-bottom: 20px; font-family: sans-serif; }
     #btn-restart {
-      padding: 10px 24px; background: linear-gradient(135deg, #d4a017, #a07010);
-      color: #1a0a02; border: none; border-radius: 8px; font-size: 14px;
-      font-weight: 700; cursor: pointer; font-family: 'Cinzel', serif;
+      padding: 10px 24px;
+      background: linear-gradient(135deg, #e8c050, #a07010);
+      color: #1a0a02;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.4);
     }
+    #btn-restart:active { transform: translateY(1px); }
   </style>
 </head>
 <body>
@@ -131,332 +148,434 @@
   </div>
 </div>
 
+<script src="js/core/engine-full.js"></script>
 <script>
-// ==================== MOTEUR COMPLET ====================
-function createGame(startingPlayer = "south") {
-  return {
-    board: {
-      north: [5,5,5,5,5,5,5],
-      south: [5,5,5,5,5,5,5]
-    },
-    scores: { north: 0, south: 0 },
-    currentPlayer: startingPlayer,
-    status: "playing",
-    winner: null,
-    moveNumber: 1,
-    lastMoveDesc: ""
-  };
-}
-
-function getLegalMoves(state) {
-  if (state.status !== "playing") return [];
-  const pits = state.board[state.currentPlayer];
-  const moves = [];
-  for (let i = 0; i < 7; i++) {
-    if (pits[i] > 0) moves.push({ player: state.currentPlayer, pitIndex: i });
-  }
-  return moves;
-}
-
-function applyMove(state, move) {
-  if (state.status !== "playing") return { ok: false };
-  if (move.player !== state.currentPlayer) return { ok: false };
-  if (state.board[move.player][move.pitIndex] === 0) return { ok: false };
-
-  let newState = JSON.parse(JSON.stringify(state));
-  let seeds = newState.board[move.player][move.pitIndex];
-  newState.board[move.player][move.pitIndex] = 0;
-  
-  let currentPlayer = move.player;
-  let currentRow = move.player;
-  let currentIdx = move.pitIndex;
-  let lastPos = null;
-  let sowingPath = [];
-
-  while (seeds > 0) {
-    if (currentRow === move.player && currentIdx === move.pitIndex) {
-      if (currentRow === "north") {
-        if (currentIdx + 1 < 7) currentIdx++;
-        else { currentRow = "south"; currentIdx = 0; }
-      } else {
-        if (currentIdx + 1 < 7) currentIdx++;
-        else { currentRow = "north"; currentIdx = 0; }
-      }
-    } else {
-      newState.board[currentRow][currentIdx]++;
-      sowingPath.push({ player: currentRow, pitIndex: currentIdx });
-      seeds--;
-      lastPos = { player: currentRow, pitIndex: currentIdx };
-      if (seeds === 0) break;
-      if (currentRow === "north") {
-        if (currentIdx + 1 < 7) currentIdx++;
-        else { currentRow = "south"; currentIdx = 0; }
-      } else {
-        if (currentIdx + 1 < 7) currentIdx++;
-        else { currentRow = "north"; currentIdx = 0; }
-      }
-    }
-  }
-
-  let captured = 0;
-  let captureDesc = "";
-
-  if (lastPos && lastPos.player === move.player && newState.board[lastPos.player][lastPos.pitIndex] === 1) {
-    let oppRow = lastPos.player === "north" ? "south" : "north";
-    let oppPit = lastPos.pitIndex;
-    if (newState.board[oppRow][oppPit] > 0) {
-      captured = newState.board[oppRow][oppPit];
-      newState.scores[move.player] += captured + 1;
-      newState.board[oppRow][oppPit] = 0;
-      newState.board[lastPos.player][lastPos.pitIndex] = 0;
-      captureDesc = `capture ${captured}`;
-    } else {
-      captureDesc = `aucune capture`;
-    }
-  } else {
-    captureDesc = `aucune capture`;
-  }
-
-  const northEmpty = newState.board.north.every(v => v === 0);
-  const southEmpty = newState.board.south.every(v => v === 0);
-  
-  if (northEmpty || southEmpty) {
-    let remainingNorth = newState.board.north.reduce((a,b)=>a+b,0);
-    let remainingSouth = newState.board.south.reduce((a,b)=>a+b,0);
-    newState.scores.north += remainingNorth;
-    newState.scores.south += remainingSouth;
-    newState.board.north.fill(0);
-    newState.board.south.fill(0);
-    newState.status = "ended";
-    if (newState.scores.north > newState.scores.south) newState.winner = "north";
-    else if (newState.scores.south > newState.scores.north) newState.winner = "south";
-    else newState.winner = "draw";
-  } else {
-    newState.currentPlayer = newState.currentPlayer === "north" ? "south" : "north";
-    let nextMoves = getLegalMoves(newState);
-    if (nextMoves.length === 0) {
-      let remainingNorth = newState.board.north.reduce((a,b)=>a+b,0);
-      let remainingSouth = newState.board.south.reduce((a,b)=>a+b,0);
-      newState.scores.north += remainingNorth;
-      newState.scores.south += remainingSouth;
-      newState.board.north.fill(0);
-      newState.board.south.fill(0);
-      newState.status = "ended";
-      if (newState.scores.north > newState.scores.south) newState.winner = "north";
-      else if (newState.scores.south > newState.scores.north) newState.winner = "south";
-      else newState.winner = "draw";
-    }
-  }
-  
-  let lastPosStr = lastPos ? `${lastPos.player === "north" ? "N" : "S"}${lastPos.pitIndex + 1}` : "-";
-  let desc = `${move.player === "north" ? "Nord" : "Sud"} joue ${move.player === "north" ? "N" : "S"}${move.pitIndex + 1}, dernière graine en ${lastPosStr}, ${captureDesc}.`;
-  newState.lastMoveDesc = desc;
-  newState.moveNumber++;
-  
-  return { ok: true, state: newState, desc: desc };
-}
-
-// ==================== RENDU AMÉLIORÉ ====================
 let state = createGame("south");
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-const CW = 700;
-const CH = 380;
+const CW = 500;
+const CH = 290;
 canvas.width = CW;
 canvas.height = CH;
 
-const PIT_R = 28;
-const GREN_W = 55;
-const GREN_H = 100;
-const GREN_X_LEFT = 28;
-const GREN_X_RIGHT = CW - 28;
+const COLS = 7;
+const PIT_R = 26;
+const SEED_R = 5;
+const GREN_W = 46;
+const GREN_H = 118;
+const GREN_X_LEFT = 23;
+const GREN_X_RIGHT = CW - 23;
+const PAD = 6;
 
 function getPitCenter(player, index) {
-  const startX = GREN_W + 15;
-  const endX = CW - GREN_W - 15;
-  const cellW = (endX - startX) / 6;
-  const x = startX + index * cellW;
-  const y = player === "north" ? CH * 0.28 : CH * 0.72;
+  const usable = CW - 2 * (GREN_W + PAD * 2);
+  const startX = GREN_W + PAD * 2;
+  const cellW = usable / COLS;
+  const x = startX + (index + 0.5) * cellW;
+  const y = player === "north" ? CH * 0.26 : CH * 0.74;
   return { x, y };
 }
 
-// Bois texturé réaliste
-function drawWoodTexture() {
+function drawWood() {
+  // Fond bois principal - tons chauds profonds
   const grad = ctx.createLinearGradient(0, 0, CW, CH);
-  grad.addColorStop(0, "#8B5E3C");
-  grad.addColorStop(0.3, "#6B3E1C");
-  grad.addColorStop(0.7, "#5A3014");
-  grad.addColorStop(1, "#3E2010");
+  grad.addColorStop(0,   "#6b3c10");
+  grad.addColorStop(0.2, "#4e2a08");
+  grad.addColorStop(0.5, "#7a4818");
+  grad.addColorStop(0.8, "#5c3210");
+  grad.addColorStop(1,   "#4e2a08");
   ctx.fillStyle = grad;
   ctx.beginPath();
-  ctx.roundRect(0, 0, CW, CH, 14);
+  ctx.roundRect(0, 0, CW, CH, 18);
   ctx.fill();
-  
-  // Veines du bois
-  for (let i = 0; i < 30; i++) {
+
+  // Veines bois subtiles
+  for (let i = 0; i < 28; i++) {
+    const yBase = (CH / 28) * i;
     ctx.beginPath();
-    ctx.moveTo(i * 25, 0);
-    ctx.bezierCurveTo(i * 25 + 10, CH * 0.3, i * 25 - 5, CH * 0.6, i * 25 + 5, CH);
-    ctx.strokeStyle = `rgba(0,0,0,${0.03 + (i % 3) * 0.01})`;
-    ctx.lineWidth = 1.2;
+    ctx.moveTo(0, yBase + Math.sin(i * 1.3) * 4);
+    ctx.bezierCurveTo(
+      CW * 0.3, yBase + Math.sin(i * 0.8) * 7,
+      CW * 0.7, yBase - Math.sin(i * 1.1) * 5,
+      CW, yBase + Math.sin(i * 0.6) * 4
+    );
+    ctx.strokeStyle = `rgba(0,0,0,${0.025 + (i % 4) * 0.008})`;
+    ctx.lineWidth = 0.8 + (i % 3) * 0.4;
     ctx.stroke();
   }
-  
-  // Bordure sculptée
-  ctx.strokeStyle = "#D4A017";
+
+  // Reflets clairs sur le bois (effet verni)
+  const sheen1 = ctx.createLinearGradient(0, 0, CW * 0.6, CH * 0.4);
+  sheen1.addColorStop(0, "rgba(255,210,100,0.09)");
+  sheen1.addColorStop(0.5, "rgba(255,180,60,0.04)");
+  sheen1.addColorStop(1, "transparent");
+  ctx.fillStyle = sheen1;
+  ctx.beginPath();
+  ctx.roundRect(0, 0, CW, CH, 18);
+  ctx.fill();
+
+  // Ombre intérieure bas (profondeur)
+  const shadowBottom = ctx.createLinearGradient(0, CH * 0.7, 0, CH);
+  shadowBottom.addColorStop(0, "transparent");
+  shadowBottom.addColorStop(1, "rgba(0,0,0,0.3)");
+  ctx.fillStyle = shadowBottom;
+  ctx.beginPath();
+  ctx.roundRect(0, 0, CW, CH, 18);
+  ctx.fill();
+
+  // Bordure dorée avec glow
+  ctx.save();
+  ctx.shadowColor = "rgba(201,168,76,0.8)";
+  ctx.shadowBlur = 12;
+  ctx.strokeStyle = "#c9a84c";
   ctx.lineWidth = 2.5;
   ctx.beginPath();
-  ctx.roundRect(3, 3, CW - 6, CH - 6, 12);
+  ctx.roundRect(2, 2, CW - 4, CH - 4, 16);
   ctx.stroke();
-  ctx.strokeStyle = "#A07020";
+  ctx.restore();
+
+  // Bordure intérieure fine
+  ctx.strokeStyle = "rgba(100,60,10,0.5)";
   ctx.lineWidth = 1;
   ctx.beginPath();
-  ctx.roundRect(1, 1, CW - 2, CH - 2, 14);
+  ctx.roundRect(5, 5, CW - 10, CH - 10, 14);
   ctx.stroke();
+
+  // Séparateur central
+  const sepG = ctx.createLinearGradient(0, 0, CW, 0);
+  sepG.addColorStop(0, "transparent");
+  sepG.addColorStop(0.1, "rgba(201,168,76,0.6)");
+  sepG.addColorStop(0.9, "rgba(201,168,76,0.6)");
+  sepG.addColorStop(1, "transparent");
+  ctx.fillStyle = sepG;
+  ctx.fillRect(GREN_W + PAD, CH / 2 - 1, CW - 2 * (GREN_W + PAD), 2);
+  // Reflet sur le séparateur
+  const sepShine = ctx.createLinearGradient(0, 0, CW, 0);
+  sepShine.addColorStop(0, "transparent");
+  sepShine.addColorStop(0.1, "rgba(255,230,120,0.3)");
+  sepShine.addColorStop(0.9, "rgba(255,230,120,0.3)");
+  sepShine.addColorStop(1, "transparent");
+  ctx.fillStyle = sepShine;
+  ctx.fillRect(GREN_W + PAD, CH / 2 - 1, CW - 2 * (GREN_W + PAD), 1);
 }
 
 function drawCavity(x, y, r, isLegal) {
+  // Ombre portée externe
   ctx.save();
-  ctx.shadowColor = "rgba(0,0,0,0.7)";
-  ctx.shadowBlur = 6;
-  ctx.shadowOffsetY = 3;
-  
-  const grad = ctx.createRadialGradient(x - 4, y - 4, 3, x, y, r);
-  grad.addColorStop(0, "#1A0A02");
-  grad.addColorStop(0.6, "#2D1608");
-  grad.addColorStop(1, "#4A2810");
+  ctx.shadowColor = "rgba(0,0,0,0.95)";
+  ctx.shadowBlur = 18;
+  ctx.shadowOffsetY = 5;
+  ctx.shadowOffsetX = 2;
+
+  // Cavité principale - gradient radial très sombre au centre
+  const grad = ctx.createRadialGradient(
+    x - r * 0.2, y - r * 0.15, r * 0.02,
+    x + r * 0.15, y + r * 0.15, r * 1.05
+  );
+  grad.addColorStop(0,    "#080300");
+  grad.addColorStop(0.3,  "#130800");
+  grad.addColorStop(0.65, "#1e0d04");
+  grad.addColorStop(0.85, "#2e1608");
+  grad.addColorStop(1,    "#4a2810");
   ctx.fillStyle = grad;
   ctx.beginPath();
   ctx.arc(x, y, r, 0, Math.PI * 2);
   ctx.fill();
-  
-  ctx.shadowBlur = 2;
+  ctx.restore();
+
+  // Bord relief bois - haut clair, bas sombre
+  const rimTop = ctx.createLinearGradient(x, y - r - 3, x, y - r + 4);
+  rimTop.addColorStop(0, "rgba(220,160,70,0.7)");
+  rimTop.addColorStop(1, "rgba(120,70,20,0.3)");
+  ctx.strokeStyle = rimTop;
+  ctx.lineWidth = 4;
   ctx.beginPath();
-  ctx.arc(x, y, r - 2, 0, Math.PI * 2);
-  ctx.strokeStyle = "#A08040";
-  ctx.lineWidth = 2;
+  ctx.arc(x, y, r + 1.5, Math.PI * 1.1, Math.PI * 1.9);
   ctx.stroke();
-  
+
+  const rimBottom = ctx.createLinearGradient(x, y + r - 4, x, y + r + 3);
+  rimBottom.addColorStop(0, "rgba(80,40,10,0.4)");
+  rimBottom.addColorStop(1, "rgba(0,0,0,0.6)");
+  ctx.strokeStyle = rimBottom;
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.arc(x, y, r + 1.5, Math.PI * 0.1, Math.PI * 0.9);
+  ctx.stroke();
+
+  // Lueur jouable - or brillant
   if (isLegal) {
-    ctx.beginPath();
-    ctx.arc(x, y, r + 2, 0, Math.PI * 2);
-    ctx.strokeStyle = "#FFD700";
+    ctx.save();
+    ctx.shadowColor = "rgba(255,200,30,1)";
+    ctx.shadowBlur = 22;
+    ctx.strokeStyle = "rgba(255,210,60,0.95)";
     ctx.lineWidth = 2.5;
-    ctx.shadowBlur = 12;
-    ctx.shadowColor = "#FFD700";
+    ctx.beginPath();
+    ctx.arc(x, y, r + 4, 0, Math.PI * 2);
     ctx.stroke();
+    // Double anneau
+    ctx.shadowBlur = 8;
+    ctx.strokeStyle = "rgba(255,240,120,0.5)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(x, y, r + 6.5, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
   }
-  ctx.restore();
+
+  // Reflet interne - petite ellipse lumineuse en haut à gauche
+  const shine = ctx.createRadialGradient(
+    x - r * 0.35, y - r * 0.35, 0,
+    x - r * 0.25, y - r * 0.25, r * 0.65
+  );
+  shine.addColorStop(0, "rgba(255,200,100,0.10)");
+  shine.addColorStop(0.5, "rgba(255,150,50,0.04)");
+  shine.addColorStop(1, "transparent");
+  ctx.fillStyle = shine;
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fill();
 }
 
-function drawSeed(x, y, isNorth) {
+function drawSeed(x, y, c1, c2) {
+  // Ombre portée de la bille
   ctx.save();
-  ctx.shadowBlur = 3;
-  ctx.shadowOffsetX = 1;
-  ctx.shadowOffsetY = 1;
-  const grad = ctx.createRadialGradient(x - 2, y - 2, 1, x, y, 5);
-  if (isNorth) {
-    grad.addColorStop(0, "#E0F0FF");
-    grad.addColorStop(1, "#2060A0");
-  } else {
-    grad.addColorStop(0, "#FFE0C0");
-    grad.addColorStop(1, "#C04020");
-  }
-  ctx.fillStyle = grad;
+  ctx.shadowColor = "rgba(0,0,0,0.9)";
+  ctx.shadowBlur = 7;
+  ctx.shadowOffsetX = 1.5;
+  ctx.shadowOffsetY = 2.5;
+
+  // Corps de la bille avec gradient sphérique
+  const g = ctx.createRadialGradient(
+    x - SEED_R * 0.38, y - SEED_R * 0.38, 0.3,
+    x + SEED_R * 0.1,  y + SEED_R * 0.1,  SEED_R
+  );
+  g.addColorStop(0,    c1);
+  g.addColorStop(0.45, c2);
+  g.addColorStop(0.85, shadeColor(c2, -40));
+  g.addColorStop(1,    "rgba(0,0,0,0.6)");
+  ctx.fillStyle = g;
   ctx.beginPath();
-  ctx.ellipse(x, y, 5, 6, 0, 0, Math.PI * 2);
-  ctx.fill();
-  // Reflet
-  ctx.fillStyle = "rgba(255,255,200,0.6)";
-  ctx.beginPath();
-  ctx.ellipse(x - 1.5, y - 1.5, 1.5, 1.8, 0, 0, Math.PI * 2);
+  ctx.arc(x, y, SEED_R, 0, Math.PI * 2);
   ctx.fill();
   ctx.restore();
+
+  // Reflet primaire - brillance principale
+  const sh1 = ctx.createRadialGradient(
+    x - SEED_R * 0.32, y - SEED_R * 0.32, 0,
+    x - SEED_R * 0.2,  y - SEED_R * 0.2,  SEED_R * 0.55
+  );
+  sh1.addColorStop(0, "rgba(255,255,255,0.70)");
+  sh1.addColorStop(0.4, "rgba(255,255,255,0.25)");
+  sh1.addColorStop(1, "transparent");
+  ctx.fillStyle = sh1;
+  ctx.beginPath();
+  ctx.arc(x, y, SEED_R, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Micro-reflet secondaire - point brillant
+  const sh2 = ctx.createRadialGradient(
+    x - SEED_R * 0.5, y - SEED_R * 0.48, 0,
+    x - SEED_R * 0.5, y - SEED_R * 0.48, SEED_R * 0.22
+  );
+  sh2.addColorStop(0, "rgba(255,255,255,0.85)");
+  sh2.addColorStop(1, "transparent");
+  ctx.fillStyle = sh2;
+  ctx.beginPath();
+  ctx.arc(x, y, SEED_R, 0, Math.PI * 2);
+  ctx.fill();
 }
 
-function drawSeedsInPit(x, y, r, count, isNorth) {
+function shadeColor(color, amount) {
+  // Assombrit une couleur hex ou rgba
+  if (color.startsWith("rgba") || color.startsWith("rgb")) return "rgba(0,0,0,0.7)";
+  return color; // fallback
+}
+
+function getSeedPositions(count, cx, cy, r) {
+  if (count === 0) return [];
+  if (count === 1) return [{ x: cx, y: cy }];
+  if (count === 2) return [{ x: cx - r*0.28, y: cy }, { x: cx + r*0.28, y: cy }];
+  if (count === 3) return [
+    { x: cx, y: cy - r*0.28 },
+    { x: cx - r*0.28, y: cy + r*0.18 },
+    { x: cx + r*0.28, y: cy + r*0.18 }
+  ];
+  if (count === 4) return [
+    { x: cx - r*0.25, y: cy - r*0.25 }, { x: cx + r*0.25, y: cy - r*0.25 },
+    { x: cx - r*0.25, y: cy + r*0.25 }, { x: cx + r*0.25, y: cy + r*0.25 }
+  ];
+  if (count === 5) return [
+    { x: cx, y: cy },
+    { x: cx - r*0.30, y: cy - r*0.28 }, { x: cx + r*0.30, y: cy - r*0.28 },
+    { x: cx - r*0.30, y: cy + r*0.28 }, { x: cx + r*0.30, y: cy + r*0.28 }
+  ];
+  if (count === 6) return [
+    { x: cx - r*0.28, y: cy - r*0.28 }, { x: cx + r*0.28, y: cy - r*0.28 },
+    { x: cx - r*0.32, y: cy }, { x: cx + r*0.32, y: cy },
+    { x: cx - r*0.28, y: cy + r*0.28 }, { x: cx + r*0.28, y: cy + r*0.28 }
+  ];
+  // 7+ : anneau + centre
+  const positions = [];
+  const ring = Math.min(count, 8);
+  for (let i = 0; i < ring; i++) {
+    const angle = (i / ring) * Math.PI * 2 - Math.PI / 2;
+    positions.push({ x: cx + Math.cos(angle) * r * 0.50, y: cy + Math.sin(angle) * r * 0.50 });
+  }
+  if (count > 8) positions.push({ x: cx, y: cy });
+  return positions;
+}
+
+function drawBadge(x, y, count, r) {
   if (count === 0) return;
-  const radius = r * 0.5;
-  const maxRing = Math.min(count, 8);
-  for (let i = 0; i < maxRing; i++) {
-    const angle = (i / maxRing) * Math.PI * 2;
-    const offX = Math.cos(angle) * radius;
-    const offY = Math.sin(angle) * radius * 0.7;
-    drawSeed(x + offX, y + offY - 2, isNorth);
-  }
-  if (count > 8) {
-    for (let i = 0; i < Math.min(count - 8, 4); i++) {
-      const angle2 = (i / 3) * Math.PI * 2 + 0.5;
-      const offX2 = Math.cos(angle2) * (radius * 0.6);
-      const offY2 = Math.sin(angle2) * (radius * 0.5);
-      drawSeed(x + offX2, y + offY2 + 1, isNorth);
-    }
-  }
-  // Badge nombre
-  ctx.font = "bold 12px 'Cinzel'";
-  ctx.fillStyle = "#F5E2A4";
-  ctx.shadowBlur = 3;
-  ctx.fillText(count, x + 12, y - 12);
+  const bx = x + r * 0.60;
+  const by = y - r * 0.63;
+  ctx.save();
+  // Ombre badge
+  ctx.shadowColor = "rgba(0,0,0,0.7)";
+  ctx.shadowBlur = 5;
+  ctx.shadowOffsetY = 1;
+  // Fond blanc
+  ctx.fillStyle = "rgba(255,255,255,0.96)";
+  ctx.beginPath();
+  ctx.arc(bx, by, 9, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  // Texte
+  ctx.fillStyle = "#1a0a02";
+  ctx.font = "bold 7.5px sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(count, bx, by + 0.5);
+  ctx.restore();
 }
 
 function drawGrenier(side, score) {
   const cx = side === "sud" ? GREN_X_LEFT : GREN_X_RIGHT;
   const cy = CH / 2;
-  const ww = GREN_W;
-  const hh = GREN_H;
-  
+  const hw = GREN_W / 2 - 2;
+  const hh = GREN_H / 2;
+
+  // Ombre grenier
   ctx.save();
-  ctx.shadowBlur = 5;
-  ctx.fillStyle = "#1A0A02";
+  ctx.shadowColor = "rgba(0,0,0,0.95)";
+  ctx.shadowBlur = 16;
+  ctx.shadowOffsetY = 4;
+
+  // Fond creusé
+  const g = ctx.createLinearGradient(cx - hw, cy - hh, cx + hw, cy + hh);
+  g.addColorStop(0,   "#060200");
+  g.addColorStop(0.4, "#120600");
+  g.addColorStop(0.8, "#1e0d04");
+  g.addColorStop(1,   "#2e1608");
+  ctx.fillStyle = g;
   ctx.beginPath();
-  ctx.roundRect(cx - ww/2, cy - hh/2, ww, hh, 8);
+  ctx.roundRect(cx - hw, cy - hh, hw * 2, hh * 2, 10);
   ctx.fill();
-  
-  ctx.fillStyle = "rgba(212,160,23,0.3)";
-  ctx.beginPath();
-  ctx.roundRect(cx - ww/2 + 2, cy - hh/2 + 2, ww - 4, hh - 4, 6);
-  ctx.fill();
-  
-  ctx.font = "bold 24px 'Cinzel'";
-  ctx.fillStyle = side === "sud" ? "#FF6B4A" : "#60AAFF";
-  ctx.shadowBlur = 5;
-  ctx.fillText(score, cx - 15, cy + 8);
-  
-  ctx.font = "bold 10px sans-serif";
-  ctx.fillStyle = "#D4A017";
-  ctx.fillText(side === "sud" ? "SUD" : "NORD", cx - 20, cy - 25);
   ctx.restore();
+
+  // Bord supérieur clair (relief)
+  const rimG = ctx.createLinearGradient(cx - hw, cy - hh, cx - hw, cy - hh + 6);
+  rimG.addColorStop(0, "rgba(200,140,50,0.7)");
+  rimG.addColorStop(1, "rgba(100,60,10,0.1)");
+  ctx.strokeStyle = rimG;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.roundRect(cx - hw, cy - hh, hw * 2, hh * 2, 10);
+  ctx.stroke();
+
+  // Bordure dorée
+  ctx.strokeStyle = "rgba(201,168,76,0.5)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.roundRect(cx - hw + 1, cy - hh + 1, hw * 2 - 2, hh * 2 - 2, 9);
+  ctx.stroke();
+
+  // Score
+  ctx.save();
+  ctx.font = "bold 22px Cinzel, serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillStyle = side === "sud" ? "#ff7055" : "#6ab8ff";
+  ctx.shadowColor = side === "sud" ? "rgba(255,112,85,0.8)" : "rgba(106,184,255,0.8)";
+  ctx.shadowBlur = 14;
+  ctx.fillText(score, cx, cy - hh * 0.42);
+  ctx.restore();
+
+  // Label
+  ctx.save();
+  ctx.font = "bold 8px sans-serif";
+  ctx.fillStyle = "rgba(201,168,76,0.45)";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.translate(cx, cy + hh * 0.28);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText(side === "sud" ? "SUD" : "NORD", 0, 0);
+  ctx.restore();
+
+  // Mini billes dans grenier
+  const maxB = Math.min(score, 16);
+  const cols = 2;
+  for (let i = 0; i < maxB; i++) {
+    const col = (i % cols) - (cols - 1) / 2;
+    const row = Math.floor(i / cols);
+    const sx = cx + col * 10;
+    const sy = cy - hh * 0.02 + row * 11;
+    if (sy > cy + hh - 9) break;
+    const c1 = side === "sud" ? "#ffd8b8" : "#c8e8ff";
+    const c2 = side === "sud" ? "#c84828" : "#2870b8";
+    ctx.save();
+    ctx.shadowColor = "rgba(0,0,0,0.7)";
+    ctx.shadowBlur = 4;
+    ctx.shadowOffsetY = 1.5;
+    const sg = ctx.createRadialGradient(sx - 1.5, sy - 1.5, 0.2, sx + 0.5, sy + 0.5, 4.5);
+    sg.addColorStop(0, c1);
+    sg.addColorStop(0.5, c2);
+    sg.addColorStop(1, "rgba(0,0,0,0.5)");
+    ctx.fillStyle = sg;
+    ctx.beginPath();
+    ctx.arc(sx, sy, 4.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+    // Reflet bille grenier
+    const shr = ctx.createRadialGradient(sx - 1.8, sy - 1.8, 0, sx - 1.2, sy - 1.2, 2.5);
+    shr.addColorStop(0, "rgba(255,255,255,0.65)");
+    shr.addColorStop(1, "transparent");
+    ctx.fillStyle = shr;
+    ctx.beginPath();
+    ctx.arc(sx, sy, 4.5, 0, Math.PI * 2);
+    ctx.fill();
+  }
 }
 
 function draw() {
   ctx.clearRect(0, 0, CW, CH);
-  drawWoodTexture();
-  
+  drawWood();
+
   const legalMoves = getLegalMoves(state);
   const legalIndexes = legalMoves.map(m => m.pitIndex);
-  
+
   ["north", "south"].forEach(player => {
     for (let i = 0; i < 7; i++) {
       const { x, y } = getPitCenter(player, i);
       const count = state.board[player][i];
       const isLegal = state.currentPlayer === player && legalIndexes.includes(i);
       drawCavity(x, y, PIT_R, isLegal);
-      drawSeedsInPit(x, y, PIT_R, count, player === "north");
+      const c1 = isLegal
+        ? "#fff0a0"
+        : (player === "north" ? "#c8e0ff" : "#ffe0c0");
+      const c2 = isLegal
+        ? "#c89010"
+        : (player === "north" ? "#1850a0" : "#b03010");
+      getSeedPositions(count, x, y, PIT_R).forEach(p => drawSeed(p.x, p.y, c1, c2));
+      drawBadge(x, y, count, PIT_R);
     }
   });
-  
+
   drawGrenier("sud", state.scores.south);
   drawGrenier("nord", state.scores.north);
-  
-  // Motif central décoratif
-  ctx.font = "italic 14px 'Cinzel'";
-  ctx.fillStyle = "#D4A017";
-  ctx.shadowBlur = 2;
-  ctx.fillText("⚡ SONGHO ⚡", CW/2 - 55, CH - 12);
 }
 
-// ==================== INTERACTIONS ====================
 canvas.addEventListener("click", function(e) {
   if (state.status !== "playing") return;
   const rect = canvas.getBoundingClientRect();
@@ -464,33 +583,34 @@ canvas.addEventListener("click", function(e) {
   const my = (e.clientY - rect.top) * (CH / rect.height);
   const legalMoves = getLegalMoves(state);
   const legalIndexes = legalMoves.map(m => m.pitIndex);
-  
   for (let i = 0; i < 7; i++) {
     if (!legalIndexes.includes(i)) continue;
     const { x, y } = getPitCenter(state.currentPlayer, i);
-    if (Math.hypot(mx - x, my - y) <= PIT_R + 5) {
-      const result = applyMove(state, { player: state.currentPlayer, pitIndex: i });
-      if (result.ok) {
-        state = result.state;
-        document.getElementById("last-move-text").textContent = result.desc;
-        const item = document.createElement("div");
-        item.className = "history-item";
-        item.textContent = (state.moveNumber - 1) + ". " + result.desc;
-        const historyList = document.getElementById("history-list");
-        historyList.insertBefore(item, historyList.firstChild);
-        while (historyList.children.length > 8) historyList.removeChild(historyList.lastChild);
-        updateUI();
-        draw();
-        if (state.status === "ended") {
-          document.getElementById("overlay").classList.add("show");
-          document.getElementById("modal-title").textContent = state.winner === "draw" ? "Match nul !" : (state.winner === "north" ? "Nord" : "Sud") + " gagne !";
-          document.getElementById("modal-body").textContent = `Score final : Nord ${state.scores.north} – Sud ${state.scores.south}`;
-        }
-      }
-      break;
-    }
+    if (Math.hypot(mx - x, my - y) <= PIT_R + 6) { playMove(state.currentPlayer, i); return; }
   }
 });
+
+function playMove(player, pitIndex) {
+  const pitName = (player === "north" ? "N" : "S") + (pitIndex + 1);
+  const result = applyMove(state, { player, pitIndex });
+  if (!result.ok) return;
+  state = result.state;
+  const action = result.action;
+  let desc = action.type === "forced-donation"
+    ? `${player === "north" ? "Nord" : "Sud"} joue ${pitName}, don forcé ${action.donated} graine(s).`
+    : `${player === "north" ? "Nord" : "Sud"} joue ${pitName}, dernière graine en ${(action.sowing.lastPosition.player === "north" ? "N" : "S") + (action.sowing.lastPosition.pitIndex + 1)}, capture ${action.capture.captured}.`;
+  document.getElementById("last-move-text").textContent = desc;
+  const item = document.createElement("div");
+  item.className = "history-item";
+  item.textContent = state.moveNumber + ". " + desc;
+  document.getElementById("history-list").insertBefore(item, document.getElementById("history-list").firstChild);
+  updateUI(); draw();
+  if (state.status === "ended") {
+    document.getElementById("overlay").classList.add("show");
+    document.getElementById("modal-title").textContent = state.winner === "draw" ? "Match nul !" : (state.winner === "north" ? "Nord" : "Sud") + " gagne !";
+    document.getElementById("modal-body").textContent = `Score final : Nord ${state.scores.north} – Sud ${state.scores.south}`;
+  }
+}
 
 function updateUI() {
   document.getElementById("score-nord").textContent = state.scores.north;
@@ -505,30 +625,10 @@ document.getElementById("btn-restart").addEventListener("click", () => {
   document.getElementById("history-list").innerHTML = "";
   document.getElementById("last-move-text").textContent = "—";
   document.getElementById("overlay").classList.remove("show");
-  updateUI();
-  draw();
+  updateUI(); draw();
 });
 
-// Helper pour roundRect
-if (!CanvasRenderingContext2D.prototype.roundRect) {
-  CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
-    if (w < 2 * r) r = w / 2;
-    if (h < 2 * r) r = h / 2;
-    this.moveTo(x+r, y);
-    this.lineTo(x+w-r, y);
-    this.quadraticCurveTo(x+w, y, x+w, y+r);
-    this.lineTo(x+w, y+h-r);
-    this.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
-    this.lineTo(x+r, y+h);
-    this.quadraticCurveTo(x, y+h, x, y+h-r);
-    this.lineTo(x, y+r);
-    this.quadraticCurveTo(x, y, x+r, y);
-    return this;
-  };
-}
-
-updateUI();
-draw();
+updateUI(); draw();
 </script>
 </body>
 </html>
