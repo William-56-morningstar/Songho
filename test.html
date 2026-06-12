@@ -57,17 +57,20 @@
     });
 
     tryTest("Grenier 14", () => {
-      const s = createGame("south");
-      s.board.south[3] = s.board.south[3] + 14 - s.board.south[0];
-      s.board.south[0] = 0;
-      assert("Grenier 14 - invariant avant", totalSeeds(s) === 70);
-      applyMove(s, { player: "south", pitIndex: 3 });
-      assert("Grenier 14 - case source vide", s.board.south[3] === 0);
-      assert("Grenier 14 - score Sud augmente", s.scores.south >= 1);
-      assert("Grenier 14 - invariant après", totalSeeds(s) === 70);
-    });
-
-    tryTest("Coup interdit", () => {
+  const s = createGame("south");
+  // On repart de zéro avec exactement 70 graines
+  s.board.south = [0, 0, 0, 14, 0, 0, 0];
+  s.board.north = [0, 0, 0, 0, 0, 0, 0];
+  s.scores.south = 0;
+  s.scores.north = 56;
+  assert("Grenier 14 - invariant avant", totalSeeds(s) === 70);
+  applyMove(s, { player: "south", pitIndex: 3 });
+  assert("Grenier 14 - case source vide", s.board.south[3] === 0);
+  assert("Grenier 14 - score Sud augmente", s.scores.south >= 1);
+  assert("Grenier 14 - invariant après", totalSeeds(s) === 70);
+});
+    
+ tryTest("Coup interdit", () => {
       const s = createGame("south");
       s.board.south = [1, 0, 0, 0, 0, 0, 0];
       s.board.north = [5, 5, 5, 5, 5, 5, 5];
