@@ -26,11 +26,10 @@
     }
 
     #status {
-      font-size: 15px;
-      margin-bottom: 16px;
+      font-size: 14px;
+      margin-bottom: 12px;
       color: #f5deb3;
       text-align: center;
-      min-height: 20px;
     }
 
     #scores {
@@ -67,13 +66,13 @@
       background: #3b1f0a;
       border: 2px solid #8b5e3c;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
+      padding: 4px;
+      gap: 2px;
+      cursor: default;
       transition: background 0.2s, transform 0.1s;
-      color: #f5deb3;
     }
 
     .pit:active { transform: scale(0.92); }
@@ -84,17 +83,33 @@
       cursor: pointer;
     }
 
-    .pit.legal:hover {
-      background: #7a4015;
-    }
+    .pit.legal:hover { background: #7a4015; }
 
-    .pit.disabled {
-      opacity: 0.4;
-      cursor: default;
-    }
+    .pit.disabled { opacity: 0.4; }
 
     .pit.north-pit { border-color: #6ab0f5; }
     .pit.south-pit { border-color: #f57c6a; }
+    .pit.legal { border-color: #d4a017 !important; }
+
+    .seed {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #d4a017;
+      flex-shrink: 0;
+    }
+
+    .pit.north-pit .seed { background: #a8d4f5; }
+    .pit.south-pit .seed { background: #f5a08a; }
+    .pit.legal .seed { background: #ffe066; }
+
+    .seed-count {
+      font-size: 9px;
+      color: #d4a017;
+      text-align: center;
+      width: 100%;
+      line-height: 1;
+    }
 
     #row-north { flex-direction: row-reverse; }
 
@@ -117,16 +132,6 @@
       font-weight: bold;
       cursor: pointer;
       display: none;
-    }
-
-    #btn-restart:active { opacity: 0.8; }
-
-    #turn-indicator {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      display: inline-block;
-      margin-right: 6px;
     }
   </style>
 </head>
@@ -152,17 +157,38 @@
   <script>
     let state = createGame("south");
 
+    function renderSeeds(pit, count, isLegal, side) {
+      pit.innerHTML = "";
+      if (count <= 15) {
+        for (let i = 0; i < count; i++) {
+          const seed = document.createElement("div");
+          seed.className = "seed";
+          pit.appendChild(seed);
+        }
+      } else {
+        // Trop de graines : affiche pions + chiffre
+        for (let i = 0; i < 9; i++) {
+          const seed = document.createElement("div");
+          seed.className = "seed";
+          pit.appendChild(seed);
+        }
+        const label = document.createElement("div");
+        label.className = "seed-count";
+        label.textContent = count;
+        pit.appendChild(label);
+      }
+    }
+
     function render() {
       const legalMoves = getLegalMoves(state);
       const legalIndexes = legalMoves.map(m => m.pitIndex);
 
-      // Ligne Nord (affichée en miroir)
+      // Ligne Nord
       const rowNorth = document.getElementById("row-north");
       rowNorth.innerHTML = "";
       for (let i = 0; i < 7; i++) {
         const pit = document.createElement("div");
         pit.className = "pit north-pit";
-        pit.textContent = state.board.north[i];
         const isLegal = state.currentPlayer === "north" && legalIndexes.includes(i);
         if (isLegal) {
           pit.classList.add("legal");
@@ -170,6 +196,7 @@
         } else {
           pit.classList.add("disabled");
         }
+        renderSeeds(pit, state.board.north[i], isLegal, "north");
         rowNorth.appendChild(pit);
       }
 
@@ -179,7 +206,6 @@
       for (let i = 0; i < 7; i++) {
         const pit = document.createElement("div");
         pit.className = "pit south-pit";
-        pit.textContent = state.board.south[i];
         const isLegal = state.currentPlayer === "south" && legalIndexes.includes(i);
         if (isLegal) {
           pit.classList.add("legal");
@@ -187,6 +213,7 @@
         } else {
           pit.classList.add("disabled");
         }
+        renderSeeds(pit, state.board.south[i], isLegal, "south");
         rowSouth.appendChild(pit);
       }
 
@@ -201,7 +228,7 @@
         statusEl.textContent = who + " — cases dorées = coups possibles";
       }
 
-      // Fin de partie
+      // Fin
       const msgEl = document.getElementById("message");
       const btnRestart = document.getElementById("btn-restart");
       if (state.status === "ended") {
@@ -241,4 +268,4 @@
     render();
   </script>
 </body>
-    </html>
+</html>
