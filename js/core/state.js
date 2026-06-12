@@ -1,5 +1,9 @@
 // js/core/state.js
 
+function other(player) {
+  return player === "north" ? "south" : "north";
+}
+
 function createGame(startingPlayer = "south") {
   return {
     board: {
