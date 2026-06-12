@@ -10,7 +10,7 @@
 
     body {
       min-height: 100vh;
-      background: #0d1117;
+      background: #0a0705;
       font-family: 'Inter', sans-serif;
       display: flex;
       flex-direction: column;
@@ -26,23 +26,20 @@
       align-items: center;
       justify-content: space-between;
       padding: 10px 14px;
-      background: #161b22;
-      border: 1px solid #30363d;
+      background: linear-gradient(135deg, #1a1205, #2d1f0a);
+      border: 1px solid #8b6914;
       border-radius: 10px;
     }
 
     #logo {
       font-family: 'Cinzel', serif;
-      font-size: 20px;
-      color: #c9a84c;
-      letter-spacing: 2px;
+      font-size: 22px;
+      color: #d4a017;
+      letter-spacing: 3px;
+      text-shadow: 0 0 20px rgba(212,160,23,0.5);
     }
 
-    #header-right {
-      font-size: 11px;
-      color: #8b949e;
-      text-align: right;
-    }
+    #header-right { font-size: 11px; color: #a08040; text-align: right; line-height: 1.6; }
 
     /* STATUS */
     #statusbar {
@@ -53,105 +50,129 @@
     }
 
     .stat-box {
-      background: #161b22;
-      border: 1px solid #30363d;
+      background: linear-gradient(135deg, #1a1205, #2d1f0a);
+      border: 1px solid #5a3e10;
       border-radius: 8px;
       padding: 6px 4px;
       text-align: center;
     }
 
-    .stat-label {
-      font-size: 9px;
-      color: #8b949e;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+    .stat-label { font-size: 9px; color: #8b6914; text-transform: uppercase; letter-spacing: 1px; }
+    .stat-value { font-size: 18px; font-weight: 700; margin-top: 1px; }
+    .stat-value.nord { color: #60aaff; }
+    .stat-value.sud { color: #ff6b4a; }
+    .stat-value.gold { color: #d4a017; }
 
-    .stat-value {
-      font-size: 16px;
-      font-weight: 700;
-      color: #e6edf3;
-      margin-top: 1px;
-    }
-
-    .stat-value.nord { color: #58a6ff; }
-    .stat-value.sud { color: #f78166; }
-    .stat-value.gold { color: #c9a84c; }
-
-    /* GRENIER HAUT (Nord) */
+    /* GRENIER */
     .grenier-bar {
       width: 100%;
-      background: #161b22;
-      border: 1px solid #30363d;
+      background: linear-gradient(135deg, #1a1205, #2d1f0a);
+      border: 1px solid #5a3e10;
       border-radius: 8px;
-      padding: 8px 12px;
+      padding: 8px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    .grenier-bar .g-label {
-      font-size: 10px;
-      color: #8b949e;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+    .g-info { display: flex; flex-direction: column; gap: 2px; }
+    .g-label { font-size: 10px; color: #8b6914; text-transform: uppercase; letter-spacing: 1px; }
+    .g-score { font-family: 'Cinzel', serif; font-size: 28px; font-weight: 800; }
+    .g-score.nord { color: #60aaff; }
+    .g-score.sud { color: #ff6b4a; }
 
-    .grenier-bar .g-score {
-      font-family: 'Cinzel', serif;
-      font-size: 22px;
-      font-weight: 800;
-    }
+    .g-seeds { display: flex; flex-wrap: wrap; gap: 3px; max-width: 200px; justify-content: flex-end; }
+    .gseed { width: 8px; height: 8px; border-radius: 50%; }
+    .gseed.nord { background: radial-gradient(circle at 35% 35%, #90c8ff, #2060a0); }
+    .gseed.sud { background: radial-gradient(circle at 35% 35%, #ff9070, #c03020); }
 
-    .grenier-bar .g-score.nord { color: #58a6ff; }
-    .grenier-bar .g-score.sud { color: #f78166; }
-
-    .grenier-bar .g-seeds {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 3px;
-      max-width: 180px;
-      justify-content: flex-end;
-    }
-
-    .gseed {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-    }
-
-    .gseed.nord { background: #58a6ff; }
-    .gseed.sud { background: #f78166; }
-
-    /* PLATEAU */
-    #plateau {
+    /* PLATEAU avec texture bois */
+    #plateau-wrapper {
       width: 100%;
-      background: linear-gradient(145deg, #1c1008, #2d1a0a, #1c1008);
-      border: 2px solid #5a3a1a;
-      border-radius: 14px;
-      padding: 12px 8px;
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 3px solid #8b5e1a;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,200,80,0.2);
+    }
+
+    #plateau-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 3px,
+          rgba(0,0,0,0.03) 3px,
+          rgba(0,0,0,0.03) 6px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 8px,
+          rgba(0,0,0,0.02) 8px,
+          rgba(0,0,0,0.02) 16px
+        ),
+        linear-gradient(160deg,
+          #5c3010 0%,
+          #8b4e1a 15%,
+          #6b3a12 30%,
+          #9b5820 45%,
+          #7a4418 60%,
+          #5c3010 75%,
+          #8b4e1a 90%,
+          #6b3a12 100%
+        );
+      filter: contrast(1.1) saturate(1.2);
+    }
+
+    #plateau {
+      position: relative;
+      padding: 16px 10px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      box-shadow: inset 0 2px 8px rgba(0,0,0,0.6), 0 4px 20px rgba(0,0,0,0.5);
+      gap: 10px;
+      z-index: 1;
     }
 
-    .board-row {
+    /* Labels Nord/Sud sur le plateau */
+    #plateau-labels {
+      position: absolute;
+      bottom: 8px;
+      left: 0; right: 0;
       display: flex;
-      gap: 4px;
-      justify-content: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      z-index: 2;
+      pointer-events: none;
     }
 
+    .plateau-label {
+      font-size: 9px;
+      color: rgba(255,220,100,0.6);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-family: 'Cinzel', serif;
+    }
+
+    .board-row { display: flex; gap: 5px; justify-content: center; }
     #row-nord { flex-direction: row-reverse; }
+
+    #separator {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255,200,80,0.4), transparent);
+      margin: 0 6px;
+    }
 
     /* CASES */
     .pit {
       flex: 1;
-      max-width: 46px;
-      height: 46px;
+      max-width: 44px;
+      height: 44px;
       border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #3d2210, #1e0f05);
-      border: 2px solid #5a3a1a;
+      background: radial-gradient(ellipse at 40% 30%, #2a1508, #0f0603);
+      border: 2px solid #6b3a12;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -160,93 +181,79 @@
       gap: 2px;
       cursor: default;
       transition: all 0.15s;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+      box-shadow:
+        inset 0 3px 6px rgba(0,0,0,0.7),
+        inset 0 -1px 2px rgba(255,180,50,0.1),
+        0 2px 4px rgba(0,0,0,0.5);
     }
 
     .pit.legal {
-      border-color: #c9a84c !important;
-      background: radial-gradient(circle at 35% 35%, #5c3a10, #2d1a05);
+      border-color: #d4a017 !important;
+      background: radial-gradient(ellipse at 40% 30%, #4a2808, #1f0e03);
       cursor: pointer;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 0 8px rgba(201,168,76,0.4);
+      box-shadow:
+        inset 0 3px 6px rgba(0,0,0,0.5),
+        0 0 12px rgba(212,160,23,0.5),
+        0 0 24px rgba(212,160,23,0.2);
     }
 
-    .pit.legal:active { transform: scale(0.9); }
-    .pit.nord-pit { border-color: #2d5a8a; }
-    .pit.sud-pit { border-color: #8a2d1a; }
-    .pit.disabled { opacity: 0.45; }
+    .pit.legal:active { transform: scale(0.88); }
+    .pit.nord-pit { border-color: #1a4a8a; }
+    .pit.sud-pit { border-color: #8a1a0a; }
+    .pit.disabled { opacity: 0.5; }
 
     /* GRAINES */
-    .seed {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
+    .seed { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    .pit.nord-pit .seed {
+      background: radial-gradient(circle at 35% 35%, #c0e0ff, #3080c0);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.5);
     }
 
-    .pit.nord-pit .seed { background: radial-gradient(circle at 35% 35%, #7ec8f0, #2a6fa8); }
-    .pit.sud-pit .seed { background: radial-gradient(circle at 35% 35%, #f5a080, #c0402a); }
-    .pit.legal .seed { background: radial-gradient(circle at 35% 35%, #ffe599, #c9a84c); }
-
-    .seed-overflow {
-      font-size: 8px;
-      color: #c9a84c;
-      font-weight: bold;
-      width: 100%;
-      text-align: center;
+    .pit.sud-pit .seed {
+      background: radial-gradient(circle at 35% 35%, #ffc0a0, #c04020);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.5);
     }
 
-    #separator {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, #c9a84c55, transparent);
-      margin: 0 8px;
+    .pit.legal .seed {
+      background: radial-gradient(circle at 35% 35%, #fff0a0, #d4a017);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.5);
     }
+
+    .seed-overflow { font-size: 8px; color: #d4a017; font-weight: bold; width: 100%; text-align: center; }
 
     /* BAS */
-    #bottom-area {
-      width: 100%;
-      display: flex;
-      gap: 8px;
-    }
+    #bottom-area { width: 100%; display: flex; gap: 8px; }
 
     .info-box {
       flex: 1;
-      background: #161b22;
-      border: 1px solid #30363d;
+      background: linear-gradient(135deg, #1a1205, #2d1f0a);
+      border: 1px solid #5a3e10;
       border-radius: 8px;
       padding: 10px;
-      max-height: 110px;
+      max-height: 100px;
       overflow-y: auto;
     }
 
     .box-title {
       font-size: 9px;
-      color: #8b949e;
+      color: #8b6914;
       text-transform: uppercase;
       letter-spacing: 1px;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       padding-bottom: 4px;
-      border-bottom: 1px solid #21262d;
+      border-bottom: 1px solid #3a2a08;
     }
 
-    #last-move-text {
-      font-size: 12px;
-      color: #c9d1d9;
-      line-height: 1.5;
-    }
-
-    .history-item {
-      font-size: 11px;
-      color: #8b949e;
-      padding: 2px 0;
-      border-bottom: 1px solid #21262d;
-    }
+    #last-move-text { font-size: 11px; color: #c8a060; line-height: 1.5; }
+    .history-item { font-size: 10px; color: #8b6914; padding: 2px 0; border-bottom: 1px solid #2a1e08; }
 
     /* MODAL */
     #overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.85);
+      background: rgba(0,0,0,0.88);
       z-index: 100;
       align-items: center;
       justify-content: center;
@@ -255,38 +262,34 @@
     #overlay.show { display: flex; }
 
     #modal {
-      background: #161b22;
-      border: 1px solid #c9a84c;
-      border-radius: 14px;
-      padding: 28px 24px;
+      background: linear-gradient(145deg, #1a1205, #2d1f0a);
+      border: 2px solid #d4a017;
+      border-radius: 16px;
+      padding: 30px 24px;
       text-align: center;
       width: 85%;
       max-width: 320px;
+      box-shadow: 0 0 40px rgba(212,160,23,0.3);
     }
 
-    #modal h2 {
-      font-family: 'Cinzel', serif;
-      font-size: 22px;
-      color: #c9a84c;
-      margin-bottom: 6px;
-    }
-
-    #modal p { color: #8b949e; font-size: 13px; margin-bottom: 18px; }
+    #modal h2 { font-family: 'Cinzel', serif; font-size: 24px; color: #d4a017; margin-bottom: 8px; }
+    #modal p { color: #a08040; font-size: 13px; margin-bottom: 20px; }
 
     #btn-restart {
-      padding: 10px 22px;
-      background: #c9a84c;
-      color: #0d1117;
+      padding: 10px 24px;
+      background: linear-gradient(135deg, #d4a017, #a07010);
+      color: #0a0705;
       border: none;
       border-radius: 8px;
       font-size: 14px;
       font-weight: 700;
       cursor: pointer;
       font-family: 'Cinzel', serif;
+      letter-spacing: 1px;
     }
 
     .info-box::-webkit-scrollbar { width: 3px; }
-    .info-box::-webkit-scrollbar-thumb { background: #30363d; }
+    .info-box::-webkit-scrollbar-thumb { background: #5a3e10; }
   </style>
 </head>
 <body>
@@ -315,25 +318,29 @@
     </div>
   </div>
 
-  <!-- Grenier Nord -->
   <div class="grenier-bar">
-    <div>
+    <div class="g-info">
       <div class="g-label">⬆ Grenier Nord</div>
       <div class="g-score nord" id="g-nord">0</div>
     </div>
     <div class="g-seeds" id="gs-nord"></div>
   </div>
 
-  <!-- Plateau -->
-  <div id="plateau">
-    <div class="board-row" id="row-nord"></div>
-    <div id="separator"></div>
-    <div class="board-row" id="row-sud"></div>
+  <div id="plateau-wrapper">
+    <div id="plateau-bg"></div>
+    <div id="plateau">
+      <div class="board-row" id="row-nord"></div>
+      <div id="separator"></div>
+      <div class="board-row" id="row-sud"></div>
+    </div>
+    <div id="plateau-labels">
+      <span class="plateau-label">Nord</span>
+      <span class="plateau-label">Sud</span>
+    </div>
   </div>
 
-  <!-- Grenier Sud -->
   <div class="grenier-bar">
-    <div>
+    <div class="g-info">
       <div class="g-label">⬇ Grenier Sud</div>
       <div class="g-score sud" id="g-sud">0</div>
     </div>
@@ -382,7 +389,7 @@
     function renderGrenierSeeds(id, count, side) {
       const el = document.getElementById(id);
       el.innerHTML = "";
-      const display = Math.min(count, 24);
+      const display = Math.min(count, 28);
       for (let i = 0; i < display; i++) {
         const s = document.createElement("div");
         s.className = "gseed " + side;
@@ -443,7 +450,7 @@
       const action = result.action;
       let desc = "";
       if (action.type === "forced-donation") {
-        desc = `${player === "north" ? "Nord" : "Sud"} joue ${pitName}, don forcé de ${action.donated} graine(s).`;
+        desc = `${player === "north" ? "Nord" : "Sud"} joue ${pitName}, don forcé ${action.donated} graine(s).`;
       } else {
         const cap = action.capture.captured;
         const last = action.sowing.lastPosition;
@@ -470,4 +477,4 @@
     render();
   </script>
 </body>
-</html>
+  </html>
