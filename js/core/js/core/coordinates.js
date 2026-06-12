@@ -35,10 +35,6 @@ function nextPositionsAfter(source) {
   return positions;
 }
 
-function other(player) {
-  return player === "north" ? "south" : "north";
-}
-
 function attackPit(player) {
   return player === "north"
     ? { player: "north", pitIndex: 6 }
