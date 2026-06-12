@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Songho — Version Locale</title>
+  <title>Songho</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@400;600&display=swap');
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -16,170 +15,140 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 12px;
+      padding: 10px;
+      gap: 8px;
     }
 
-    /* ── HEADER ── */
+    /* HEADER */
     #header {
       width: 100%;
-      max-width: 860px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 16px;
+      padding: 10px 14px;
       background: #161b22;
       border: 1px solid #30363d;
-      border-radius: 12px;
-      margin-bottom: 12px;
+      border-radius: 10px;
     }
 
     #logo {
       font-family: 'Cinzel', serif;
-      font-size: 22px;
+      font-size: 20px;
       color: #c9a84c;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
     }
 
-    #header-info {
-      font-size: 12px;
+    #header-right {
+      font-size: 11px;
       color: #8b949e;
       text-align: right;
-      line-height: 1.6;
     }
 
-    /* ── STATUS BAR ── */
+    /* STATUS */
     #statusbar {
       width: 100%;
-      max-width: 860px;
-      display: flex;
-      gap: 8px;
-      margin-bottom: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 6px;
     }
 
     .stat-box {
-      flex: 1;
       background: #161b22;
       border: 1px solid #30363d;
-      border-radius: 10px;
-      padding: 8px 12px;
+      border-radius: 8px;
+      padding: 6px 4px;
       text-align: center;
     }
 
     .stat-label {
-      font-size: 10px;
+      font-size: 9px;
       color: #8b949e;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
 
     .stat-value {
-      font-size: 15px;
-      font-weight: 600;
+      font-size: 16px;
+      font-weight: 700;
       color: #e6edf3;
-      margin-top: 2px;
+      margin-top: 1px;
     }
 
     .stat-value.nord { color: #58a6ff; }
     .stat-value.sud { color: #f78166; }
-    .stat-value.active { color: #c9a84c; }
+    .stat-value.gold { color: #c9a84c; }
 
-    /* ── MAIN GAME AREA ── */
-    #game-area {
+    /* GRENIER HAUT (Nord) */
+    .grenier-bar {
       width: 100%;
-      max-width: 860px;
-      display: flex;
-      gap: 10px;
-      align-items: stretch;
-      margin-bottom: 12px;
-    }
-
-    /* ── GRENIERS ── */
-    .grenier {
-      width: 64px;
       background: #161b22;
       border: 1px solid #30363d;
-      border-radius: 12px;
+      border-radius: 8px;
+      padding: 8px 12px;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 10px 6px;
-      gap: 6px;
-      flex-shrink: 0;
+      justify-content: space-between;
     }
 
-    .grenier-label {
+    .grenier-bar .g-label {
       font-size: 10px;
       color: #8b949e;
       text-transform: uppercase;
       letter-spacing: 1px;
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
     }
 
-    .grenier-score {
+    .grenier-bar .g-score {
       font-family: 'Cinzel', serif;
-      font-size: 26px;
+      font-size: 22px;
       font-weight: 800;
     }
 
-    .grenier-score.nord { color: #58a6ff; }
-    .grenier-score.sud { color: #f78166; }
+    .grenier-bar .g-score.nord { color: #58a6ff; }
+    .grenier-bar .g-score.sud { color: #f78166; }
 
-    .grenier-seeds {
+    .grenier-bar .g-seeds {
       display: flex;
       flex-wrap: wrap;
       gap: 3px;
-      justify-content: center;
-      max-width: 52px;
+      max-width: 180px;
+      justify-content: flex-end;
     }
 
-    .grenier-seed {
+    .gseed {
       width: 7px;
       height: 7px;
       border-radius: 50%;
     }
 
-    .grenier-seed.nord { background: #58a6ff; }
-    .grenier-seed.sud { background: #f78166; }
+    .gseed.nord { background: #58a6ff; }
+    .gseed.sud { background: #f78166; }
 
-    /* ── PLATEAU ── */
+    /* PLATEAU */
     #plateau {
-      flex: 1;
+      width: 100%;
       background: linear-gradient(145deg, #1c1008, #2d1a0a, #1c1008);
-      border: 2px solid #4a3520;
-      border-radius: 16px;
-      padding: 14px 10px;
+      border: 2px solid #5a3a1a;
+      border-radius: 14px;
+      padding: 12px 8px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      box-shadow:
-        inset 0 2px 8px rgba(0,0,0,0.6),
-        0 4px 20px rgba(0,0,0,0.5);
-      position: relative;
-    }
-
-    #plateau::before {
-      content: '';
-      position: absolute;
-      inset: 4px;
-      border: 1px solid rgba(201,168,76,0.15);
-      border-radius: 12px;
-      pointer-events: none;
+      gap: 8px;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.6), 0 4px 20px rgba(0,0,0,0.5);
     }
 
     .board-row {
       display: flex;
-      gap: 6px;
+      gap: 4px;
       justify-content: center;
     }
 
     #row-nord { flex-direction: row-reverse; }
 
-    /* ── CASES ── */
+    /* CASES */
     .pit {
-      width: 48px;
-      height: 48px;
+      flex: 1;
+      max-width: 46px;
+      height: 46px;
       border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #3d2210, #1e0f05);
       border: 2px solid #5a3a1a;
@@ -187,124 +156,97 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      padding: 5px;
+      padding: 4px;
       gap: 2px;
       cursor: default;
-      transition: all 0.15s ease;
-      position: relative;
+      transition: all 0.15s;
       box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
     }
 
     .pit.legal {
-      border-color: #c9a84c;
+      border-color: #c9a84c !important;
       background: radial-gradient(circle at 35% 35%, #5c3a10, #2d1a05);
       cursor: pointer;
-      box-shadow:
-        inset 0 2px 4px rgba(0,0,0,0.3),
-        0 0 10px rgba(201,168,76,0.3);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 0 8px rgba(201,168,76,0.4);
     }
 
-    .pit.legal:active { transform: scale(0.93); }
-
+    .pit.legal:active { transform: scale(0.9); }
     .pit.nord-pit { border-color: #2d5a8a; }
     .pit.sud-pit { border-color: #8a2d1a; }
-    .pit.legal { border-color: #c9a84c !important; }
-    .pit.disabled { opacity: 0.5; }
+    .pit.disabled { opacity: 0.45; }
 
-    /* ── GRAINES ── */
+    /* GRAINES */
     .seed {
-      width: 9px;
-      height: 9px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       flex-shrink: 0;
     }
 
-    .pit.nord-pit .seed {
-      background: radial-gradient(circle at 35% 35%, #7ec8f0, #2a6fa8);
-    }
-
-    .pit.sud-pit .seed {
-      background: radial-gradient(circle at 35% 35%, #f5a080, #c0402a);
-    }
-
-    .pit.legal .seed {
-      background: radial-gradient(circle at 35% 35%, #ffe599, #c9a84c);
-    }
+    .pit.nord-pit .seed { background: radial-gradient(circle at 35% 35%, #7ec8f0, #2a6fa8); }
+    .pit.sud-pit .seed { background: radial-gradient(circle at 35% 35%, #f5a080, #c0402a); }
+    .pit.legal .seed { background: radial-gradient(circle at 35% 35%, #ffe599, #c9a84c); }
 
     .seed-overflow {
-      font-size: 9px;
+      font-size: 8px;
       color: #c9a84c;
       font-weight: bold;
       width: 100%;
       text-align: center;
-      line-height: 1;
     }
 
-    /* ── SÉPARATEUR ── */
     #separator {
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #4a3520, #c9a84c44, #4a3520, transparent);
-      border-radius: 1px;
-      margin: 2px 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #c9a84c55, transparent);
+      margin: 0 8px;
     }
 
-    /* ── DERNIER COUP + HISTORIQUE ── */
+    /* BAS */
     #bottom-area {
       width: 100%;
-      max-width: 860px;
       display: flex;
-      gap: 10px;
+      gap: 8px;
     }
 
-    #last-move {
+    .info-box {
       flex: 1;
       background: #161b22;
       border: 1px solid #30363d;
-      border-radius: 10px;
-      padding: 12px;
-    }
-
-    #history {
-      flex: 1;
-      background: #161b22;
-      border: 1px solid #30363d;
-      border-radius: 10px;
-      padding: 12px;
-      max-height: 130px;
+      border-radius: 8px;
+      padding: 10px;
+      max-height: 110px;
       overflow-y: auto;
     }
 
     .box-title {
-      font-size: 10px;
+      font-size: 9px;
       color: #8b949e;
       text-transform: uppercase;
       letter-spacing: 1px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
+      padding-bottom: 4px;
       border-bottom: 1px solid #21262d;
-      padding-bottom: 6px;
     }
 
     #last-move-text {
-      font-size: 13px;
+      font-size: 12px;
       color: #c9d1d9;
       line-height: 1.5;
     }
 
     .history-item {
-      font-size: 12px;
+      font-size: 11px;
       color: #8b949e;
-      padding: 3px 0;
+      padding: 2px 0;
       border-bottom: 1px solid #21262d;
     }
 
-    .history-item:last-child { border-bottom: none; }
-
-    /* ── MESSAGE FIN ── */
+    /* MODAL */
     #overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.8);
+      background: rgba(0,0,0,0.85);
       z-index: 100;
       align-items: center;
       justify-content: center;
@@ -315,58 +257,45 @@
     #modal {
       background: #161b22;
       border: 1px solid #c9a84c;
-      border-radius: 16px;
-      padding: 32px;
+      border-radius: 14px;
+      padding: 28px 24px;
       text-align: center;
-      max-width: 300px;
-      width: 90%;
+      width: 85%;
+      max-width: 320px;
     }
 
     #modal h2 {
       font-family: 'Cinzel', serif;
-      font-size: 24px;
+      font-size: 22px;
       color: #c9a84c;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
-    #modal p {
-      color: #8b949e;
-      font-size: 14px;
-      margin-bottom: 20px;
-    }
+    #modal p { color: #8b949e; font-size: 13px; margin-bottom: 18px; }
 
     #btn-restart {
-      padding: 10px 24px;
+      padding: 10px 22px;
       background: #c9a84c;
       color: #0d1117;
       border: none;
       border-radius: 8px;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       cursor: pointer;
       font-family: 'Cinzel', serif;
     }
 
-    #btn-restart:active { opacity: 0.8; }
-
-    /* scrollbar */
-    #history::-webkit-scrollbar { width: 4px; }
-    #history::-webkit-scrollbar-track { background: #0d1117; }
-    #history::-webkit-scrollbar-thumb { background: #30363d; border-radius: 2px; }
+    .info-box::-webkit-scrollbar { width: 3px; }
+    .info-box::-webkit-scrollbar-thumb { background: #30363d; }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
   <div id="header">
     <div id="logo">⚜ SONGHO</div>
-    <div id="header-info">
-      Version locale · 2 joueurs<br>
-      <span id="move-counter">Tour 0</span>
-    </div>
+    <div id="header-right">Version locale · 2 joueurs<br><span id="move-counter">Tour 0</span></div>
   </div>
 
-  <!-- STATUS BAR -->
   <div id="statusbar">
     <div class="stat-box">
       <div class="stat-label">Nord</div>
@@ -374,11 +303,11 @@
     </div>
     <div class="stat-box">
       <div class="stat-label">Tour</div>
-      <div class="stat-value active" id="tour-joueur">Sud</div>
+      <div class="stat-value gold" id="tour-joueur">Sud</div>
     </div>
     <div class="stat-box">
       <div class="stat-label">État</div>
-      <div class="stat-value active" id="etat-jeu">En jeu</div>
+      <div class="stat-value gold" id="etat-jeu">En jeu</div>
     </div>
     <div class="stat-box">
       <div class="stat-label">Sud</div>
@@ -386,45 +315,42 @@
     </div>
   </div>
 
-  <!-- ZONE DE JEU -->
-  <div id="game-area">
-
-    <!-- Grenier Nord -->
-    <div class="grenier" id="grenier-nord">
-      <div class="grenier-label">Nord</div>
-      <div class="grenier-score nord" id="g-nord">0</div>
-      <div class="grenier-seeds" id="gs-nord"></div>
+  <!-- Grenier Nord -->
+  <div class="grenier-bar">
+    <div>
+      <div class="g-label">⬆ Grenier Nord</div>
+      <div class="g-score nord" id="g-nord">0</div>
     </div>
-
-    <!-- Plateau -->
-    <div id="plateau">
-      <div class="board-row" id="row-nord"></div>
-      <div id="separator"></div>
-      <div class="board-row" id="row-sud"></div>
-    </div>
-
-    <!-- Grenier Sud -->
-    <div class="grenier" id="grenier-sud">
-      <div class="grenier-label">Sud</div>
-      <div class="grenier-score sud" id="g-sud">0</div>
-      <div class="grenier-seeds" id="gs-sud"></div>
-    </div>
-
+    <div class="g-seeds" id="gs-nord"></div>
   </div>
 
-  <!-- DERNIER COUP + HISTORIQUE -->
+  <!-- Plateau -->
+  <div id="plateau">
+    <div class="board-row" id="row-nord"></div>
+    <div id="separator"></div>
+    <div class="board-row" id="row-sud"></div>
+  </div>
+
+  <!-- Grenier Sud -->
+  <div class="grenier-bar">
+    <div>
+      <div class="g-label">⬇ Grenier Sud</div>
+      <div class="g-score sud" id="g-sud">0</div>
+    </div>
+    <div class="g-seeds" id="gs-sud"></div>
+  </div>
+
   <div id="bottom-area">
-    <div id="last-move">
+    <div class="info-box">
       <div class="box-title">Dernier coup</div>
       <div id="last-move-text">—</div>
     </div>
-    <div id="history">
+    <div class="info-box">
       <div class="box-title">Historique</div>
       <div id="history-list"></div>
     </div>
   </div>
 
-  <!-- MODAL FIN -->
   <div id="overlay">
     <div id="modal">
       <h2 id="modal-title">Victoire !</h2>
@@ -436,18 +362,16 @@
   <script src="js/core/engine-full.js"></script>
   <script>
     let state = createGame("south");
-    let historyLog = [];
 
-    function renderSeeds(pit, count, side) {
+    function renderSeeds(pit, count) {
       pit.innerHTML = "";
-      const max = 12;
-      const display = Math.min(count, max);
+      const display = Math.min(count, 12);
       for (let i = 0; i < display; i++) {
         const s = document.createElement("div");
         s.className = "seed";
         pit.appendChild(s);
       }
-      if (count > max) {
+      if (count > 12) {
         const lbl = document.createElement("div");
         lbl.className = "seed-overflow";
         lbl.textContent = count;
@@ -455,14 +379,13 @@
       }
     }
 
-    function renderGrenierSeeds(containerId, count, side) {
-      const el = document.getElementById(containerId);
+    function renderGrenierSeeds(id, count, side) {
+      const el = document.getElementById(id);
       el.innerHTML = "";
-      const max = 20;
-      const display = Math.min(count, max);
+      const display = Math.min(count, 24);
       for (let i = 0; i < display; i++) {
         const s = document.createElement("div");
-        s.className = "grenier-seed " + side;
+        s.className = "gseed " + side;
         el.appendChild(s);
       }
     }
@@ -471,72 +394,43 @@
       const legalMoves = getLegalMoves(state);
       const legalIndexes = legalMoves.map(m => m.pitIndex);
 
-      // Ligne Nord
-      const rowNord = document.getElementById("row-nord");
-      rowNord.innerHTML = "";
-      for (let i = 0; i < 7; i++) {
-        const pit = document.createElement("div");
-        pit.className = "pit nord-pit";
-        const isLegal = state.currentPlayer === "north" && legalIndexes.includes(i);
-        if (isLegal) {
-          pit.classList.add("legal");
-          pit.addEventListener("click", () => playMove("north", i));
-        } else {
-          pit.classList.add("disabled");
+      ["nord", "sud"].forEach(side => {
+        const player = side === "nord" ? "north" : "south";
+        const row = document.getElementById("row-" + side);
+        row.innerHTML = "";
+        for (let i = 0; i < 7; i++) {
+          const pit = document.createElement("div");
+          pit.className = "pit " + side + "-pit";
+          const isLegal = state.currentPlayer === player && legalIndexes.includes(i);
+          if (isLegal) {
+            pit.classList.add("legal");
+            pit.addEventListener("click", () => playMove(player, i));
+          } else {
+            pit.classList.add("disabled");
+          }
+          renderSeeds(pit, state.board[player][i]);
+          row.appendChild(pit);
         }
-        renderSeeds(pit, state.board.north[i], "nord");
-        rowNord.appendChild(pit);
-      }
+      });
 
-      // Ligne Sud
-      const rowSud = document.getElementById("row-sud");
-      rowSud.innerHTML = "";
-      for (let i = 0; i < 7; i++) {
-        const pit = document.createElement("div");
-        pit.className = "pit sud-pit";
-        const isLegal = state.currentPlayer === "south" && legalIndexes.includes(i);
-        if (isLegal) {
-          pit.classList.add("legal");
-          pit.addEventListener("click", () => playMove("south", i));
-        } else {
-          pit.classList.add("disabled");
-        }
-        renderSeeds(pit, state.board.south[i], "sud");
-        rowSud.appendChild(pit);
-      }
-
-      // Scores
       document.getElementById("score-nord").textContent = state.scores.north;
       document.getElementById("score-sud").textContent = state.scores.south;
       document.getElementById("g-nord").textContent = state.scores.north;
       document.getElementById("g-sud").textContent = state.scores.south;
       document.getElementById("move-counter").textContent = "Tour " + state.moveNumber;
+      document.getElementById("tour-joueur").textContent = state.currentPlayer === "north" ? "Nord" : "Sud";
+      document.getElementById("etat-jeu").textContent = state.status === "playing" ? "En jeu" : "Terminée";
 
       renderGrenierSeeds("gs-nord", state.scores.north, "nord");
       renderGrenierSeeds("gs-sud", state.scores.south, "sud");
 
-      // Tour
-      document.getElementById("tour-joueur").textContent =
-        state.currentPlayer === "north" ? "Nord" : "Sud";
-
-      // Etat
-      document.getElementById("etat-jeu").textContent =
-        state.status === "playing" ? "En jeu" : "Terminée";
-
-      // Fin
       if (state.status === "ended") {
-        const overlay = document.getElementById("overlay");
-        overlay.classList.add("show");
-        const title = document.getElementById("modal-title");
-        const body = document.getElementById("modal-body");
-        if (state.winner === "draw") {
-          title.textContent = "Match nul !";
-          body.textContent = `Score final : Nord ${state.scores.north} – Sud ${state.scores.south}`;
-        } else {
-          const winner = state.winner === "north" ? "Nord" : "Sud";
-          title.textContent = winner + " gagne !";
-          body.textContent = `Score final : Nord ${state.scores.north} – Sud ${state.scores.south}`;
-        }
+        document.getElementById("overlay").classList.add("show");
+        const w = state.winner;
+        document.getElementById("modal-title").textContent =
+          w === "draw" ? "Match nul !" : (w === "north" ? "Nord" : "Sud") + " gagne !";
+        document.getElementById("modal-body").textContent =
+          `Score final : Nord ${state.scores.north} – Sud ${state.scores.south}`;
       }
     }
 
@@ -544,33 +438,29 @@
       if (state.status !== "playing") return;
       const pitName = (player === "north" ? "N" : "S") + (pitIndex + 1);
       const result = applyMove(state, { player, pitIndex });
-      if (result.ok) {
-        state = result.state;
-        const action = result.action;
-        let desc = "";
-        if (action.type === "forced-donation") {
-          desc = `${player === "north" ? "Nord" : "Sud"} joue ${pitName}, don forcé de ${action.donated} graine(s).`;
-        } else {
-          const cap = action.capture.captured;
-          const last = action.sowing.lastPosition;
-          const lastName = (last.player === "north" ? "N" : "S") + (last.pitIndex + 1);
-          desc = `${player === "north" ? "Nord" : "Sud"} joue ${pitName}, dernière graine en ${lastName}, capture ${cap}.`;
-        }
-        document.getElementById("last-move-text").textContent = desc;
-
-        const item = document.createElement("div");
-        item.className = "history-item";
-        item.textContent = `${state.moveNumber}. ${desc}`;
-        const list = document.getElementById("history-list");
-        list.insertBefore(item, list.firstChild);
-
-        render();
+      if (!result.ok) return;
+      state = result.state;
+      const action = result.action;
+      let desc = "";
+      if (action.type === "forced-donation") {
+        desc = `${player === "north" ? "Nord" : "Sud"} joue ${pitName}, don forcé de ${action.donated} graine(s).`;
+      } else {
+        const cap = action.capture.captured;
+        const last = action.sowing.lastPosition;
+        const lastName = (last.player === "north" ? "N" : "S") + (last.pitIndex + 1);
+        desc = `${player === "north" ? "Nord" : "Sud"} joue ${pitName}, dernière graine en ${lastName}, capture ${cap}.`;
       }
+      document.getElementById("last-move-text").textContent = desc;
+      const item = document.createElement("div");
+      item.className = "history-item";
+      item.textContent = state.moveNumber + ". " + desc;
+      const list = document.getElementById("history-list");
+      list.insertBefore(item, list.firstChild);
+      render();
     }
 
     document.getElementById("btn-restart").addEventListener("click", () => {
       state = createGame("south");
-      historyLog = [];
       document.getElementById("history-list").innerHTML = "";
       document.getElementById("last-move-text").textContent = "—";
       document.getElementById("overlay").classList.remove("show");
